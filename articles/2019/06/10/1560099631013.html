@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>Java后端和JavaScript前端实现AES的加密和解密 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="Java后端和JavaScript前端实现AES的加密和解密 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/06/10/1560099631013.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="Java后端和JavaScript前端实现AES的加密和解密 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/06/10/1560099631013.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">Java后端和JavaScript前端实现AES的加密和解密</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-06-10</span>
+          <span class="comments">
+            <span data-uvstatcmt="1560099631013">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/06/10/1560099631013.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>&nbsp;
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20180205.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_0">AES算法</h3>
+<p>AES加密算法（Advanced Encryption Standard）：是美国联邦政府采用的一种区块加密标准。这个标准用来替代原先的DES。<br>
+AES加密主要包括两个步骤：密钥扩展和明文加密。<br>
+密钥扩展：将输入的密钥（16字节、24字节和32字节）进行扩展，根据密钥长度的不同，得到扩展后的密钥进行加密的轮数也不相同。</p>
+<h3 id="toc_h3_1">话不多说，直接上代码</h3>
+<pre><code class="language-java">
+import java.math.BigInteger;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+
+import sun.misc.BASE64Decoder;
+
+/**
+ * AES的加密和解密
+ * @author AlgerFan
+ */
+public class AesUtil {
+    //密钥 (需要前端和后端保持一致) ，长度为16的倍数
+    private static final String KEY = "0123456789aaaaaa";
+    //算法
+    private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
+
+    /**
+     * aes解密
+     * @param encrypt   内容
+     * @return
+     * @throws Exception
+     */
+    public static String aesDecrypt(String encrypt) {
+        try {
+            return aesDecrypt(encrypt, KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * aes加密
+     * @param content
+     * @return
+     * @throws Exception
+     */
+    public static String aesEncrypt(String content) {
+        try {
+            return aesEncrypt(content, KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * 将byte[]转为各种进制的字符串
+     * @param bytes byte[]
+     * @param radix 可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制
+     * @return 转换后的字符串
+     */
+    public static String binary(byte[] bytes, int radix){
+        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数
+    }
+
+    /**
+     * base 64 encode
+     * @param bytes 待编码的byte[]
+     * @return 编码后的base 64 code
+     */
+    public static String base64Encode(byte[] bytes){
+        return Base64.encodeBase64String(bytes);
+    }
+
+    /**
+     * base 64 decode
+     * @param base64Code 待解码的base 64 code
+     * @return 解码后的byte[]
+     * @throws Exception
+     */
+    public static byte[] base64Decode(String base64Code) throws Exception{
+        return StringUtils.isEmpty(base64Code) ? null : new BASE64Decoder().decodeBuffer(base64Code);
+    }
+
+
+    /**
+     * AES加密
+     * @param content 待加密的内容
+     * @param encryptKey 加密密钥
+     * @return 加密后的byte[]
+     * @throws Exception
+     */
+    public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
+        KeyGenerator kgen = KeyGenerator.getInstance("AES");
+        kgen.init(128);
+        Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
+        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), "AES"));
+
+        return cipher.doFinal(content.getBytes("utf-8"));
+    }
+
+
+    /**
+     * AES加密为base 64 code
+     * @param content 待加密的内容
+     * @param encryptKey 加密密钥
+     * @return 加密后的base 64 code
+     * @throws Exception
+     */
+    public static String aesEncrypt(String content, String encryptKey) throws Exception {
+        return base64Encode(aesEncryptToBytes(content, encryptKey));
+    }
+
+    /**
+     * AES解密
+     * @param encryptBytes 待解密的byte[]
+     * @param decryptKey 解密密钥
+     * @return 解密后的String
+     * @throws Exception
+     */
+    public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {
+        KeyGenerator kgen = KeyGenerator.getInstance("AES");
+        kgen.init(128);
+
+        Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), "AES"));
+        byte[] decryptBytes = cipher.doFinal(encryptBytes);
+        return new String(decryptBytes);
+    }
+
+
+    /**
+     * 将base 64 code AES解密
+     * @param encryptStr 待解密的base 64 code
+     * @param decryptKey 解密密钥
+     * @return 解密后的string
+     * @throws Exception
+     */
+    public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
+        return StringUtils.isEmpty(encryptStr) ? null : aesDecryptByBytes(base64Decode(encryptStr), decryptKey);
+    }
+
+    /**
+     * 测试
+     */
+    public static void main(String[] args) throws Exception {
+        String content = "wokeyi";
+        System.out.println("加密前：" + content);
+        System.out.println("加密密钥和解密密钥：" + KEY);
+        String encrypt = aesEncrypt(content, KEY);
+        System.out.println("加密后：" + encrypt);
+        String decrypt = aesDecrypt(encrypt, KEY);
+        System.out.println("解密后：" + decrypt);
+    }
+
+
+</code></pre>
+<p>注：Spring Boot需要引入一个依赖：</p>
+<pre><code class="language-java">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+    &lt;version&gt;3.4&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>SSM需要引入两个依赖：</p>
+<pre><code class="language-java">&lt;dependency&gt;  
+ &lt;groupId&gt;commons-codec&lt;/groupId&gt;  
+ &lt;artifactId&gt;commons-codec&lt;/artifactId&gt;  
+ &lt;version&gt;1.10&lt;/version&gt;  
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+    &lt;version&gt;3.4&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="toc_h3_2">JavaScript前端：</h3>
+<pre><code class="language-JavaScript">/**
+ * 加密（需要先加载lib/aes/aes.min.js文件）
+ * @param word
+ * @returns {*}
+ */
+function encrypt(word){
+    var key = CryptoJS.enc.Utf8.parse("abcdefgabcdefg12");
+    var srcs = CryptoJS.enc.Utf8.parse(word);
+    var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+    return encrypted.toString();
+}
+
+/**
+ * 解密
+ * @param word
+ * @returns {*}
+ */
+function decrypt(word){
+    var key = CryptoJS.enc.Utf8.parse("abcdefgabcdefg12");
+    var decrypt = CryptoJS.AES.decrypt(word, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+    return CryptoJS.enc.Utf8.stringify(decrypt).toString();
+}
+</code></pre>
+<p>需要依赖aes.js文件：</p>
+<p>以下是压缩后的aes.js文件</p>
+<pre><code class="language-JavaScript">!function(t,n){"object"==typeof exports?module.exports=exports=n():"function"==typeof define&amp;&amp;define.amd?define([],n):t.CryptoJS=n()}(this,function(){var t=t||function(t,n){var i=Object.create||function(){function t(){}return function(n){var i;return t.prototype=n,i=new t,t.prototype=null,i}}(),e={},r=e.lib={},o=r.Base=function(){return{extend:function(t){var n=i(this);return t&amp;&amp;n.mixIn(t),n.hasOwnProperty("init")&amp;&amp;this.init!==n.init||(n.init=function(){n.$super.init.apply(this,arguments)}),n.init.prototype=n,n.$super=this,n},create:function(){var t=this.extend();return t.init.apply(t,arguments),t},init:function(){},mixIn:function(t){for(var n in t)t.hasOwnProperty(n)&amp;&amp;(this[n]=t[n]);t.hasOwnProperty("toString")&amp;&amp;(this.toString=t.toString)},clone:function(){return this.init.prototype.extend(this)}}}(),s=r.WordArray=o.extend({init:function(t,i){t=this.words=t||[],i!=n?this.sigBytes=i:this.sigBytes=4*t.length},toString:function(t){return(t||c).stringify(this)},concat:function(t){var n=this.words,i=t.words,e=this.sigBytes,r=t.sigBytes;if(this.clamp(),e%4)for(var o=0;o&lt;r;o++){var s=i[o&gt;&gt;&gt;2]&gt;&gt;&gt;24-o%4*8&amp;255;n[e+o&gt;&gt;&gt;2]|=s&lt;&lt;24-(e+o)%4*8}else for(var o=0;o&lt;r;o+=4)n[e+o&gt;&gt;&gt;2]=i[o&gt;&gt;&gt;2];return this.sigBytes+=r,this},clamp:function(){var n=this.words,i=this.sigBytes;n[i&gt;&gt;&gt;2]&amp;=4294967295&lt;&lt;32-i%4*8,n.length=t.ceil(i/4)},clone:function(){var t=o.clone.call(this);return t.words=this.words.slice(0),t},random:function(n){for(var i,e=[],r=function(n){var n=n,i=987654321,e=4294967295;return function(){i=36969*(65535&amp;i)+(i&gt;&gt;16)&amp;e,n=18e3*(65535&amp;n)+(n&gt;&gt;16)&amp;e;var r=(i&lt;&lt;16)+n&amp;e;return r/=4294967296,r+=.5,r*(t.random()&gt;.5?1:-1)}},o=0;o&lt;n;o+=4){var a=r(4294967296*(i||t.random()));i=987654071*a(),e.push(4294967296*a()|0)}return new s.init(e,n)}}),a=e.enc={},c=a.Hex={stringify:function(t){for(var n=t.words,i=t.sigBytes,e=[],r=0;r&lt;i;r++){var o=n[r&gt;&gt;&gt;2]&gt;&gt;&gt;24-r%4*8&amp;255;e.push((o&gt;&gt;&gt;4).toString(16)),e.push((15&amp;o).toString(16))}return e.join("")},parse:function(t){for(var n=t.length,i=[],e=0;e&lt;n;e+=2)i[e&gt;&gt;&gt;3]|=parseInt(t.substr(e,2),16)&lt;&lt;24-e%8*4;return new s.init(i,n/2)}},u=a.Latin1={stringify:function(t){for(var n=t.words,i=t.sigBytes,e=[],r=0;r&lt;i;r++){var o=n[r&gt;&gt;&gt;2]&gt;&gt;&gt;24-r%4*8&amp;255;e.push(String.fromCharCode(o))}return e.join("")},parse:function(t){for(var n=t.length,i=[],e=0;e&lt;n;e++)i[e&gt;&gt;&gt;2]|=(255&amp;t.charCodeAt(e))&lt;&lt;24-e%4*8;return new s.init(i,n)}},f=a.Utf8={stringify:function(t){try{return decodeURIComponent(escape(u.stringify(t)))}catch(t){throw new Error("Malformed UTF-8 data")}},parse:function(t){return u.parse(unescape(encodeURIComponent(t)))}},h=r.BufferedBlockAlgorithm=o.extend({reset:function(){this._data=new s.init,this._nDataBytes=0},_append:function(t){"string"==typeof t&amp;&amp;(t=f.parse(t)),this._data.concat(t),this._nDataBytes+=t.sigBytes},_process:function(n){var i=this._data,e=i.words,r=i.sigBytes,o=this.blockSize,a=4*o,c=r/a;c=n?t.ceil(c):t.max((0|c)-this._minBufferSize,0);var u=c*o,f=t.min(4*u,r);if(u){for(var h=0;h&lt;u;h+=o)this._doProcessBlock(e,h);var p=e.splice(0,u);i.sigBytes-=f}return new s.init(p,f)},clone:function(){var t=o.clone.call(this);return t._data=this._data.clone(),t},_minBufferSize:0}),p=(r.Hasher=h.extend({cfg:o.extend(),init:function(t){this.cfg=this.cfg.extend(t),this.reset()},reset:function(){h.reset.call(this),this._doReset()},update:function(t){return this._append(t),this._process(),this},finalize:function(t){t&amp;&amp;this._append(t);var n=this._doFinalize();return n},blockSize:16,_createHelper:function(t){return function(n,i){return new t.init(i).finalize(n)}},_createHmacHelper:function(t){return function(n,i){return new p.HMAC.init(t,i).finalize(n)}}}),e.algo={});return e}(Math);return t});
+//# sourceMappingURL=core.min.js.map
+!function(e,t,i){"object"==typeof exports?module.exports=exports=t(require("./core.min"),require("./sha1.min"),require("./hmac.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min","./sha1.min","./hmac.min"],t):t(e.CryptoJS)}(this,function(e){return function(){var t=e,i=t.lib,r=i.Base,n=i.WordArray,o=t.algo,a=o.MD5,c=o.EvpKDF=r.extend({cfg:r.extend({keySize:4,hasher:a,iterations:1}),init:function(e){this.cfg=this.cfg.extend(e)},compute:function(e,t){for(var i=this.cfg,r=i.hasher.create(),o=n.create(),a=o.words,c=i.keySize,f=i.iterations;a.length&lt;c;){s&amp;&amp;r.update(s);var s=r.update(e).finalize(t);r.reset();for(var u=1;u&lt;f;u++)s=r.finalize(s),r.reset();o.concat(s)}return o.sigBytes=4*c,o}});t.EvpKDF=function(e,t,i){return c.create(i).compute(e,t)}}(),e.EvpKDF});
+//# sourceMappingURL=evpkdf.min.js.map
+!function(r,e){"object"==typeof exports?module.exports=exports=e(require("./core.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min"],e):e(r.CryptoJS)}(this,function(r){return function(){function e(r,e,t){for(var n=[],i=0,o=0;o&lt;e;o++)if(o%4){var f=t[r.charCodeAt(o-1)]&lt;&lt;o%4*2,c=t[r.charCodeAt(o)]&gt;&gt;&gt;6-o%4*2;n[i&gt;&gt;&gt;2]|=(f|c)&lt;&lt;24-i%4*8,i++}return a.create(n,i)}var t=r,n=t.lib,a=n.WordArray,i=t.enc;i.Base64={stringify:function(r){var e=r.words,t=r.sigBytes,n=this._map;r.clamp();for(var a=[],i=0;i&lt;t;i+=3)for(var o=e[i&gt;&gt;&gt;2]&gt;&gt;&gt;24-i%4*8&amp;255,f=e[i+1&gt;&gt;&gt;2]&gt;&gt;&gt;24-(i+1)%4*8&amp;255,c=e[i+2&gt;&gt;&gt;2]&gt;&gt;&gt;24-(i+2)%4*8&amp;255,s=o&lt;&lt;16|f&lt;&lt;8|c,h=0;h&lt;4&amp;&amp;i+.75*h&lt;t;h++)a.push(n.charAt(s&gt;&gt;&gt;6*(3-h)&amp;63));var p=n.charAt(64);if(p)for(;a.length%4;)a.push(p);return a.join("")},parse:function(r){var t=r.length,n=this._map,a=this._reverseMap;if(!a){a=this._reverseMap=[];for(var i=0;i&lt;n.length;i++)a[n.charCodeAt(i)]=i}var o=n.charAt(64);if(o){var f=r.indexOf(o);f!==-1&amp;&amp;(t=f)}return e(r,t,a)},_map:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="}}(),r.enc.Base64});
+//# sourceMappingURL=enc-base64.min.js.map
+!function(e,t,r){"object"==typeof exports?module.exports=exports=t(require("./core.min"),require("./evpkdf.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min","./evpkdf.min"],t):t(e.CryptoJS)}(this,function(e){e.lib.Cipher||function(t){var r=e,i=r.lib,n=i.Base,c=i.WordArray,o=i.BufferedBlockAlgorithm,s=r.enc,a=(s.Utf8,s.Base64),f=r.algo,p=f.EvpKDF,d=i.Cipher=o.extend({cfg:n.extend(),createEncryptor:function(e,t){return this.create(this._ENC_XFORM_MODE,e,t)},createDecryptor:function(e,t){return this.create(this._DEC_XFORM_MODE,e,t)},init:function(e,t,r){this.cfg=this.cfg.extend(r),this._xformMode=e,this._key=t,this.reset()},reset:function(){o.reset.call(this),this._doReset()},process:function(e){return this._append(e),this._process()},finalize:function(e){e&amp;&amp;this._append(e);var t=this._doFinalize();return t},keySize:4,ivSize:4,_ENC_XFORM_MODE:1,_DEC_XFORM_MODE:2,_createHelper:function(){function e(e){return"string"==typeof e?B:x}return function(t){return{encrypt:function(r,i,n){return e(i).encrypt(t,r,i,n)},decrypt:function(r,i,n){return e(i).decrypt(t,r,i,n)}}}}()}),h=(i.StreamCipher=d.extend({_doFinalize:function(){var e=this._process(!0);return e},blockSize:1}),r.mode={}),u=i.BlockCipherMode=n.extend({createEncryptor:function(e,t){return this.Encryptor.create(e,t)},createDecryptor:function(e,t){return this.Decryptor.create(e,t)},init:function(e,t){this._cipher=e,this._iv=t}}),l=h.CBC=function(){function e(e,r,i){var n=this._iv;if(n){var c=n;this._iv=t}else var c=this._prevBlock;for(var o=0;o&lt;i;o++)e[r+o]^=c[o]}var r=u.extend();return r.Encryptor=r.extend({processBlock:function(t,r){var i=this._cipher,n=i.blockSize;e.call(this,t,r,n),i.encryptBlock(t,r),this._prevBlock=t.slice(r,r+n)}}),r.Decryptor=r.extend({processBlock:function(t,r){var i=this._cipher,n=i.blockSize,c=t.slice(r,r+n);i.decryptBlock(t,r),e.call(this,t,r,n),this._prevBlock=c}}),r}(),_=r.pad={},v=_.Pkcs7={pad:function(e,t){for(var r=4*t,i=r-e.sigBytes%r,n=i&lt;&lt;24|i&lt;&lt;16|i&lt;&lt;8|i,o=[],s=0;s&lt;i;s+=4)o.push(n);var a=c.create(o,i);e.concat(a)},unpad:function(e){var t=255&amp;e.words[e.sigBytes-1&gt;&gt;&gt;2];e.sigBytes-=t}},y=(i.BlockCipher=d.extend({cfg:d.cfg.extend({mode:l,padding:v}),reset:function(){d.reset.call(this);var e=this.cfg,t=e.iv,r=e.mode;if(this._xformMode==this._ENC_XFORM_MODE)var i=r.createEncryptor;else{var i=r.createDecryptor;this._minBufferSize=1}this._mode&amp;&amp;this._mode.__creator==i?this._mode.init(this,t&amp;&amp;t.words):(this._mode=i.call(r,this,t&amp;&amp;t.words),this._mode.__creator=i)},_doProcessBlock:function(e,t){this._mode.processBlock(e,t)},_doFinalize:function(){var e=this.cfg.padding;if(this._xformMode==this._ENC_XFORM_MODE){e.pad(this._data,this.blockSize);var t=this._process(!0)}else{var t=this._process(!0);e.unpad(t)}return t},blockSize:4}),i.CipherParams=n.extend({init:function(e){this.mixIn(e)},toString:function(e){return(e||this.formatter).stringify(this)}})),m=r.format={},k=m.OpenSSL={stringify:function(e){var t=e.ciphertext,r=e.salt;if(r)var i=c.create([1398893684,1701076831]).concat(r).concat(t);else var i=t;return i.toString(a)},parse:function(e){var t=a.parse(e),r=t.words;if(1398893684==r[0]&amp;&amp;1701076831==r[1]){var i=c.create(r.slice(2,4));r.splice(0,4),t.sigBytes-=16}return y.create({ciphertext:t,salt:i})}},x=i.SerializableCipher=n.extend({cfg:n.extend({format:k}),encrypt:function(e,t,r,i){i=this.cfg.extend(i);var n=e.createEncryptor(r,i),c=n.finalize(t),o=n.cfg;return y.create({ciphertext:c,key:r,iv:o.iv,algorithm:e,mode:o.mode,padding:o.padding,blockSize:e.blockSize,formatter:i.format})},decrypt:function(e,t,r,i){i=this.cfg.extend(i),t=this._parse(t,i.format);var n=e.createDecryptor(r,i).finalize(t.ciphertext);return n},_parse:function(e,t){return"string"==typeof e?t.parse(e,this):e}}),g=r.kdf={},S=g.OpenSSL={execute:function(e,t,r,i){i||(i=c.random(8));var n=p.create({keySize:t+r}).compute(e,i),o=c.create(n.words.slice(t),4*r);return n.sigBytes=4*t,y.create({key:n,iv:o,salt:i})}},B=i.PasswordBasedCipher=x.extend({cfg:x.cfg.extend({kdf:S}),encrypt:function(e,t,r,i){i=this.cfg.extend(i);var n=i.kdf.execute(r,e.keySize,e.ivSize);i.iv=n.iv;var c=x.encrypt.call(this,e,t,n.key,i);return c.mixIn(n),c},decrypt:function(e,t,r,i){i=this.cfg.extend(i),t=this._parse(t,i.format);var n=i.kdf.execute(r,e.keySize,e.ivSize,t.salt);i.iv=n.iv;var c=x.decrypt.call(this,e,t,n.key,i);return c}})}()});
+//# sourceMappingURL=cipher-core.min.js.map
+!function(e,i){"object"==typeof exports?module.exports=exports=i(require("./core.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min"],i):i(e.CryptoJS)}(this,function(e){!function(){var i=e,t=i.lib,n=t.Base,s=i.enc,r=s.Utf8,o=i.algo;o.HMAC=n.extend({init:function(e,i){e=this._hasher=new e.init,"string"==typeof i&amp;&amp;(i=r.parse(i));var t=e.blockSize,n=4*t;i.sigBytes&gt;n&amp;&amp;(i=e.finalize(i)),i.clamp();for(var s=this._oKey=i.clone(),o=this._iKey=i.clone(),a=s.words,f=o.words,c=0;c&lt;t;c++)a[c]^=1549556828,f[c]^=909522486;s.sigBytes=o.sigBytes=n,this.reset()},reset:function(){var e=this._hasher;e.reset(),e.update(this._iKey)},update:function(e){return this._hasher.update(e),this},finalize:function(e){var i=this._hasher,t=i.finalize(e);i.reset();var n=i.finalize(this._oKey.clone().concat(t));return n}})}()});
+//# sourceMappingURL=hmac.min.js.map
+!function(e,o,r){"object"==typeof exports?module.exports=exports=o(require("./core.min"),require("./cipher-core.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min","./cipher-core.min"],o):o(e.CryptoJS)}(this,function(e){return e.mode.ECB=function(){var o=e.lib.BlockCipherMode.extend();return o.Encryptor=o.extend({processBlock:function(e,o){this._cipher.encryptBlock(e,o)}}),o.Decryptor=o.extend({processBlock:function(e,o){this._cipher.decryptBlock(e,o)}}),o}(),e.mode.ECB});
+//# sourceMappingURL=mode-ecb.min.js.map
+!function(e,r,i){"object"==typeof exports?module.exports=exports=r(require("./core.min"),require("./cipher-core.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min","./cipher-core.min"],r):r(e.CryptoJS)}(this,function(e){return e.pad.Pkcs7});
+//# sourceMappingURL=pad-pkcs7.min.js.map
+!function(e,r,i){"object"==typeof exports?module.exports=exports=r(require("./core.min"),require("./enc-base64.min"),require("./md5.min"),require("./evpkdf.min"),require("./cipher-core.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min","./enc-base64.min","./md5.min","./evpkdf.min","./cipher-core.min"],r):r(e.CryptoJS)}(this,function(e){return function(){var r=e,i=r.lib,n=i.BlockCipher,o=r.algo,t=[],c=[],s=[],f=[],a=[],d=[],u=[],v=[],h=[],y=[];!function(){for(var e=[],r=0;r&lt;256;r++)r&lt;128?e[r]=r&lt;&lt;1:e[r]=r&lt;&lt;1^283;for(var i=0,n=0,r=0;r&lt;256;r++){var o=n^n&lt;&lt;1^n&lt;&lt;2^n&lt;&lt;3^n&lt;&lt;4;o=o&gt;&gt;&gt;8^255&amp;o^99,t[i]=o,c[o]=i;var p=e[i],l=e[p],_=e[l],k=257*e[o]^16843008*o;s[i]=k&lt;&lt;24|k&gt;&gt;&gt;8,f[i]=k&lt;&lt;16|k&gt;&gt;&gt;16,a[i]=k&lt;&lt;8|k&gt;&gt;&gt;24,d[i]=k;var k=16843009*_^65537*l^257*p^16843008*i;u[o]=k&lt;&lt;24|k&gt;&gt;&gt;8,v[o]=k&lt;&lt;16|k&gt;&gt;&gt;16,h[o]=k&lt;&lt;8|k&gt;&gt;&gt;24,y[o]=k,i?(i=p^e[e[e[_^p]]],n^=e[e[n]]):i=n=1}}();var p=[0,1,2,4,8,16,32,64,128,27,54],l=o.AES=n.extend({_doReset:function(){if(!this._nRounds||this._keyPriorReset!==this._key){for(var e=this._keyPriorReset=this._key,r=e.words,i=e.sigBytes/4,n=this._nRounds=i+6,o=4*(n+1),c=this._keySchedule=[],s=0;s&lt;o;s++)if(s&lt;i)c[s]=r[s];else{var f=c[s-1];s%i?i&gt;6&amp;&amp;s%i==4&amp;&amp;(f=t[f&gt;&gt;&gt;24]&lt;&lt;24|t[f&gt;&gt;&gt;16&amp;255]&lt;&lt;16|t[f&gt;&gt;&gt;8&amp;255]&lt;&lt;8|t[255&amp;f]):(f=f&lt;&lt;8|f&gt;&gt;&gt;24,f=t[f&gt;&gt;&gt;24]&lt;&lt;24|t[f&gt;&gt;&gt;16&amp;255]&lt;&lt;16|t[f&gt;&gt;&gt;8&amp;255]&lt;&lt;8|t[255&amp;f],f^=p[s/i|0]&lt;&lt;24),c[s]=c[s-i]^f}for(var a=this._invKeySchedule=[],d=0;d&lt;o;d++){var s=o-d;if(d%4)var f=c[s];else var f=c[s-4];d&lt;4||s&lt;=4?a[d]=f:a[d]=u[t[f&gt;&gt;&gt;24]]^v[t[f&gt;&gt;&gt;16&amp;255]]^h[t[f&gt;&gt;&gt;8&amp;255]]^y[t[255&amp;f]]}}},encryptBlock:function(e,r){this._doCryptBlock(e,r,this._keySchedule,s,f,a,d,t)},decryptBlock:function(e,r){var i=e[r+1];e[r+1]=e[r+3],e[r+3]=i,this._doCryptBlock(e,r,this._invKeySchedule,u,v,h,y,c);var i=e[r+1];e[r+1]=e[r+3],e[r+3]=i},_doCryptBlock:function(e,r,i,n,o,t,c,s){for(var f=this._nRounds,a=e[r]^i[0],d=e[r+1]^i[1],u=e[r+2]^i[2],v=e[r+3]^i[3],h=4,y=1;y&lt;f;y++){var p=n[a&gt;&gt;&gt;24]^o[d&gt;&gt;&gt;16&amp;255]^t[u&gt;&gt;&gt;8&amp;255]^c[255&amp;v]^i[h++],l=n[d&gt;&gt;&gt;24]^o[u&gt;&gt;&gt;16&amp;255]^t[v&gt;&gt;&gt;8&amp;255]^c[255&amp;a]^i[h++],_=n[u&gt;&gt;&gt;24]^o[v&gt;&gt;&gt;16&amp;255]^t[a&gt;&gt;&gt;8&amp;255]^c[255&amp;d]^i[h++],k=n[v&gt;&gt;&gt;24]^o[a&gt;&gt;&gt;16&amp;255]^t[d&gt;&gt;&gt;8&amp;255]^c[255&amp;u]^i[h++];a=p,d=l,u=_,v=k}var p=(s[a&gt;&gt;&gt;24]&lt;&lt;24|s[d&gt;&gt;&gt;16&amp;255]&lt;&lt;16|s[u&gt;&gt;&gt;8&amp;255]&lt;&lt;8|s[255&amp;v])^i[h++],l=(s[d&gt;&gt;&gt;24]&lt;&lt;24|s[u&gt;&gt;&gt;16&amp;255]&lt;&lt;16|s[v&gt;&gt;&gt;8&amp;255]&lt;&lt;8|s[255&amp;a])^i[h++],_=(s[u&gt;&gt;&gt;24]&lt;&lt;24|s[v&gt;&gt;&gt;16&amp;255]&lt;&lt;16|s[a&gt;&gt;&gt;8&amp;255]&lt;&lt;8|s[255&amp;d])^i[h++],k=(s[v&gt;&gt;&gt;24]&lt;&lt;24|s[a&gt;&gt;&gt;16&amp;255]&lt;&lt;16|s[d&gt;&gt;&gt;8&amp;255]&lt;&lt;8|s[255&amp;u])^i[h++];e[r]=p,e[r+1]=l,e[r+2]=_,e[r+3]=k},keySize:8});r.AES=n._createHelper(l)}(),e.AES});
+//# sourceMappingURL=aes.min.js.map
+!function(e,n){"object"==typeof exports?module.exports=exports=n(require("./core.min")):"function"==typeof define&amp;&amp;define.amd?define(["./core.min"],n):n(e.CryptoJS)}(this,function(e){return e.enc.Utf8});
+//# sourceMappingURL=enc-utf8.min.js.map
+</code></pre>
+          <div>
+            <hr>
+
+标题：Java后端和JavaScript前端实现AES的加密和解密<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/06/10/1560099631013.html" target="_blank">https://algerfan.github.io/articles/2019/06/10/1560099631013.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="Java后端和JavaScript前端实现AES的加密和解密"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/06/10/1560099631013.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1560099631013"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1560099631013",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1560099631013",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1560099631013', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 62ms, 2022/12/10 22:11:59 -->

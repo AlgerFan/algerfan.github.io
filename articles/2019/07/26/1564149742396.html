@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（转）（5）创建本地镜像(commit、Dockerfile) - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（转）（5）创建本地镜像(commit、Dockerfile) - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/07/26/1564149742396.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（转）（5）创建本地镜像(commit、Dockerfile) - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/07/26/1564149742396.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（转）（5）创建本地镜像(commit、Dockerfile)</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-07-26</span>
+          <span class="comments">
+            <span data-uvstatcmt="1564149742396">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/07/26/1564149742396.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20190110.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<blockquote>
+<p>作者：孤天浪雨<br>
+地址：<a href="https://blog.csdn.net/u010246789" target="_blank">https://blog.csdn.net/u010246789</a></p>
+</blockquote>
+<p>在<a href="https://www.algerfan.cn/articles/2019/07/26/1564133511398.html" target="_blank">（3）Docker容器内信息获取、命令的执行、容器的导入和导出</a>中，将一个由镜像导出的 tar 包，本地导入 tar 包为镜像，也是本地创建镜像的一种方式。<br>
+通常我们自己制作镜像都是以某一镜像为基础，在此之上安装或者定制自己需要的镜像，推荐使用 Dockerfile。</p>
+<h2 id="toc_h2_0">一、commit 命令创建本地镜像</h2>
+<p><strong>这边我们准备在 CentOS 为基础的镜像上，安装 JDK，并创建一个 txt 文件，然后使用 commit 命令打成新镜像。</strong></p>
+<ul>
+<li><code>docker run -t -i centos</code> ：启动一个 CentOS 的交互性容器。</li>
+<li>干净的 CentOS 容器中没有 JDK，我们马上要安装： <code>yum install java</code> 。</li>
+<li>记录[root@ae56f6cad215 /]中@后面的 Hash 值： <code>ae56f6cad215</code> ，后面会用到。</li>
+</ul>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/c08099077c6f4495b16fd7538e1aa238.jpg" alt="docker创建镜像1.jpg"></p>
+<ul>
+<li><code>java version</code> ：此时我们已经安装好了 JDK1.8。</li>
+<li><code>touch test_commit_image.txt</code> ：创建一个 txt 文件。</li>
+<li><code>exit</code> ：退出容器。</li>
+</ul>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/6363417a38f94931945f248bafdbd35c.jpg" alt="docker创建镜像2.jpg"></p>
+<ul>
+<li><code>docker commit -m="commit jdk" --author="gutianlangyu" ae56f6cad215 gutianlangyu/commit_jdk:v1</code> ：使用 commit 命令将容器里的所有修改提交到本地库中，形成以一个全新的镜像，会返回新镜像的完整 ID。
+<ul>
+<li>完整 ID 可以通过 <code>docker ps -l -q</code> (用于获取最近创建的容器 ID)命令得到。</li>
+<li><code>-m</code> ：描述我们此次创建 image 的信息。</li>
+<li><code>--author</code> ：用来指定作者。</li>
+<li><code>ae56f6cad215</code> ：被修改的基础镜像 ID。</li>
+<li><code>gutianlangyu/commit_jdk:v1</code> ：仓库名/镜像名：TAG 名。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/d6d475da282b4ac2bf85b21cf2d79ba3.jpg" alt="docker创建镜像3.jpg"></p>
+<p><strong>检查新镜像：如下图，镜像 5e0f7204704a 中，已经有了 jdk1.8、test_commit_image.txt</strong></p>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/ef0132a165ad4ae58627843c2c7cd18b.jpg" alt="docker创建镜像4.jpg"></p>
+<h2 id="toc_h2_1">二、Dockerfile 创建镜像</h2>
+<p><strong>将需要对镜像进行的操作全部写到一个文件中，然后使用 docker build 命令从这个文件中创建镜像。这种方法可以使镜像的创建变得透明和独立化，并且创建过程可以被重复执行。Dockerfile 文件以行为单位，行首为 Dockerfile 命令，命令都是大写形式，其后紧跟着的是命令的参数。<br>
+Dockerfile 文件实例，本例子并没有实际意义，只是为了将知识点都覆盖到，具体含义请看文末附录一：</strong></p>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/e5678239f5424134ae0a0d0b38d15ac9.jpg" alt="docker创建镜像5.jpg"></p>
+<pre><code class="language-java">#Version 1.0.1
+FROM centos:latest
+
+MAINTAINER ***u "***u@163.com"
+
+#设置root用户为后续命令的执行者
+USER root
+
+#执行操作
+RUN yum update -y
+RUN yum install -y java
+
+#使用&amp;&amp;拼接命令
+RUN touch test.txt &amp;&amp; echo "abc" &gt;&gt;abc.txt
+
+#对外暴露端口
+EXPOSE 80 8080 1038
+
+#添加文件
+ADD abc.txt /opt/
+
+#添加文件夹
+ADD /webapp /opt/webapp
+
+#添加网络文件
+ADD https://www.baidu.com/img/bd_logo1.png /opt/
+
+#设置环境变量
+ENV WEBAPP_PORT=9090
+
+#设置工作目录
+WORKDIR /opt/
+
+#设置启动命令
+ENTRYPOINT ["ls"]
+
+#设置启动参数
+CMD ["-a", "-l"]
+
+#设置卷
+VOLUME ["/data", "/var/www"]
+
+#设置子镜像的触发操作
+ONBUILD ADD . /app/src
+ONBUILD RUN echo "on build excuted" &gt;&gt; onbuild.txt
+</code></pre>
+<h3 id="toc_h3_2">使用 build 命令来构建镜像：</h3>
+<ul>
+<li><code>docker build -t gutianlangyu/test:build_dockerfile_test .</code></li>
+</ul>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/e206be426a5b46d4857d4a716abc3665.jpg" alt="docker创建镜像6.jpg"></p>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/d4421180c53344b2b10191903b13b877.jpg" alt="docker创建镜像7.jpg"></p>
+<ul>
+<li><code>-t</code> 参数用来指定镜像的命名空间、仓库名及 TAG。这个值可以在镜像创建成功之后通过 tag 命令修改。</li>
+<li>事实上是创建一个镜像的两个名称引用，指向的是同一个镜像实体 <code>bc27aeae40dd</code> ，如下图：</li>
+</ul>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/3bf58525596845b8bab4b156f5cf5264.jpg" alt="docker创建镜像8.jpg"></p>
+<ul>
+<li>紧跟-t 参数的是 Dockerfile 文件所在的相对目录，本例使用的是当前目录，即“.”</li>
+</ul>
+<h2 id="toc_h2_3">三、Dockerfile-GitHub</h2>
+<p><strong>可以把 dockerfile 放在 GitHub 上，我的地址是 <a href="https://github.com/gubaijin/docker/blob/master/Dockerfile,clone" target="_blank">https://github.com/gubaijin/docker/blob/master/Dockerfile,clone</a> 地址是 <a href="https://github.com/gubaijin/docker.git" target="_blank">https://github.com/gubaijin/docker.git</a><br>
+执行命令：docker build -t gutianlangyu/test:build_dockerfile_test_github <a href="https://github.com/gubaijin/docker.git，你们直接执行也可以成功。" target="_blank">https://github.com/gubaijin/docker.git，你们直接执行也可以成功。</a></strong></p>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/e170209f6ce24f7eae17a7f55200468d.jpg" alt="docker创建镜像9.jpg"></p>
+<p><img src="https://img.algerfan.cn/blog/image/20190726/126be54296404816aa52569439e4d92a.jpg" alt="docker创建镜像10.jpg"></p>
+<h2 id="toc_h2_4">附录一：</h2>
+<ul>
+<li><code>FROM</code> ：指定待扩展的父级镜像(基础镜像)。除了注释以外，在文件开头必须是一个 FROM 指令，接下来的指令便在这个父级镜像的环境中运行，直到遇到下一个 FROM 指令。通过添加多个 FROM 命令，可以在同一个 Dockerefile 文件中创建多个镜像。</li>
+<li><code>MAINTAINER</code> ：声明创建的镜像的作者信息。用户名、邮箱。非必须。</li>
+<li><code>RUN</code> ：用来修改镜像的命令，常用来安装库、程序以及配置程序。一条 RUN 指令执行完毕后，会在当前镜像上创建一个新的镜像层，接下来对的指令会在新的镜像上继续执行。RUN 语句有两种形式：
+<ul>
+<li><code>RUN yum update</code> ：是在/bin/sh 环境中执行的指令的命令</li>
+<li><code>RUN ["yum", "update"]</code> ：直接使用系统调用 exec 来执行行。</li>
+<li><code>RUN yum update &amp;&amp; yum install nginx</code> ：使用&amp;&amp;符号将多条命令连接在同一条 RUN 语句中。</li>
+</ul>
+</li>
+<li><code>EXPOSE</code> ：用来指明容器内进程对外开放的端口，多个端口之间使用空格隔开。运行容器时，通过参数-P(大写)即可将 EXPOSE 里所指定的端口映射到主机上另外的随机端口，其他容器或主机就可以通过映射后的端口与此容器通信。同时，我们也可以通过-p(小写)参数将 Dockerfile 中 EXPOSE 中没有列出的端口设置成公开的。</li>
+<li><code>ADD</code> ：向新镜像中添加文件，这个文件可以是一个主机文件，也可以是一个网络文件，也可以使一个文件夹。
+<ul>
+<li>第一个参数：源文件（夹）。如果是相对路径，它必须是相对于 Dockerfile 所在目录的相对路径。如果是 URL，会先下载下来，再添加到镜像里去。</li>
+<li>第二个参数：目标路径。如果源文件是主机上 zip 或者 tar 形式的压缩文件，Docker 会先解压缩，然后将文件添加到镜像的指定位置。如果源文件是一个通过 URL 指定的网络压缩文件，则不会解压。</li>
+</ul>
+</li>
+<li><code>VOLUME</code> ：在镜像里创建一个指定路径(文件或文件夹)的挂载点，这个容器可以来自主机或者其它容器。多个容器可以通过同一个挂载点共享数据，即便其中一个容器已经停止，挂载点也仍热可以访问。</li>
+<li><code>WORKDIR</code> ：为接下来执行的指令指定一个新的工作目录，这个目录可以使绝对目录，也可以是相对目录。根据需要，WORKDIR 可以被多次指定。当启动一个容器时，最后一条 WORKDIR 指令所指的目录将作为容器运行的当前工作目录。</li>
+<li><code>ENV</code> ：设置容器运行的环境变量。在运行容器的时候，通过-e 参数可以修改这个环境变量值，也可以添加新的环境变量：</li>
+</ul>
+<p><code>docker run -e WEBAPP_PORT=8000 -e WEBAPP_HOST=www.example.com ...</code></p>
+<ul>
+<li><code>CMD</code> ：用来设置启动容器时默认运行的命令。</li>
+<li><code>ENTRYPOINT</code> ：与 CMD 类似，也是用来指定容器启动时的默认运行的命令。区别在于：运行容器时添加在镜像之后的参数，对 ENTRYPOINT 是拼接，CMD 是覆盖。
+<ul>
+<li><code>ENTRYPOINT [ "ls", "-l"]</code></li>
+<li><code>docker run centos ==&gt; docker run centos ls -l</code></li>
+<li><code>docker run centos -a ==&gt; docker run centos ls -l -a</code>
+<ul>
+<li>我们在运行容器的时候可以通过--entrypoint 来覆盖 Dockerfile 中的指定： <code>docker run gutianlangyu/test --entrypoint echo "hello world"</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>USER</code> ：为容器的运行及接下来 RUN、CMD、ENTRYPOINT 等指令的运行指定用户或 UID。</li>
+<li><code>ONBUILD</code> ：触发器指令。构建镜像时，Docker 的镜像构建器会将所有的 ONBUILD 指令指定的命令保存到镜像的元数据中，这些命令在当前镜像的构建过程中并不会执行。只有心的镜像使用 FROM 指令指定父镜像为这个镜像时，便会触发执行。
+<ul>
+<li>使用 FROM 以这个 Dockerfile 构建出的镜像为父镜像，构建子镜像时：</li>
+<li>ONBUILD ADD . /app/src：自动执行 ADD . /app/src</li>
+</ul>
+</li>
+</ul>
+          <div>
+            <hr>
+
+标题：（转）（5）创建本地镜像(commit、Dockerfile)<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/07/26/1564149742396.html" target="_blank">https://algerfan.github.io/articles/2019/07/26/1564149742396.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（转）（5）创建本地镜像(commit、Dockerfile)"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/07/26/1564149742396.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1564149742396"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1564149742396",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1564149742396",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1564149742396', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 31ms, 2022/12/10 22:11:59 -->

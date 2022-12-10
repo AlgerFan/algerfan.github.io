@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/08/07/1565168360437.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/08/07/1565168360437.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-08-07</span>
+          <span class="comments">
+            <span data-uvstatcmt="1565168360437">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/07/1565168360437.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20181104.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<p>本文章为 MySQL 学习笔记，参考极客时间<a href="https://time.geekbang.org/column/intro/139" target="_blank">《MySQL 实战 45 讲》</a></p>
+<h2 id="toc_h2_0">前言</h2>
+<p>数据库锁设计的初衷是处理并发问题。作为多用户共享的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来实现这些访问规则的重要数据结构。</p>
+<p><strong>根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类</strong>。这篇文章主要分享全局锁和表级锁，主要介绍的是碰到锁时的现象和其背后的原理。而关于行锁的内容，下一篇文章中再详细介绍。</p>
+<h2 id="toc_h2_1">一、全局锁</h2>
+<p>顾名思义，全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 <code>Flush tables with read lock (FTWRL)</code> 。当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句。因此，这种方法并不适用。</p>
+<p>风险：</p>
+<ol>
+<li>如果在主库备份，在备份期间不能更新，业务停摆</li>
+<li>如果在从库备份，备份期间不能执行主库同步的 binlog，导致主从延迟</li>
+</ol>
+<p>官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction 的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持，这个过程中数据是可以正常更新的。有了这个功能，为什么还需要 FTWRL 呢？因为<strong>single-transaction 方法只适用于所有的表使用事务引擎的库</strong>。如果有的表使用了不支持事务的引擎，那么备份就只能通过 FTWRL 方法。这往往是 DBA 要求业务开发人员使用 InnoDB 替代 MyISAM 的原因之一。</p>
+<p>业务的更新不只是增删改数据（DML)，还有可能是加字段等修改表结构的操作（DDL）。不论是哪种方法，一个库被全局锁上以后，你要对里面任何一个表做加字段操作，都是会被锁住的。</p>
+<h2 id="toc_h2_2">二、表级锁</h2>
+<p>MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。</p>
+<p><strong>表锁的语法是 lock tables … read/write</strong>。与 FTWRL 类似，可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。需要注意，lock tables 语法除了会限制别的线程的读写外，也限定了本线程接下来的操作对象。</p>
+<p>表锁是最常用的处理并发的方式。而对于 InnoDB 这种支持行锁的引擎，一般不使用 lock tables 命令来控制并发，毕竟锁住整个表的影响面还是太大。</p>
+<p><strong>另一类表级的锁是 MDL（metadata lock)</strong>。MDL 不需要显式使用，在访问一个表的时候会被自动加上。MDL 的作用是，保证读写的正确性。在 MySQL 5.5 版本中引入了 MDL，当对一个表做增删改查操作的时候，加 MDL 读锁；当要对表做结构变更操作的时候，加 MDL 写锁。</p>
+<p>读锁之间不互斥。读写锁之间，写锁之间是互斥的，用来保证变更表结构操作的安全性。</p>
+<p>经常看到有人掉到这个坑里：给一个小表加个字段，导致整个库挂了。是因为 MDL 会直到事务提交才会释放，一旦加上 MDL 锁，就会堵塞之后的写操作，从而堵塞之后的所有操作。因此在做表结构变更的时候，一定要小心不要导致锁住线上查询和更新。</p>
+<h2 id="toc_h2_3">三、如何安全地给小表加字段？</h2>
+<p>首先我们要解决长事务，事务不提交，就会一直占着 MDL 锁。在 MySQL 的 information_schema 库的 innodb_trx 表中，你可以查到当前执行中的事务。如果你要做 DDL 变更的表刚好有长事务在执行，要考虑先暂停 DDL，或者 kill 掉这个长事务。</p>
+<p>但考虑一下这个场景。如果你要变更的表是一个热点表，虽然数据量不大，但是上面的请求很频繁，而你不得不加个字段，你该怎么做呢？这时候 kill 可能未必管用，因为新的请求马上就来了。比较理想的机制是，在 alter table 语句里面设定等待时间，如果在这个指定的等待时间里面能够拿到 MDL 写锁最好，拿不到也不要阻塞后面的业务语句，先放弃。之后开发人员或者 DBA 再通过重试命令重复这个过程。</p>
+          <div>
+            <hr>
+
+标题：（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/08/07/1565168360437.html" target="_blank">https://algerfan.github.io/articles/2019/08/07/1565168360437.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/08/07/1565168360437.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1565168360437"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1565168360437",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1565168360437",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1565168360437', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 31ms, 2022/12/10 22:11:59 -->

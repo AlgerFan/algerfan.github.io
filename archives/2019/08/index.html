@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>2019/08 (11) - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="2019/08 (11) - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/archives/2019/08?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="2019/08 (11) - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">            <link rel="canonical" href="https://algerfan.github.io/archives/2019/08">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <p class="subtitle">Step by step, the sun</p>
+    </div>
+  </header>
+  <h1 class="blog__title">
+    2019 年 08 月
+    - 共 11 文章
+  </h1>
+<div>
+    <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-12</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（11）MySQL数据库引擎简介、引擎管理——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/12/1565571467966.html">（11）MySQL数据库引擎简介、引擎管理——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>一、MySQL 数据库引擎简介</p>
+<p>1.1  ISAM和MyISAM<br>
+ISAM设计之时就考虑到数据库被查询的次数要远大于更新的次数。因此，ISAM 执行读取操作的速度很快，而且不占用大量的内存和存储资源。ISAM 的两个主要不足之处在于，它不支持事务处理，也不能够容错。如果你的硬盘崩溃了，那么数据文件就无法恢复了。<br>
+...</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-12</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/12/1565571467966.html#comments">
+          <span data-uvstatcmt="1565571467966">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/12/1565571467966.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/12/1565571467966.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-08</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（10）怎么给字符串字段加索引——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/08/1565270496307.html">（10）怎么给字符串字段加索引——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>现在，几乎所有的系统都支持邮箱登录，如何在邮箱这样的字段上建立合理的索引，是我们这篇文章要讨论的问题。</p>
+<p>假设，你现在维护一个支持邮箱登录的系统</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-08</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/08/1565270496307.html#comments">
+          <span data-uvstatcmt="1565270496307">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/08/1565270496307.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/08/1565270496307.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-08</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（9）普通索引和唯一索引，应该怎么选择——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/08/1565236435226.html">（9）普通索引和唯一索引，应该怎么选择——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>在前面的基础篇文章中，介绍过索引的基本概念。今天我们就继续来谈谈，在不同的业务场景下，应该选择普通索引，还是唯一索引？</p>
+<p>简单起见，使用第 4 篇文章的例子来说，假设，我们有一个主键列为 ID 的表，表中有字段 k，并且在 k 上有索引。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-08</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/08/1565236435226.html#comments">
+          <span data-uvstatcmt="1565236435226">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/08/1565236435226.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/08/1565236435226.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-07</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（8）讲事务到底是隔离的还是不隔离的——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/07/1565187839895.html">（8）讲事务到底是隔离的还是不隔离的——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>第 3 篇文章中讲事务隔离级别的时候提到过，如果是可重复读隔离级别，事务 T 启动的时候会创建一个视图 read-view，之后事务 T 执行期间，即使有其他事务修改了数据，事务 T 看到的仍然跟在启动时看到的一样。也就是说，一个在可重复读隔离级别下执行的事务，好像与世无争，不受外界影响。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-07</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/07/1565187839895.html#comments">
+          <span data-uvstatcmt="1565187839895">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/07/1565187839895.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/07/1565187839895.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-07</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（7）行锁功过：怎么减少行锁对性能的影响——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/07/1565171065880.html">（7）行锁功过：怎么减少行锁对性能的影响——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>在上一篇文章中，介绍了 MySQL 的全局锁和表级锁，MySQL 的行锁是在引擎层由各个引擎自己实现的。但并不是所有的引擎都支持行锁，比如 MyISAM 引擎就不支持行锁。不支持行锁意味着并发控制只能使用表锁，对于这种引擎的表，同一张表上任何时刻只能有一个更新在执行，这就会影响到业务并发度。InnoDB 是支持行锁的，这也是 MyISAM 被 InnoDB 替代的重要原因之一。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-07</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/07/1565171065880.html#comments">
+          <span data-uvstatcmt="1565171065880">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/07/1565171065880.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/07/1565171065880.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-07</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/07/1565168360437.html">（6）全局锁和表锁：给表加个字段怎么有这么多阻碍——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>数据库锁设计的初衷是处理并发问题。作为多用户共享的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来实现这些访问规则的重要数据结构。<br>
+根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-07</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/07/1565168360437.html#comments">
+          <span data-uvstatcmt="1565168360437">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/07/1565168360437.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/07/1565168360437.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-06</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（5）深入浅出索引（下）——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/06/1565085552341.html">（5）深入浅出索引（下）——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>在上一篇文章中，介绍了 InnoDB 索引的数据结构模型，接下来我们再继续聊聊跟 MySQL 索引有关的概念。</p>
+<p>我们先来看一下这个问题：在下面这个表 T 中，如果我执行 select * from T where k between 3 and 5，需要执行几次树的搜索操作，会扫描多少行？</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-06</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/06/1565085552341.html#comments">
+          <span data-uvstatcmt="1565085552341">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/06/1565085552341.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/06/1565085552341.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-06</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（4）深入浅出索引（上）——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/06/1565069670905.html">（4）深入浅出索引（上）——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>提到数据库索引，在日常工作中会经常接触到。比如某一个 SQL 查询比较慢，分析完原因之后，你可能就会说“给某个字段加个索引吧”之类的解决方案。但到底什么是索引，索引又是如何工作的呢？</p>
+<p>一句话简单来说，索引的出现其实就是为了提高数据查询的效率，就像书的目录一样。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-06</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/06/1565069670905.html#comments">
+          <span data-uvstatcmt="1565069670905">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/06/1565069670905.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/06/1565069670905.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-06</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（3）事务隔离：为什么你改了我还看不见——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/06/1565057803040.html">（3）事务隔离：为什么你改了我还看不见——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>简单来说，事务就是要保证一组数据库操作，要么全部成功，要么全部失败。在 MySQL 中，事务支持是在引擎层实现的。而 MySQL 原生的 MyISAM 引擎就不支持事务，这也是 MyISAM 被 InnoDB 取代的重要原因之一。</p>
+<p>以 InnoDB 为例，剖析 MySQL 在事务支持方面的特定实现，并基于原理给出相应的实践建议。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-06</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/06/1565057803040.html#comments">
+          <span data-uvstatcmt="1565057803040">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/06/1565057803040.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/06/1565057803040.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-06</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（2）一条SQL更新语句是如何执行的——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/06/1565054800728.html">（2）一条SQL更新语句是如何执行的——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<p>前面了解了一个查询语句的执行流程，并介绍了执行过程中涉及的处理模块。一条查询语句的执行过程一般是经过连接器、分析器、优化器、执行器等功能模块，最后到达存储引擎。那么 MySQL 如何做到可以恢复到半个月内任意一秒的状态的？</p>
+<p>首先，可以确定的说，查询语句的那一套流程，更新语句也是同样会走一遍。与查询流程不一样的是，更新流程还涉及两个重要的日志模块：redo log（重做日志）和 binlog（归档日志）。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-06</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/06/1565054800728.html#comments">
+          <span data-uvstatcmt="1565054800728">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/06/1565054800728.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/06/1565054800728.html">阅读全文</a>
+    </div>
+  </article>
+  <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://algerfan.github.io/authors/1563503530605" rel="nofollow">
+          <img class="author__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">AlgerFan</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2019-08-06</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="（1）一条SQL查询语句是如何执行的——MySQL学习笔记" href="https://algerfan.github.io/articles/2019/08/06/1565052856889.html">（1）一条SQL查询语句是如何执行的——MySQL学习笔记</a>
+      </div>
+      <div class="abstract vditor-reset"><p>前言</p>
+<pre><code class="language-sql">mysql&gt; select * from T where ID=10；
+</code></pre>
+<p>当我们看到的只是输入一条语句，返回一个结果时，却不知道这条语句在 MySQL 内部的执行过程。<br>
+下面是 MySQL 的基本架构示意图，从中你可以清楚地看到 SQL 语句在 MySQL 的各个功能模块中的执行过程。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2019-08-06</span>
+        <span class="item item--split" href="https://algerfan.github.io/articles/2019/08/06/1565052856889.html#comments">
+          <span data-uvstatcmt="1565052856889">0</span> 
+          评论
+        </span>
+        <span class="item">
+          <span data-uvstaturl="https://algerfan.github.io/articles/2019/08/06/1565052856889.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://algerfan.github.io/articles/2019/08/06/1565052856889.html">阅读全文</a>
+    </div>
+  </article>
+
+
+  <div class="pagination">
+  </div>
+</div>        
+      </main>
+      <div class="aside container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+  </body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 30ms, 2022/12/10 22:11:59 -->

@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（1）计算机网络概述——计算机网络复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（1）计算机网络概述——计算机网络复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/12/12/1576158787025.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（1）计算机网络概述——计算机网络复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/12/12/1576158787025.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（1）计算机网络概述——计算机网络复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-12-12</span>
+          <span class="comments">
+            <span data-uvstatcmt="1576158787025">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/12/12/1576158787025.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20190307.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">1.计算机网络在信息时代的作用</h2>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/ab7b6a7d7c944ef293865738f9b10ea7.png" alt="01作用.png"></p>
+<ul>
+<li>数字化：计算机所处理的数据</li>
+<li>信息化：电话、QQ、购物等</li>
+<li>网络化：数字化和信息化都离不开网络，网络化分为三网：电信网、计算机网络、有线电视网络。计算机网络分为因特网、军网等其他网络。</li>
+</ul>
+<p>互联网具有两个重要的基本特点：<strong>连通性</strong>和<strong>共享</strong>。</p>
+<h2 id="toc_h2_1">2. 因特网概述</h2>
+<p><strong>计算机网络</strong>由若干<strong>结点</strong>和连接这些结点的<strong>链路</strong>组成。</p>
+<ul>
+<li>网络：计算机通过交换机连接起来</li>
+<li>互连网：网络与网络连接起来</li>
+<li>因特网：全球最大的一个互连网</li>
+</ul>
+<p>internet（<strong>互连网</strong>）是一个通用名词，它泛指由多个计算机网络互连而成的计算机网络。</p>
+<p>Internet（<strong>互联网</strong>）则是一个专用名词，它指当前全球最大的、开放的、由众多网络相互连接而成的特定互连网，它采用 TCP/IP 协议族作为通信的规则，其前身是美国的 ARPANET。</p>
+<p>因特网发展的三个阶段</p>
+<ul>
+<li>ARPANET 向互联网发展</li>
+<li>三级结构的因特网：主干网、地区网、校园网</li>
+<li>多层次的 ISP（运营商）结构的因特网</li>
+</ul>
+<p>多层次的 ISP 结构的因特网</p>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/7474773fb27042179d85c12f6272b1c9.png" alt="02多层次.png"></p>
+<p>因特网的标准化由因特网协会 ISOC 制定，因特网体系结构研究委员会 IAB 由因特网研究部和因特网工程部组成。正式标准要经过三个阶段：互联网草案、建议标准、互联网标准。</p>
+<h2 id="toc_h2_2">3. 因特网的组成</h2>
+<p>互联网从工作方式上看，划分为两大类：</p>
+<ul>
+<li>边缘部分：用户直接使用的。</li>
+<li>核心部分：为边缘部分提供服务的。</li>
+</ul>
+<h3 id="toc_h3_3">3.1 主机之间的通信方式</h3>
+<ul>
+<li>客户服务器方式（Client/Server 方式）</li>
+<li>对等方式（P2P）
+<ul>
+<li>计算机既是客户机又是服务器，多用于快速下载</li>
+</ul>
+</li>
+</ul>
+<h3 id="toc_h3_4">3.2 数据交换方式</h3>
+<ul>
+<li>电路交换
+<ul>
+<li>多用于打电话</li>
+<li>分为三个步骤：建立连接、通话、释放连接</li>
+<li>特点：适合于数据量较大的实时性传输，如：核心路由器之间</li>
+</ul>
+</li>
+<li>分组交换
+<ul>
+<li>用于计算机网络</li>
+<li>将数据分组直接发送，每段数据都有首部，即转发表，用于存储目标地址和源地址</li>
+<li>可进行互相转发，路由器也具有存储转发的功能</li>
+<li>优点：高效、灵活、迅速、可靠</li>
+<li>问题：时延、开销</li>
+</ul>
+</li>
+<li>报文交换
+<ul>
+<li>相比分组交换较长</li>
+<li>缺点：时延较长</li>
+</ul>
+</li>
+</ul>
+<p>三种交换方式的比较</p>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/0b5605249b0c4b5b98dc372594185170.png" alt="03三种交换方式.png"></p>
+<h2 id="toc_h2_5">4. 计算机网络的类别</h2>
+<p>计算机网络最简单的定义：一些互相连接的、自治的计算机的集合</p>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/67348330ab0541428b8eb16c17c94e4c.png" alt="04类别.png"></p>
+<h2 id="toc_h2_6">5. 计算机网络的性能</h2>
+<ul>
+<li><strong>速率</strong>
+<ul>
+<li>传输数据的速率</li>
+<li>单位为 b/s，Kb/s，Mb/s，Gb/s</li>
+</ul>
+</li>
+<li><strong>带宽</strong>
+<ul>
+<li>数字信道所能传输的最高数据率</li>
+<li>单位为 b/s，Kb/s，Mb/s，Gb/s</li>
+</ul>
+</li>
+<li><strong>吞吐量</strong>
+<ul>
+<li>单位时间内通过网络的数据量</li>
+<li>单位为 b/s，Kb/s，Mb/s，Gb/s</li>
+</ul>
+</li>
+<li><strong>时延</strong>：数据从网络的一段传送到另一端所需的时间
+<ul>
+<li>发送时延：主机发送数据帧所需的时间。<strong>发送时延 = 数据块长度（bit）/信道带宽（bit/s）</strong></li>
+<li>传播时延：电磁波在信道传播一定的距离需要的时间。<strong>传播时延 = 信道长度（m）/信号的传播速率（m/s）</strong></li>
+<li>处理时延</li>
+<li>排队时延</li>
+</ul>
+</li>
+<li><strong>时延带宽积</strong>：<strong>传播时延*带宽</strong></li>
+<li><strong>往返时间</strong>：从发送方到收到接收方确认</li>
+<li><strong>利用率</strong>
+<ul>
+<li>信道利用率：有数据通过时间/（有 + 无）数据通过时间</li>
+<li>网络利用率：信道利用率加权平均值</li>
+</ul>
+</li>
+</ul>
+<h2 id="toc_h2_7">6. 计算机网络的体系结构</h2>
+<p>体系结构分层带来哪些好处</p>
+<ul>
+<li>各层之间是独立的</li>
+<li>灵活性好</li>
+<li>结构上可分隔开</li>
+<li>易于实现和维护</li>
+<li>能促进标准化工作
+<ul>
+<li><strong>差错控制</strong></li>
+<li><strong>流量控制</strong></li>
+<li><strong>分段和重装</strong></li>
+<li><strong>复用和分用</strong></li>
+<li><strong>连接建立和释放</strong></li>
+</ul>
+</li>
+</ul>
+<p>ISO 七层模型：国际标准化组织</p>
+<ul>
+<li><strong>应用层</strong>：能够产生网络流量，能够和用户交互的应用程序</li>
+<li><strong>表示层</strong>：开发人员进行加密、压缩</li>
+<li><strong>会话层</strong>：服务和客户端建立的会话</li>
+<li><strong>传输层</strong>：可靠传输建立会话、不可靠传输、流量控制</li>
+<li><strong>网络层</strong>：IP 地址编址、选择最佳路径</li>
+<li><strong>数据链路层</strong>：输入如何封装、添加物理层地址、Mac</li>
+<li><strong>物理层</strong>：电压、接口标准</li>
+</ul>
+<p>OSI/RM：互联网法律上的国际标准</p>
+<p>TCP/IP：因特网事实上的国际标准</p>
+<p>Network Protocols</p>
+<p>网络体系结构：计算机网络各层及其协议的集合</p>
+<p>网络排错：从底层到高层</p>
+<h3 id="toc_h3_8">6.1 网络安全和 OSI 参考模型</h3>
+<ul>
+<li>物理层安全</li>
+<li>数据链路层安全
+<ul>
+<li>ADSL</li>
+<li>无线 AP 密码</li>
+</ul>
+</li>
+<li>网络层安全</li>
+<li>应用层安全
+<ul>
+<li>SQL 注入漏洞</li>
+<li>上传漏洞</li>
+</ul>
+</li>
+</ul>
+<h3 id="toc_h3_9">6.2 计算机网络的体系结构</h3>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/41ba83ac6745408db39ed02e8cd06c28.png" alt="05体系结构.png"></p>
+<h3 id="toc_h3_10">6.3 开放系统信息交换的几个概念</h3>
+<ul>
+<li>实体：交换信息的硬件或软件进程</li>
+<li>协议：控制两个对等实体通信的规则</li>
+<li>服务：下层向上层提供服务，上层需要使用下层提供的服务来实现本层的功能</li>
+<li>服务访问点：相邻两层实体间交换信息的地方</li>
+</ul>
+<h3 id="toc_h3_11">6.4 五层协议对应的数据单元</h3>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/309bd2c40e664b698a7d0ef424de5461.png" alt="06数据单元.png"></p>
+<p>主机 1 向主机 2 发送数据</p>
+<p><img src="https://img.algerfan.cn/blog/image/20191212/bab1dbc919a74852921ced28599f2dee.png" alt="07发送数据.png"></p>
+          <div>
+            <hr>
+
+标题：（1）计算机网络概述——计算机网络复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/12/12/1576158787025.html" target="_blank">https://algerfan.github.io/articles/2019/12/12/1576158787025.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（1）计算机网络概述——计算机网络复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/12/12/1576158787025.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1576158787025"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1576158787025",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1576158787025",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1576158787025', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 17ms, 2022/12/10 22:11:59 -->

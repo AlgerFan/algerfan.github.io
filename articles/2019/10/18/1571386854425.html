@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>学会了这些技术，你离BAT大厂不远了（转） - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="学会了这些技术，你离BAT大厂不远了（转） - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/10/18/1571386854425.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="学会了这些技术，你离BAT大厂不远了（转） - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/10/18/1571386854425.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">学会了这些技术，你离BAT大厂不远了（转）</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-10-18</span>
+          <span class="comments">
+            <span data-uvstatcmt="1571386854425">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/10/18/1571386854425.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <blockquote>
+<p>原文链接：<a href="https://blog.csdn.net/z694644032/article/details/100084287" target="_blank">https://blog.csdn.net/z694644032/article/details/100084287</a><br>
+作者：平头哥的技术博文</p>
+</blockquote>
+<p>每一个程序员都有一个梦想，梦想着能够进入阿里、腾讯、字节跳动、百度等一线互联网公司，由于身边的环境等原因，不知道 BAT 等一线互联网公司使用哪些技术？或者该如何去学习这些技术？或者我该去哪些获取这些技术资料？没关系，平头哥一站式服务，上面统统不是问题。平头哥整理了 BAT 等一线大厂的必备技能，并且帮你准备了对应的资料。对于整理出来的技术，如果你掌握的不牢固，那就赶快巩固，如果你还没有涉及，现在就立马学习起来吧。</p>
+<blockquote>
+<p>文章很长，越到后面越精彩，如果文章对你有帮助，欢迎点赞转发一条龙服务</p>
+</blockquote>
+<h1 id="toc_h1_0">一、基础篇</h1>
+<h2 id="toc_h2_1">Java</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/av53317264?from=search&amp;seid=1607360922132019289" target="_blank">毕向东_Java 基础视频教程 25 天基础版</a></li>
+<li><a href="https://www.runoob.com/java/java-tutorial.html" target="_blank">菜鸟教程</a></li>
+<li><a href="https://www.oracle.com/technetwork/cn/java/javase/community/index.html" target="_blank">Java SE 社区</a></li>
+<li><a href="http://www.matools.com/api/java8" target="_blank">JDK 8 中文手册</a></li>
+<li><a href="https://www.imooc.com/learn/85" target="_blank">Java 入门第一季 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/124" target="_blank">Java 入门第二季 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/110" target="_blank">Java 入门第三季 慕课网</a></li>
+<li><a href="http://www.bjsxt.com/2014/down_0425/13.html" target="_blank">马士兵 Java 基础教程</a></li>
+<li><a href="https://www.bjsxt.com/down/9107.html" target="_blank">高淇 Java 300 集教程视频</a></li>
+<li><a href="https://segmentfault.com/n/1330000017785588" target="_blank">小马哥一入 Java 深似海</a></li>
+<li><a href="https://time.geekbang.org/column/intro/82" target="_blank">Java 核心技术 36 讲 极客时间</a></li>
+<li><a href="https://www.bilibili.com/video/av44816144/" target="_blank">尚硅谷 NIO 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av21399242" target="_blank">尚硅谷 Java8 新特性视频教程</a></li>
+<li>Java 核心技术卷 II(书籍)</li>
+<li>Head First Java（中文版）(书籍)</li>
+</ul>
+<h2 id="toc_h2_2">代码规范</h2>
+<ul>
+<li><a href="https://github.com/alibaba/p3c/blob/master/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%EF%BC%88%E5%8D%8E%E5%B1%B1%E7%89%88%EF%BC%89.pdf" target="_blank">阿里巴巴 Java 开发手册</a></li>
+<li><a href="https://sjsdfg.github.io/effective-java-3rd-chinese/#/README" target="_blank">effctive-java 第三版</a></li>
+<li><a href="http://hawstein.com/2014/01/20/google-java-style/" target="_blank">Google Java 编程风格指南</a></li>
+<li><a href="https://github.com/alibaba/p3c" target="_blank">阿里巴巴 Java 代码规约扫描插件 P3C</a></li>
+</ul>
+<h2 id="toc_h2_3">编辑工具</h2>
+<ul>
+<li><a href="https://www.jetbrains.com/idea/" target="_blank">Idea</a></li>
+<li><a href="https://www.myeclipsecn.com/" target="_blank">myeclipsecn</a></li>
+<li><a href="https://www.eclipse.org/" target="_blank">eclipse</a></li>
+<li><a href="https://code.visualstudio.com/" target="_blank">VS Code</a></li>
+</ul>
+<h2 id="toc_h2_4">数据结构与算法</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/av59600020/" target="_blank">Java 数据结构与算法视频教程全集</a></li>
+<li><a href="https://time.geekbang.org/column/intro/126" target="_blank">数据结构与算法之美 极客时间</a></li>
+<li><a href="https://time.geekbang.org/course/intro/130" target="_blank">算法面试通关 40 讲(视频) 极客时间</a></li>
+<li><a href="https://leetcode-cn.com/" target="_blank">leetcode 中国</a></li>
+<li><a href="https://www.bilibili.com/video/av54029771/" target="_blank">尚硅谷-韩顺平图解 Java 数据结构和算法</a></li>
+<li>Java 数据结构和算法中文版（第二版）(书籍)</li>
+</ul>
+<h2 id="toc_h2_5">设计模式</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/av59599696" target="_blank">Java 设计模式视频教程全集</a></li>
+<li><a href="https://www.bjsxt.com/down/8754.html" target="_blank">尚学堂设计模式</a></li>
+<li><a href="https://www.bilibili.com/video/av24176315?from=search&amp;seid=8737394704280817861" target="_blank">23 个设计模式</a></li>
+<li><a href="https://www.bilibili.com/video/av57936239" target="_blank">尚硅谷图解 Java 设计模式</a></li>
+<li>图解 Java 多线程设计模式(书籍)</li>
+</ul>
+<h2 id="toc_h2_6">多线程</h2>
+<ul>
+<li><a href="https://www.runoob.com/java/java-multithreading.html" target="_blank">菜鸟教程</a></li>
+<li><a href="https://www.imooc.com/learn/202" target="_blank">慕课网 深入浅出 Java 多线程</a></li>
+<li><a href="https://time.geekbang.org/column/intro/159" target="_blank">Java 并发编程实战 极客时间</a></li>
+<li><a href="https://www.bilibili.com/video/av21398578" target="_blank">尚硅谷 JUC 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av43529474" target="_blank">Java 多线程编程实战 – 高并发编程第一,二阶段</a></li>
+<li><a href="https://www.bilibili.com/video/av43532833" target="_blank">Java 多线程编程实战 – 高并发编程第三阶段</a></li>
+<li>Java 多线程编程实战指南(核心篇)</li>
+</ul>
+<h2 id="toc_h2_7">HttpClient</h2>
+<ul>
+<li><a href="https://hc.apache.org/" target="_blank">HttpClient 官网</a></li>
+<li><a href="https://www.ctolib.com/topics-80581.html" target="_blank">Apache HttpClient 官方教程中文版</a></li>
+<li><a href="http://www.java1234.com/a/yuanchuang/httpclient/" target="_blank">一头扎进 HttpClient</a></li>
+</ul>
+<h2 id="toc_h2_8">性能优化</h2>
+<ul>
+<li>《Java 性能优化权威指南》(书籍)</li>
+<li>《大话 Java 性能优化》(书籍)</li>
+</ul>
+<h1 id="toc_h1_9">二、数据库</h1>
+<h2 id="toc_h2_10">MySQL</h2>
+<ul>
+<li><a href="https://www.mysql.com/" target="_blank">MySQL 官网</a></li>
+<li><a href="https://www.runoob.com/mysql/mysql-tutorial.html" target="_blank">MySQL 菜鸟教程</a></li>
+<li><a href="https://www.bilibili.com/video/av19538278?from=search&amp;seid=4463927256593098191" target="_blank">MySQL 从入门到精通视频教程</a></li>
+<li><a href="https://bbs.csdn.net/forums/MySQL" target="_blank">MySQL 论坛</a></li>
+<li><a href="https://time.geekbang.org/column/intro/139" target="_blank">MySQL 实战 45 讲 极客时间</a></li>
+<li><a href="https://www.imooc.com/learn/122" target="_blank">与 MySQL 的零距离接触 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/117" target="_blank">数据库设计那些事 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/194" target="_blank">性能优化之 MySQL 优化 慕课网</a></li>
+<li><a href="https://coding.imooc.com/class/49.html" target="_blank">MySQL 提升课程 全面讲解 MySQL 架构设计 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av21400736/" target="_blank">尚硅谷 MySQL 核心技术</a></li>
+<li>高性能 MySQL (书籍)</li>
+<li>MySQL 必知必会（书籍）</li>
+</ul>
+<h2 id="toc_h2_11">Redis</h2>
+<ul>
+<li><a href="https://www.runoob.com/redis/redis-tutorial.html" target="_blank">Redis 菜鸟教程</a></li>
+<li><a href="https://redis.io/" target="_blank">Redis 官网</a></li>
+<li><a href="http://www.redis.cn/" target="_blank">Redis 中文网</a></li>
+<li><a href="http://www.redis.com.cn/redis-tutorial" target="_blank">Redis 中文教程</a></li>
+<li><a href="http://try.redis.io/" target="_blank">Redis 在线测试</a></li>
+<li><a href="http://redisdoc.com/index.html" target="_blank">Redis 命令参考</a></li>
+<li><a href="https://www.bilibili.com/video/av49517046?from=search&amp;seid=16610152865250508889" target="_blank">千峰教育 2019 最新 Redis 教程</a></li>
+<li><a href="https://www.bilibili.com/video/av7950222?from=search&amp;seid=16610152865250508889" target="_blank">黑马教育 Redis 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av20974126" target="_blank">尚硅谷 Redis 视频</a></li>
+<li><a href="https://www.imooc.com/learn/839" target="_blank">Redis 入门 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/809" target="_blank">redis 的入门与应用 慕课网</a></li>
+<li>Redis 实战(书籍)</li>
+</ul>
+<h2 id="toc_h2_12">MongoDB</h2>
+<ul>
+<li><a href="https://www.mongodb.com/" target="_blank">mongodb 官网</a></li>
+<li><a href="https://www.mongodb.org.cn/" target="_blank">mongodb 中文网</a></li>
+<li><a href="https://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank">菜鸟教程 MongoDB 教程</a></li>
+<li><a href="https://www.w3cschool.cn/mongodb/" target="_blank">MongoDB 教程</a></li>
+<li><a href="https://www.bilibili.com/video/av21989676?from=search&amp;seid=9070860896856801467" target="_blank">尚硅谷 MongoDB 夯实基础视频</a></li>
+<li><a href="https://www.imooc.com/course/list?c=mongodb" target="_blank">慕课网 MongoDB 视频集合</a></li>
+<li><a href="https://coding.imooc.com/class/324.html" target="_blank">玩转 MongoDB4.0(最新版) 从入门到实践 慕课网</a></li>
+<li>MongoDB 权威指南 第 2 版(书籍)</li>
+</ul>
+<h1 id="toc_h1_13">三、网络协议</h1>
+<ul>
+<li><a href="https://www.bilibili.com/video/av59638344?from=search&amp;seid=8766142930495269590" target="_blank">网络协议 TCP/IP 视频教程全集</a></li>
+<li><a href="https://time.geekbang.org/column/intro/189" target="_blank">透视 HTTP 协议 极客时间</a></li>
+<li><a href="https://time.geekbang.org/column/intro/85" target="_blank">趣谈网络协议 极客时间</a></li>
+<li>图解 HTTP(书籍)</li>
+<li>图解 TCP/IP_第 5 版(书籍)</li>
+<li>TCP-IP 详解卷 1：协议(书籍)</li>
+</ul>
+<h1 id="toc_h1_14">四、Linux 系统</h1>
+<ul>
+<li><a href="https://time.geekbang.org/column/intro/140" target="_blank">Linux 性能优化实战 极客时间</a></li>
+<li><a href="https://time.geekbang.org/column/article/108227" target="_blank">趣谈 Linux 操作系统 极客时间</a></li>
+<li><a href="https://www.bilibili.com/video/av21303002/" target="_blank">尚硅谷_韩顺平_Linux 教程</a></li>
+</ul>
+<h1 id="toc_h1_15">五、Java Web</h1>
+<h2 id="toc_h2_16">JDBC</h2>
+<ul>
+<li><a href="https://www.runoob.com/w3cnote/jdbc-use-guide.html" target="_blank">JDBC 使用说明</a></li>
+<li><a href="https://www.bilibili.com/video/av21399547" target="_blank">尚硅谷 JDBC 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av7751581?from=search&amp;seid=2640253484566695421" target="_blank">黑马程序员 JDBC 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av34494390?from=search&amp;seid=2640253484566695421" target="_blank">JDBC 视频教程从入门到精通</a></li>
+</ul>
+<h2 id="toc_h2_17">Servlet</h2>
+<ul>
+<li><a href="https://www.runoob.com/servlet/servlet-tutorial.html" target="_blank">Servlet 菜鸟教程</a></li>
+<li><a href="https://www.w3cschool.cn/servlet/" target="_blank">w3cschool Servlet 教程</a></li>
+<li><a href="https://www.iteye.com/blogs/subjects/Servlet-3-1" target="_blank">Servlet3.1 规范翻译</a></li>
+<li><a href="https://www.bilibili.com/video/av44919297" target="_blank">【北京尚学堂·百战程序员】Servlet</a></li>
+</ul>
+<h2 id="toc_h2_18">Spring</h2>
+<ul>
+<li><a href="https://spring.io/projects/spring-framework" target="_blank">spring 官网</a></li>
+<li><a href="https://lfvepclr.gitbooks.io/spring-framework-5-doc-cn/content/" target="_blank">Spring Framework 5 中文文档</a></li>
+<li><a href="https://www.w3cschool.cn/wkspring/" target="_blank">w3cschool Spring 教程</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/wa-spring1/index.html" target="_blank">IBM Spring 教程</a></li>
+<li><a href="https://www.bilibili.com/video/av59570922" target="_blank">Spring 视频教程全集</a></li>
+<li><a href="https://time.geekbang.org/course/intro/156" target="_blank">玩转 Spring 全家桶(视频) 极客时间</a></li>
+<li><a href="https://www.imooc.com/learn/869" target="_blank">探秘 Spring AOP 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/196" target="_blank">Spring 入门篇 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/47" target="_blank">Spring MVC 起步 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/478" target="_blank">Spring 事务管理 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/821" target="_blank">轻松愉快之玩转 SpringData 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av21335209/" target="_blank">尚硅谷首套_Spring4 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av20967380" target="_blank">尚硅谷 Spring 注解驱动开发视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av21272240" target="_blank">尚硅谷 SpringMVC 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av21083608" target="_blank">尚硅谷 Spring Data 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av46130817" target="_blank">Spring 事务管理机制视频</a></li>
+</ul>
+<h2 id="toc_h2_19">MyBatis</h2>
+<ul>
+<li><a href="http://www.mybatis.org/" target="_blank">mybatis 官网</a></li>
+<li><a href="http://www.mybatis.org/mybatis-3/zh/index.html" target="_blank">mybatis3 中文文档</a></li>
+<li><a href="https://www.imooc.com/learn/1130" target="_blank">MyBatis-Plus 入门 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av21272940" target="_blank">尚硅谷 MyBatis 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av43935832" target="_blank">千锋 Mybatis 框架从入门到实战</a></li>
+<li>MyBatis 技术内幕(书籍)</li>
+</ul>
+<h2 id="toc_h2_20">Hibernate</h2>
+<ul>
+<li><a href="https://hibernate.org/" target="_blank">Hibernate 官网</a></li>
+<li><a href="http://www.kubiji.cn/book/hibernate/" target="_blank">Hibernate 中文手册</a></li>
+<li><a href="https://www.w3cschool.cn/hibernate/" target="_blank">w3cschool Hibernate 教程</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/hibernate/" target="_blank">极客学院 Hibernate 教程</a></li>
+<li><a href="https://segmentfault.com/a/1190000013568216" target="_blank">Hibernate 入门这一篇就够了</a></li>
+<li><a href="https://www.bilibili.com/video/av21335712" target="_blank">尚硅谷 Hibernate4 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av44756882" target="_blank">千锋 Hibernate 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av7744375?from=search&amp;seid=14166178899669484642" target="_blank">黑马程序员 Hibernate 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av55231479?from=search&amp;seid=14166178899669484642" target="_blank">Hibernate5 框架视频教程-Hibernate 入门到实战</a></li>
+</ul>
+<h2 id="toc_h2_21">Jpa</h2>
+<ul>
+<li><a href="https://spring.io/projects/spring-data-jpa" target="_blank">Jpa 官网</a></li>
+<li><a href="http://www.spring4all.com/article/500" target="_blank">Spring Data JPA 从入门到进阶系列教程</a></li>
+<li><a href="https://www.bilibili.com/video/av21263089" target="_blank">尚硅谷 JPA 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av61454398?from=search&amp;seid=5754201681590662665" target="_blank">云课堂 jpa 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av7755689?from=search&amp;seid=5754201681590662665" target="_blank">黑马程序员 jpa 详解视频教程</a></li>
+</ul>
+<h2 id="toc_h2_22">SpringBoot</h2>
+<ul>
+<li><a href="https://spring.io/projects/spring-boot" target="_blank">springboot 官网</a></li>
+<li><a href="https://docshome.gitbooks.io/springboot/content/" target="_blank">Spring Boot 中文文档</a></li>
+<li><a href="http://springboot.fun/" target="_blank">Spring Boot 中文索引</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-spring-boot-basics-perry/index.html" target="_blank">IBM Spring Boot 基础</a></li>
+<li><a href="http://blog.didispace.com/Spring-Boot%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" target="_blank">程序猿 DD Spring Boot 基础教程</a></li>
+<li><a href="http://www.ityouknow.com/spring-boot" target="_blank">纯洁的微笑 Spring Boot 基础教程</a></li>
+<li><a href="https://www.bilibili.com/video/av20965295/" target="_blank">尚硅谷好评如潮【SpringBoot】视频</a></li>
+<li><a href="https://www.imooc.com/coursescore/810" target="_blank">Spring Boot 进阶之 Web 进阶 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/945" target="_blank">SpringBoot+MyBatis 搭建迷你小程序 慕课网</a></li>
+<li><a href="https://www.imooc.com/learn/915" target="_blank">Spring Boot 热部署 慕课网</a></li>
+<li><a href="https://segmentfault.com/ls/1650000011063780" target="_blank">Java 微服务实践 - Spring Boot 系列</a></li>
+<li><a href="https://coding.imooc.com/class/252.html" target="_blank">小马哥 Spring Boot2.0 深度实践之核心技术篇 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av42150427" target="_blank">Spring Boot 实战与原理分析视频课程</a></li>
+</ul>
+<h2 id="toc_h2_23">文档工具</h2>
+<ul>
+<li><a href="https://swagger.io/" target="_blank">swagger 官网</a></li>
+<li><a href="https://juejin.im/post/5d4000b7f265da03e3695bc9" target="_blank">SpringBoot 结合 Swagger 构建 Api Demo</a></li>
+<li><a href="http://blog.didispace.com/springbootswagger2/" target="_blank">Spring Boot 中使用 Swagger2 构建强大的 RESTful API 文档</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-using-swagger-in-a-spring-boot-project/index.html" target="_blank">在 Spring Boot 项目中使用 Swagger 文档</a></li>
+<li><a href="https://blog.csdn.net/itguangit/article/details/78978296" target="_blank">一篇文章带你搞懂 SpringBoot 与 Swagger 整合</a></li>
+</ul>
+<h1 id="toc_h1_24">六、JVM 虚拟机</h1>
+<ul>
+<li><a href="https://github.com/doocs/jvm" target="_blank">JVM 底层原理知识总结</a></li>
+<li><a href="https://www.bilibili.com/video/av29502877?from=search&amp;seid=18098903232145604601" target="_blank">深入理解 Java 虚拟机（JVM 性能调优 + 内存模型 + 虚拟机原理）</a></li>
+<li><a href="https://www.bilibili.com/video/av47756459?from=search&amp;seid=18098903232145604601" target="_blank">深入理解 JVM-张龙</a></li>
+<li><a href="https://time.geekbang.org/column/article/41800" target="_blank">深入拆解 Java 虚拟机 极客时间</a></li>
+<li><a href="https://www.bilibili.com/video/av61408412?from=search&amp;seid=10256072510957459060" target="_blank">2019 最新 JVM 虚拟机面试必问全集</a></li>
+<li><a href="https://www.bilibili.com/video/av47477945?from=search&amp;seid=10256072510957459060" target="_blank">尚学堂-JVM 虚拟机深度讲解教程</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34426768" target="_blank">关于 Jvm 知识看这一篇就够了</a></li>
+<li>揭秘 Java 虚拟机：JVM 设计原理与实现</li>
+</ul>
+<h1 id="toc_h1_25">七、消息中间件</h1>
+<h2 id="toc_h2_26"><strong>Kafka</strong></h2>
+<ul>
+<li><a href="https://kafka.apache.org/" target="_blank">Kafka 官网</a></li>
+<li><a href="http://kafka.apachecn.org/" target="_blank">Kafka 中文网</a></li>
+<li><a href="http://www.kubiji.cn/book/apache_kafka/" target="_blank">Kafka 中文手册</a></li>
+<li><a href="https://www.w3cschool.cn/apache_kafka/" target="_blank">w3cschool Apache Kafka 教程</a></li>
+<li><a href="https://www.bilibili.com/video/av35354301" target="_blank">尚硅谷 Kafka 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av36607048?from=search&amp;seid=10247561166017399606" target="_blank">Kafka 从入门到精通</a></li>
+</ul>
+<h2 id="toc_h2_27">RabbitMQ</h2>
+<ul>
+<li><a href="https://www.rabbitmq.com/" target="_blank">RabbitMQ 官网</a></li>
+<li><a href="https://www.jianshu.com/p/79ca08116d57" target="_blank">消息队列之 RabbitMQ</a></li>
+<li><a href="https://blog.csdn.net/u013256816/article/category/6532725/2" target="_blank">【朱小厮】RabbitMQ 源码解析</a></li>
+<li><a href="http://www.iocoder.cn/RabbitMQ/good-collection/" target="_blank">RabbitMQ 实现原理与源码解析系统</a></li>
+<li><a href="https://github.com/vipstone/rabbitmq-java" target="_blank">王磊 RabbitMQ 系列文章</a></li>
+<li><a href="http://www.ityouknow.com/springboot/2016/11/30/spring-boot-rabbitMQ.html" target="_blank">纯洁的微笑 RabbitMQ 详解</a></li>
+<li><a href="https://www.imooc.com/learn/1042" target="_blank">RabbitMQ 消息中间件极速入门与实战 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av18997807?from=search&amp;seid=10858926357316740687" target="_blank">RabbitMQ 入门到进阶</a></li>
+</ul>
+<h2 id="toc_h2_28">RocketMQ</h2>
+<ul>
+<li><a href="https://rocketmq.apache.org/" target="_blank">RocketMQ 官网</a></li>
+<li><a href="http://www.iocoder.cn/categories/RocketMQ/" target="_blank">芋道源码 RocketMQ 源码解析</a></li>
+<li><a href="http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/" target="_blank">十分钟入门 RocketMQ</a></li>
+<li><a href="https://www.bilibili.com/video/av42180586?from=search&amp;seid=13687488303558801963" target="_blank">RocketMQ 实战</a></li>
+</ul>
+<h2 id="toc_h2_29">ActiveMQ</h2>
+<ul>
+<li><a href="https://activemq.apache.org/" target="_blank">ActiveMQ 官网</a></li>
+<li><a href="https://www.bilibili.com/video/av55976700?from=search&amp;seid=10858926357316740687" target="_blank">尚硅谷消息中间件之 ActiveMQ</a></li>
+<li><a href="https://www.bilibili.com/video/av32390735?from=search&amp;seid=8676191738416183023" target="_blank">ActiveMQ 入门和消息中间件</a></li>
+<li><a href="https://my.oschina.net/Auhgnahz?tab=newest&amp;catalogId=3428475" target="_blank">ActiveMQ 教程</a></li>
+</ul>
+<h1 id="toc_h1_30">八、构建管理工具</h1>
+<h2 id="toc_h2_31">Maven</h2>
+<ul>
+<li><a href="https://maven.apache.org/" target="_blank">Maven 官网</a></li>
+<li><a href="http://www.kubiji.cn/book/maven/" target="_blank">Maven 中文手册</a></li>
+<li><a href="https://www.runoob.com/maven/maven-tutorial.html" target="_blank">Maven 菜鸟教程</a></li>
+<li><a href="https://www.imooc.com/learn/443" target="_blank">项目管理利器——maven 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av21004567" target="_blank">尚硅谷 Maven 视频</a></li>
+</ul>
+<h2 id="toc_h2_32">Git</h2>
+<ul>
+<li><a href="https://git-scm.com/" target="_blank">Git 官网</a></li>
+<li><a href="http://www.kubiji.cn/book/git/" target="_blank">Git 中文手册</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank">廖雪峰 Git 教程</a></li>
+<li><a href="https://time.geekbang.org/course/intro/145" target="_blank">玩转 Git 三剑客 极客时间</a></li>
+<li><a href="https://www.imooc.com/learn/1052" target="_blank">Git 入门 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av24441039/" target="_blank">尚硅谷_Git&amp;GitHub 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av43936824" target="_blank">千锋 Java 版本控制实战教程</a></li>
+</ul>
+<h2 id="toc_h2_33">SVN</h2>
+<ul>
+<li><a href="https://subversion.apache.org/" target="_blank">Svn 官网</a></li>
+<li><a href="http://www.kubiji.cn/book/svn/" target="_blank">Svn 中文手册</a></li>
+<li><a href="https://www.runoob.com/svn/svn-tutorial.html" target="_blank">Svn 菜鸟教程</a></li>
+<li><a href="https://www.imooc.com/learn/109" target="_blank">版本管理工具介绍—SVN 篇 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av27204378" target="_blank">尚硅谷 SVN 高级视频教程</a></li>
+</ul>
+<h2 id="toc_h2_34">Gradle</h2>
+<ul>
+<li><a href="https://gradle.org/" target="_blank">gradle 官网</a></li>
+<li><a href="http://www.kubiji.cn/book/gradle/" target="_blank">Gradle 中文手册</a></li>
+<li><a href="https://www.cnblogs.com/davenkin/tag/gradle/" target="_blank">Gradle 学习系列</a></li>
+<li><a href="https://www.imooc.com/learn/833" target="_blank">新一代构建工具 gradle 慕课网</a></li>
+<li><a href="https://www.w3cschool.cn/gradle/" target="_blank">w3cschool gradle 教程</a></li>
+</ul>
+<h1 id="toc_h1_35">九、安全中间件</h1>
+<h2 id="toc_h2_36">Shiro</h2>
+<ul>
+<li><a href="https://shiro.apache.org/" target="_blank">Shiro 官网</a></li>
+<li><a href="https://www.iteye.com/blogs/subjects/shiro" target="_blank">跟我学 Shiro</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/54176956" target="_blank">Shiro 安全框架【快速入门】就这一篇</a></li>
+<li><a href="https://www.bilibili.com/video/av21260992" target="_blank">尚硅谷 Shiro 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av43940441" target="_blank">千锋 Shiro 框架从入门到实战</a></li>
+</ul>
+<h2 id="toc_h2_37">Security</h2>
+<ul>
+<li><a href="https://spring.io/projects/spring-security" target="_blank">Security 官网</a></li>
+<li><a href="http://www.spring4all.com/article/428" target="_blank">社区 Spring Security 从入门到进阶系列教程</a></li>
+<li><a href="https://coding.imooc.com/class/134.html" target="_blank">Spring Security 开发安全的 REST 服务 慕课网</a></li>
+</ul>
+<h1 id="toc_h1_38">十、搜索引擎中间件</h1>
+<h2 id="toc_h2_39">Lucene</h2>
+<ul>
+<li><a href="https://lucene.apache.org/" target="_blank">Lucene 官网</a></li>
+<li><a href="https://www.bilibili.com/video/av57891048?from=search&amp;seid=14798257461831592466" target="_blank">Lucene 从入门到精通</a></li>
+<li><a href="https://www.bilibili.com/video/av60513286?from=search&amp;seid=5793175095784382853" target="_blank">Lucene 全文检索技术</a></li>
+<li><a href="https://blog.csdn.net/ch656409110/article/category/1570275" target="_blank">Lucene 实例教程</a></li>
+<li>解密搜索引擎技术实战：Lucene&amp;Java 精华版(第 3 版)</li>
+</ul>
+<h2 id="toc_h2_40">Solr</h2>
+<ul>
+<li><a href="https://lucene.apache.org/solr/" target="_blank">solr 官网</a></li>
+<li><a href="https://www.solr.cc/blog/" target="_blank">Solr 中国</a></li>
+<li><a href="https://www.w3cschool.cn/solr_doc/" target="_blank">Solr 官方中文文档</a></li>
+<li><a href="https://www.bilibili.com/video/av34261318?from=search&amp;seid=2314333354843835443" target="_blank">Solr 视频教程从入门到案例实战</a></li>
+<li><a href="https://www.bilibili.com/video/av35510289?from=search&amp;seid=2314333354843835443" target="_blank">solr 从入门到精通</a></li>
+</ul>
+<h2 id="toc_h2_41">Elasticsearch</h2>
+<ul>
+<li><a href="https://elasticsearch.cn/explore/category-2" target="_blank">ElasticSearch 中文社区</a></li>
+<li><a href="https://www.cnblogs.com/jajian/category/1280015.html" target="_blank">Elasticsearch 技术分析</a></li>
+<li><a href="https://time.geekbang.org/course/intro/197" target="_blank">Elasticsearch 核心技术与实战 极客时间</a></li>
+<li><a href="https://www.imooc.com/learn/889" target="_blank">ElasticSearch 入门 慕课网</a></li>
+<li><a href="https://www.bilibili.com/video/av43957643" target="_blank">千锋 Java ElasticSearch6 入门教程</a></li>
+<li><a href="https://www.bilibili.com/video/av29521652?from=search&amp;seid=366095727202838043" target="_blank">Elasticsearch 顶尖高手系列-快速入门篇</a></li>
+</ul>
+<h1 id="toc_h1_42">十一、容器化技术</h1>
+<h2 id="toc_h2_43">docker</h2>
+<ul>
+<li><a href="https://www.runoob.com/docker/docker-tutorial.html" target="_blank">菜鸟教程</a></li>
+<li><a href="http://www.docker.org.cn/" target="_blank">docker 中文社区</a></li>
+<li><a href="https://www.bilibili.com/video/av17854410?from=search&amp;seid=10026979048851310046" target="_blank">Docker 入坑教程【33 集】</a></li>
+<li><a href="https://www.bilibili.com/video/av26993050" target="_blank">尚硅谷 Docker 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av30010765/" target="_blank">尚硅谷】Docker 核心技术</a></li>
+<li><a href="https://www.bilibili.com/video/av35847195?from=search&amp;seid=10026979048851310046" target="_blank">2018 黑马 docker 容器技术 +k8s 集群技术</a></li>
+<li>Docker 实战(书籍)</li>
+<li>深入浅出 Docker(书籍)</li>
+</ul>
+<h2 id="toc_h2_44">kubernetes</h2>
+<ul>
+<li><a href="https://www.kubernetes.org.cn/k8s" target="_blank">kubernetes 中文社区</a></li>
+<li><a href="https://www.bilibili.com/video/av44264629?from=search&amp;seid=10612284828584367292" target="_blank">Kubernetes（K8s）从入门到精通</a></li>
+<li><a href="https://www.bilibili.com/video/av40743487?from=search&amp;seid=10612284828584367292" target="_blank">kubernetes（k8s）教程</a></li>
+<li><a href="https://www.bilibili.com/video/av49783277?from=search&amp;seid=10612284828584367292" target="_blank">一天入门 Kubernetes/K8S</a></li>
+<li><a href="https://time.geekbang.org/column/intro/116" target="_blank">深入剖析 Kubernetes 极客时间</a></li>
+<li>Kubernetes 权威指南(书籍)</li>
+<li>Kubernetes in Action 中文版(书籍)</li>
+</ul>
+<h1 id="toc_h1_45">十二、分布式服务架构</h1>
+<h2 id="toc_h2_46">SpringCloud</h2>
+<ul>
+<li><a href="https://spring.io/projects/spring-cloud" target="_blank">SpringCloud 官网</a></li>
+<li><a href="http://springcloud.cc/" target="_blank">SpringCloud 中文网</a></li>
+<li><a href="https://github.com/alibaba/spring-cloud-alibaba/blob/master/README-zh.md" target="_blank">Spring Cloud Alibaba</a></li>
+<li><a href="https://www.bilibili.com/video/av22613028/" target="_blank">尚硅谷_SpringCloud（全）</a></li>
+<li><a href="https://www.bilibili.com/video/av44311231" target="_blank">千锋 SpringCloud 全套视频）</a></li>
+<li><a href="https://segmentfault.com/ls/1650000011386794" target="_blank">Java 微服务实践 - Spring Cloud 系列</a></li>
+<li><a href="https://time.geekbang.org/course/intro/84" target="_blank">微服务架构实战 160 讲(视频) 极客时间</a></li>
+<li><a href="https://blog.csdn.net/forezp/article/details/70148833" target="_blank">史上最简单的 SpringCloud 教程</a></li>
+<li><a href="http://springcloud.fun/" target="_blank">Spring Cloud 中文索引</a></li>
+</ul>
+<h2 id="toc_h2_47">Dubbo</h2>
+<ul>
+<li><a href="https://dubbo.apache.org/zh-cn/" target="_blank">dubbo 官网</a></li>
+<li><a href="https://www.bilibili.com/video/av30612478" target="_blank">尚硅谷 Dubbo 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av44712206" target="_blank">动力节点 Dubbo 视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av42128740" target="_blank">分布式系统架构解决方案之 Dubbo 视频</a></li>
+<li><a href="https://www.bilibili.com/video/av43387399" target="_blank">Dubbo 分布式系统架构实战视频教程–基础篇</a></li>
+<li><a href="https://www.bilibili.com/video/av43368464" target="_blank">Dubbo 分布式系统架构实战视频教程–高级篇</a></li>
+<li><a href="https://www.bilibili.com/video/av43480823" target="_blank">Dubbo 分布式系统架构实战视频教程–高可用架构篇</a></li>
+</ul>
+<h2 id="toc_h2_48">分库分表</h2>
+<ul>
+<li><a href="https://shardingsphere.apache.org/index_zh.html" target="_blank">shardingsphere 官网</a></li>
+<li><a href="https://github.com/MyCATApache/Mycat-Server" target="_blank">MyCAT</a></li>
+<li><a href="https://github.com/alibaba/cobar" target="_blank">cobar</a></li>
+<li><a href="https://github.com/ctripcorp/dal" target="_blank">Ctrip-DAL</a></li>
+<li><a href="https://segmentfault.com/a/1190000017272697" target="_blank">“分库分表" ？选型和流程要慎重，否则会失控</a></li>
+</ul>
+<h2 id="toc_h2_49">Zookeeper</h2>
+<ul>
+<li><a href="https://zookeeper.apache.org/" target="_blank">zookeeper 官网</a></li>
+<li><a href="http://www.kubiji.cn/book/zookeeper/ZOOKEEPERZhongWenShouCe/ZOOKEEPERGaiShu.html" target="_blank">zookeeper 中文手册</a></li>
+<li><a href="https://www.w3cschool.cn/zookeeper/" target="_blank">w3cschool zookeeper 教程</a></li>
+<li><a href="https://juejin.im/post/5b037d5c518825426e024473" target="_blank">漫画：什么是 ZooKeeper？</a></li>
+<li><a href="https://segmentfault.com/a/1190000016349824" target="_blank">可能是全网把 ZooKeeper 概念讲的最清楚的一篇文章</a></li>
+<li><a href="https://www.bilibili.com/video/av32093417" target="_blank">尚硅谷 Zookeeper 视频教程</a></li>
+</ul>
+<h2 id="toc_h2_50">Nginx</h2>
+<ul>
+<li><a href="http://nginx.org/" target="_blank">nginx 官网</a></li>
+<li><a href="https://www.runoob.com/w3cnote/nginx-setup-intro.html" target="_blank">nginx 菜鸟教程</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34943332" target="_blank">8 分钟带你深入浅出搞懂 Nginx</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2018/02/nginx-docker.html" target="_blank">Nginx 容器教程</a></li>
+<li><a href="https://time.geekbang.org/course/intro/138" target="_blank">Nginx 核心知识 100 讲 极客时间</a></li>
+<li><a href="https://www.bjsxt.com/down/3243.html" target="_blank">Nginx 教程 尚学堂</a></li>
+</ul>
+<h2 id="toc_h2_51">定时任务框架</h2>
+<ul>
+<li><a href="http://www.quartz-scheduler.org/" target="_blank">quartz</a></li>
+<li><a href="https://github.com/ltsopensource/light-task-scheduler" target="_blank">light-task-scheduler</a></li>
+<li><a href="http://www.xuxueli.com/xxl-job/#/" target="_blank">XXL-JOB</a></li>
+<li><a href="https://github.com/elasticjob/elastic-job-lite" target="_blank">elasticjob</a></li>
+<li><a href="https://github.com/vipshop/Saturn" target="_blank">Saturn</a></li>
+<li><a href="https://github.com/jobxhub/JobX" target="_blank">jobx</a></li>
+</ul>
+<h2 id="toc_h2_52">JSON Web Token</h2>
+<ul>
+<li><a href="https://jwt.io/introduction/" target="_blank">JWT 官网</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank">JSON Web Token 入门教程</a></li>
+<li><a href="https://learnku.com/articles/10885/full-use-of-jwt" target="_blank">JWT 完整使用详解</a></li>
+<li><a href="http://calebb.net/" target="_blank">JWT 解码器</a></li>
+</ul>
+<h2 id="toc_h2_53">OAuth</h2>
+<ul>
+<li><a href="https://oauth.net/2/" target="_blank">OAuth 官网</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2019/04/oauth_design.html" target="_blank">OAuth 2.0 的一个简单解释</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2019/04/oauth-grant-types.html" target="_blank">OAuth 2.0 的四种方式</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2019/04/github-oauth.html" target="_blank">GitHub OAuth 第三方登录示例教程</a></li>
+<li><a href="https://deepzz.com/post/what-is-oauth2-protocol.html" target="_blank">10 分钟理解什么是 OAuth 2.0 协议</a></li>
+</ul>
+<h2 id="toc_h2_54">分布式架构</h2>
+<ul>
+<li><a href="https://time.geekbang.org/column/intro/81" target="_blank">从 0 开始学架构 极客时间</a></li>
+<li><a href="https://www.iteye.com/blogs/subjects/as-core" target="_blank">亿级流量网站架构核心技术</a></li>
+<li>大型网站技术架构(书籍)</li>
+<li>分布式服务框架：原理与实践(书籍)</li>
+</ul>
+<h1 id="toc_h1_55">十三、面试相关</h1>
+<ul>
+<li><a href="https://www.bilibili.com/video/av37602130/?spm_id_from=333.788.videocard.0" target="_blank">Java 高频面试题-尚硅谷-Java 面试题第一季</a></li>
+<li><a href="https://www.bilibili.com/video/av48958673/" target="_blank">尚硅谷 互联网大厂高频重点面试题（第 2 季）</a></li>
+<li><a href="https://www.bilibili.com/video/av53785429" target="_blank">尚硅谷面试技巧与就业指导</a></li>
+<li><a href="https://www.bilibili.com/video/av49561181/" target="_blank">Java 工程师面试突击第 1 季（可能是史上最好的 Java 面试突击课程）</a></li>
+<li>剑指 offer(书籍)</li>
+</ul>
+<p>如果有侵权，请及时联系，即删</p>
+          <div>
+            <hr>
+
+标题：学会了这些技术，你离BAT大厂不远了（转）<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/10/18/1571386854425.html" target="_blank">https://algerfan.github.io/articles/2019/10/18/1571386854425.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="学会了这些技术，你离BAT大厂不远了（转）"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/10/18/1571386854425.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1571386854425"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1571386854425",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1571386854425",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1571386854425', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 30ms, 2022/12/10 22:11:59 -->

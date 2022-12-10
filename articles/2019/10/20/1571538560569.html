@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（15）MySQL  主从备份——MySQL学习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（15）MySQL  主从备份——MySQL学习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/10/20/1571538560569.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（15）MySQL  主从备份——MySQL学习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/10/20/1571538560569.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（15）MySQL  主从备份——MySQL学习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-10-20</span>
+          <span class="comments">
+            <span data-uvstatcmt="1571538560569">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/10/20/1571538560569.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/MySQL">MySQL</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20181008.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">一、主从备份概念</h2>
+<p>什么是主从备份: 就是一种主备模式的数据库应用。<br>
+主库(Master)数据与备库(Slave)数据完全一致。<br>
+实现数据的多重备份, 保证数据的安全。<br>
+可以在 Master[InnoDB]和 Slave[MyISAM]中使用不同的数据库引擎,实现读写的分离。</p>
+<h3 id="toc_h3_1">1、MySQL5.5  版本后本身支持主从备份</h3>
+<p>在老旧版本的 MySQL 数据库系统中,不支持主从备份,需要安装额外的 RPM 包。<br>
+如果需要安装 RPM,只能在一个位置节点安装。</p>
+<h3 id="toc_h3_2">2、主从备份目的</h3>
+<h4 id="toc_h4_3">实现主备模式</h4>
+<p>保证数据的安全，尽量避免数据丢失的可能。</p>
+<h4 id="toc_h4_4">实现读写分离</h4>
+<p>使用不同的数据库引擎，实现读写分离，提高所有的操作效率。<br>
+InnoDB 使用 DML 语法操作，MyISAM 使用 DQL 语法操作。</p>
+<h3 id="toc_h3_5">3、主从备份效果</h3>
+<h4 id="toc_h4_6">主库操作同步到备库</h4>
+<p>所有对 Master 的操作，都会同步到 Slave 中。<br>
+如果 Master 和 Salve 天生上环境不同,那么对 Master 的操作，可能会在 Slave 中出现错误，如: 在创建主从模式之前，Master 有 database : db1、db2、db3，Slave 有 database: db1、db2。创建主从模式.现在的情况 Master 和 Slave 天生不同。<br>
+主从模式创建成功后，在 Master 中 drop database db3。Slave 中抛出数据库 SQL 异常，后续所有的命令不能同步。一旦出现错误，只能重新实现主从模式。</p>
+<h2 id="toc_h2_7">二、主 从 备 份 配 置</h2>
+<p>主要操作 Master 和 Slave 中的配置文件和 DBMS 的配置。<br>
+配置文件: 定义主从模式的基础信息。如: 日志, 命令等。<br>
+DBMS 配置: 提供主从访问的用户,基础信息 Master 和 Slave 的位置、用户名、密码、日志文件名等等。<br>
+建议：建立主从备份的多个 MySQL，最好原始环境一致。Database、table、data 完全一致。</p>
+<h3 id="toc_h3_8">1、Master[主库]配置</h3>
+<h4 id="toc_h4_9">修改 Master 配置文件</h4>
+<p>/etc/my.cnf<br>
+需要修改，修改前建议复制一份备份文件。<br>
+修改后的 my.cnf 配置文件,参考资料中的 my.cnf 文件内容。</p>
+<p><strong>server-id</strong></p>
+<p>本环境中 server-id 是 1<br>
+MySQL 服务唯一标识<br>
+唯一标识是数字.自然数<br>
+配置的时候有要求</p>
+<ul>
+<li>单机使用<br>
+server-id 任意配置,只要是数字即可。</li>
+<li>主从使用<br>
+server-id Master 唯一标识数字必须小于 Slave 唯一标识数字。</li>
+</ul>
+<p><strong>log_bin</strong></p>
+<p>本环境中 log_bin 值 : master_log<br>
+日志文件命名, 开启日志功能。此日志记录了主库中执行的所有的 SQL 命令的。</p>
+<ul>
+<li>开启日志<br>
+MySQL 的 log_bin 不是执行日志，状态日志。是操作日志.就是在 DBMS 中所有的 SQL 命令<br>
+log_bin 日志不是必要的.只有配置主从备份时才必要。</li>
+<li>日志文件配置<br>
+变量的值就是日志文件名称，是日志文件名称的主体。<br>
+MySQL 数据库自动增加文件名后缀和文件类型。</li>
+</ul>
+<h4 id="toc_h4_10">重启 MySQL</h4>
+<p><code>service mysqld restart</code></p>
+<h4 id="toc_h4_11">配置 Master</h4>
+<p><strong>访问 MySQL</strong><br>
+<code>mysql -uusername -ppassword</code></p>
+<ul>
+<li>
+<p>创建用户<br>
+在 MySQL 数据库中，为不存在的用户授权，就是同步创建用户并授权，此用户是从库访问主库使用的用户<br>
+ip 地址不能写为%。因为主从备份中,当前创建的用户，是给从库 Slave 访问主库 Master 使用的，用户必须有指定的访问地址，不能是通用地址。<br>
+<code>grant all privileges on *.* to ‘username’@’ip’ identified by ‘password’ with grant option;</code><br>
+<code>flush privileges;</code></p>
+<p>例如：</p>
+<p><code>grant all privileges on *.* to 'slave'@'192.168.199.133' identified by 'slave' with grant option;</code><br>
+<code>flush privileges;</code></p>
+</li>
+<li>
+<p>查看用户<br>
+<code>use mysql;</code><br>
+<code>select host,userfrom user;</code></p>
+</li>
+<li>
+<p>查看 Master 信息<br>
+<code>show master status;</code></p>
+</li>
+</ul>
+<h3 id="toc_h3_12">2、Slave[从库]配置</h3>
+<h4 id="toc_h4_13">修改 Slave 配置文件</h4>
+<p>/etc/my.cnf</p>
+<p><strong>server_id</strong></p>
+<p>唯一标识，本环境中配置为 : 2</p>
+<p><strong>log_bin</strong></p>
+<p>可以使用默认配置，也可以注释。</p>
+<h4 id="toc_h4_14">可选: 修改 uuid</h4>
+<p>主从模式要求多个 MySQL 物理名称不能相同。即按装 MySQL 过程中 Linux 自动生成的物理标志。唯一物理标志命名为 uuid。保存位置是 MySQL 数据库的数据存放位置。默认为/var/lib/mysql 目录中。文件名是 auto.cnf。<br>
+修改 auto.cnf 文件中的 uuid 数据. 随意修改,不建议改变数据长度.建议改变数据内容。</p>
+<h4 id="toc_h4_15">重启 MySQL  服 务</h4>
+<p>service mysqld restart</p>
+<h4 id="toc_h4_16">配置 Slave</h4>
+<ul>
+<li>
+<p>访问 MySQL<br>
+<code>mysql -uusername -ppassword</code><br>
+1.3.2.4.2 停止 止 Slave  功 能<br>
+<code>stop slave;</code></p>
+</li>
+<li>
+<p>配置主库信息<br>
+需要修改的数据是依据 Master 信息修改的。ip 是 Master 所在物理机 IP， 用户名和密码是 Master 提供的 Slave 访问用户名和密码。日志文件是在 Master 中查看的主库信息提供的，在 Master 中使用命令 show master status 查看日志文件名称。<br>
+<code>change master to master_host=’ip’, master_user=’username’, master_password=’password’, master_log_file=’log_file_name’;</code></p>
+<p>例如：</p>
+<p><code>change master to master_host='192.168.199.212', master_user='slave', master_password='slave', master_log_file='master_log.000001';</code></p>
+</li>
+<li>
+<p>启动 Slave 功能<br>
+<code>start slave;</code></p>
+</li>
+<li>
+<p>查看 Slave 配置<br>
+<code>show slave status \G;</code></p>
+</li>
+</ul>
+<pre><code>  mysql&gt; show slave status \G;
+  *************************** 1. row ***************************
+                 Slave_IO_State: Waiting for master to send event
+                    Master_Host: 10.1.36.67
+                    Master_User: slave
+                    Master_Port: 3306
+                  Connect_Retry: 60
+                Master_Log_File: master_log.000001
+            Read_Master_Log_Pos: 1277
+                 Relay_Log_File: localhost-relay-bin.000002
+                  Relay_Log_Pos: 1492
+          Relay_Master_Log_File: master_log.000001
+               Slave_IO_Running: Yes
+              Slave_SQL_Running: Yes
+                Replicate_Do_DB: 
+            Replicate_Ignore_DB: 
+             Replicate_Do_Table: 
+         Replicate_Ignore_Table: 
+        Replicate_Wild_Do_Table: 
+    Replicate_Wild_Ignore_Table: 
+                     Last_Errno: 0
+                     Last_Error: 
+                   Skip_Counter: 0
+            Exec_Master_Log_Pos: 1277
+                Relay_Log_Space: 1703
+                Until_Condition: None
+                 Until_Log_File: 
+                  Until_Log_Pos: 0
+             Master_SSL_Allowed: No
+             Master_SSL_CA_File: 
+             Master_SSL_CA_Path: 
+                Master_SSL_Cert: 
+              Master_SSL_Cipher: 
+                 Master_SSL_Key: 
+          Seconds_Behind_Master: 0
+  Master_SSL_Verify_Server_Cert: No
+                  Last_IO_Errno: 0
+                  Last_IO_Error: 
+                 Last_SQL_Errno: 0
+                 Last_SQL_Error: 
+    Replicate_Ignore_Server_Ids: 
+               Master_Server_Id: 1
+                    Master_UUID: 24fbce5b-266b-11e7-b0a7-5254008815b6
+               Master_Info_File: /var/lib/mysql/master.info
+                      SQL_Delay: 0
+            SQL_Remaining_Delay: NULL
+        Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates
+             Master_Retry_Count: 86400
+                    Master_Bind: 
+        Last_IO_Error_Timestamp: 
+       Last_SQL_Error_Timestamp: 
+                 Master_SSL_Crl: 
+             Master_SSL_Crlpath: 
+             Retrieved_Gtid_Set: 
+              Executed_Gtid_Set: 
+                  Auto_Position: 0
+           Replicate_Rewrite_DB: 
+                   Channel_Name: 
+             Master_TLS_Version: 
+  1 row in set (0.00 sec)
+
+  ERROR: 
+  No query specified
+</code></pre>
+<h4 id="toc_h4_17">测试主从</h4>
+<h3 id="toc_h3_18">3、主从模式下的逻辑图</h3>
+<p><img src="https://img.algerfan.cn/blog/image/20191018/05547b1657ae4de0b44dceea09804a32.png" alt="主从复制 1.png"></p>
+          <div>
+            <hr>
+
+标题：（15）MySQL  主从备份——MySQL学习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/10/20/1571538560569.html" target="_blank">https://algerfan.github.io/articles/2019/10/20/1571538560569.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（15）MySQL  主从备份——MySQL学习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/10/20/1571538560569.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1571538560569"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1571538560569",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1571538560569",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1571538560569', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 18ms, 2022/12/10 22:11:59 -->

@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（9）输入输出系统——计算机操作系统复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（9）输入输出系统——计算机操作系统复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2020/01/06/1578296456011.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（9）输入输出系统——计算机操作系统复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2020/01/06/1578296456011.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（9）输入输出系统——计算机操作系统复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2020-01-06</span>
+          <span class="comments">
+            <span data-uvstatcmt="1578296456011">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2020/01/06/1578296456011.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20191016.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">一、IO 设备的概念与分类</h2>
+<p><strong>什么是 I/0 设备</strong></p>
+<p>“I/O”就是“ 输入/输出”(Input/Output)。就是可以将数据输入到计算机，或者可以接收计算机输出数据的外部设备，属于计算机中的硬件部件。如：鼠标、键盘、显示器等</p>
+<p><strong>IO 设备的分类--按使用特性</strong></p>
+<ul>
+<li>人机交互类外部设备（鼠标、键盘）：数据传输速度慢</li>
+<li>存储设备（移动硬盘）：数据传输速度快</li>
+<li>网络通信设备（调制解调器）：数据传输速度介于上述二者之间</li>
+</ul>
+<p><strong>IO 设备的分类--按传输速率分类</strong></p>
+<ul>
+<li>低速设备（鼠标、键盘，每秒几个到几百个字节）</li>
+<li>中速设备（激光打印机，每秒数千至上万个字节）</li>
+<li>高速设备（硬盘，每秒数千字节至千兆字节）</li>
+</ul>
+<p><strong>IO 设备按信息交换的单位分类</strong></p>
+<ul>
+<li>块设备（如磁盘等，传输的基本单位是“块”）：传输速率较高，可寻址，即对它可随机地读/写任一块</li>
+<li>字符设备（如鼠标、键盘，传输的基本单位是字符）：传输速率较慢，不可寻址，在输入/输出时常采用中断驱动方式。</li>
+</ul>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-660161fe.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_1">二、IO 软件层次结构</h2>
+<p>通常把 IO 软件组织成四个层次：</p>
+<ol>
+<li>用户层 IO 软件。实现与用户交互的接口，用户可直接调用该层所提供的、与 IO 操作有关的库函数对设备进行操作。</li>
+<li>设备独立性软件。用于实现用户程序与设备驱动器的统一接口、设备命名、设备的保护以及设备的分配与释放等，同时为设备管理和数据传送提供必要的存储空间。</li>
+<li>设备驱动程序。与硬件直接相关，用于具体实现系统对设备发出的操作指令，驱动 IO 设备工作的驱动程序。</li>
+<li>中断处理程序。用于保存被中断进程的 CPU 环境，传入相应的中断处理程序进行处理，处理完毕再恢复被中断进程的现场后，返回到被中断的进程。</li>
+</ol>
+<p><strong>用户层 IO 软件</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-b404c751.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>设备独立性软件</strong></p>
+<p>设备独立性软件，又称设备无关性软件。与设备的硬件特性无关的功能几乎都在这一层实现。<br>
+主要实现的功能：</p>
+<ul>
+<li>向上层提供统-的调用接口 (如 read/write 系统调用)</li>
+<li>设备的保护</li>
+<li>差错处理</li>
+<li>设备的分配与回收</li>
+<li>数据缓冲区管理：可以通过缓冲技术屏蔽设备之间数据交换单位大小和传输速度的差异</li>
+<li>建立逻辑设备名到物理设备名的映射关系;根据设备类型选择调用相应的驱动程序</li>
+</ul>
+<p><strong>设备独立性软件</strong>需要通过“逻辑设备表(LUT, Logical Unit Table)、”来确定逻辑设备对应的<strong>物理设备</strong>，并找到该设备对应的<strong>设备驱动程序。</strong></p>
+<p>操作系统系统可以采用两种方式管理<strong>逻辑设备表</strong>(LUT) :<br>
+第一种方式，<strong>整个系统只设置一张 LUT</strong>,这就意味着所有用户不能使用相同的逻辑设备名，因此这种方式只适用于单用户操作系统。<br>
+第二种方式，<strong>为每个用户设置一张 LUT</strong>，各个用户使用的逻辑设备名可以重复，适用于多用户操作系统。系统会在用户登录时为其建立一个用户管理进程，而 LUT 就存放在用户管理进程的 PCB 中。</p>
+<p><strong>中断处理程序</strong></p>
+<p>当 I/0 任务完成时，I/O 控制器会发送一一个<strong>中断信号</strong>，系统会<strong>根据中断信号类型</strong>找到相应的中断处理程序并执行。<strong>中断处理程序</strong>的处理流程如下：</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-321f418c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-1c754835.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>直接涉及到硬件具体细节、且与中断无关的操作肯定是在设备驱动程序层完成的;没有涉及硬件的、对各种设备都需要进行的管理工作都是在设备独立性软件层完成的)</strong></p>
+<h2 id="toc_h2_2">三、IO 设备控制器</h2>
+<p><strong>IO 设备的机械部件</strong></p>
+<p>I/0 设备的<strong>机械部件</strong>主要用来执行具体 I/0 操作。<br>
+如我们看得见摸得着的鼠标/键盘的按钮; 显示器的 LED 屏; 移动硬盘的磁臂、磁盘盘面。<br>
+I/O 设备的<strong>电子部件</strong>通常是一块插入主板扩充槽的印刷电路板。</p>
+<p><strong>I0 设备的电子部件(I/0 控制器)</strong></p>
+<p>CPU 无法直接控制 I/O 设备的机械部件，因此 I/0 设备还要有- - -个电子部件作为 CPU 和/O 设备机械部件之间的“中介”，用于实现 CPU 对设备的控制。</p>
+<p>这个电子部件就是 <strong>I/O 控制器</strong>，又称<strong>设备控制器</strong>。CPU 可控制 I/O 控制器，又由 I/O 控制器来控制设备的机械部件。</p>
+<h3 id="toc_h3_3">1. IO 控制器的功能</h3>
+<ol>
+<li>接收和识别命令。设备控制器能接收并识别处理机发来的多种命令。</li>
+<li>数据交换。可实现 CPU 与控制器之间、控制器与设备之间的数据交换。</li>
+<li>标识和报告设备的状态。控制器应记下设备的状态供 CPU 了解。</li>
+<li>地址识别。就像内存中的每一个单元都有一个地址一样，系统中的每一个设备都有一个地址。</li>
+<li>数据缓冲区。由于 IO 设备的速率较低，而 CPU 和内存的速率却很高，因此在控制器必须设置一个缓存区。</li>
+<li>差错控制。对于由设备传送来的数据，设备控制器还监管进行差错控制。</li>
+</ol>
+<p><img src="https://img.hacpai.com/file/2020/01/image-0a020a2c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_4">2. IO 控制器的组成</h3>
+<ol>
+<li>设备控制器与处理机的接口。用于实现 CPU 与设备控制器之间的通信，共有三类信号线：数据线、地址线和控制线。数据线通常与两类寄存器相连接：第一类是数据寄存器，第二类是控制/状态寄存器。</li>
+<li>设备控制器与设备的接口。在一个设备控制器上，可以连接一个或多个设备。相应的，在控制器中便有一个或多个设备接口。</li>
+<li>IO 逻辑。IO 逻辑用于实现对设备的控制。</li>
+</ol>
+<p><img src="https://img.hacpai.com/file/2020/01/image-2d1c3258.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>值得注意的小细节：</p>
+<p>① 一个 I/0 控制器可能会对应多个设备;<br>
+② 数据寄存器、控制寄存器、状态寄存器可能有多个(如：每个控制/状态寄存器对应一一个具体的设备)，且这些寄存器都要有相应的地址，才能方便 CPU 操作。有的计算机会让这些寄存器占用内存地址的一部分， 称为<strong>内存映像 I/O</strong>;另一些计算机则采用 I/0 专用地址，即<strong>寄存器独立编址</strong>。</p>
+<p>内存映像 I/O v.s. 寄存器独立编址（了解）</p>
+<hr>
+<p><img src="https://img.hacpai.com/file/2020/01/image-4fbfbaa7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-f188bfbe.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_5">四、对 IO 设备的控制方式</h2>
+<h3 id="toc_h3_6">1. 程序直接控制方式</h3>
+<p><img src="https://img.hacpai.com/file/2020/01/image-14aed09a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-621366f3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>1.完成一次读/写操作的流程(见右图，<strong>Key word:轮询</strong>)</p>
+<p>2.CPU 干预的频率<br>
+很频繁，I/0 操作开始之前、完成之后需要 CPU 介入，并且在<strong>等待 I/O 完成的过程中 CPU 需要不断地轮询检查</strong>。</p>
+<p>3.数据传送的单位<br>
+每次读/写一个<strong>字</strong></p>
+<p>4.数据的流向<br>
+读操作(数据输入) : I/0 设 备 → CPU→内存<br>
+写操作(数据输出) :内存 → CPU→ I/O 设 备<br>
+每个字的读/写都需要 CPU 的帮助</p>
+<p>5.主要缺点和主要优点<br>
+<strong>优点</strong>：实现简单。在读/写指令之后加_上实现循环检查的一系列指令即可(因此才称为“程序直接控制方式”)<br>
+<strong>缺点</strong>： <strong>CPU 和 I/0 设备只能串行工作，CPU 需要一直轮询检查，长期处于“忙等”状态，CPU 利用率低</strong>。</p>
+<h3 id="toc_h3_7">2. 中断驱动方式</h3>
+<p>引入<strong>中断机制</strong>。由于/0 设备速度很慢，因此在 CPU 发出读/写命令后，可将<strong>等待 I/O 的进程阻塞</strong>，先切换到别的进程执行。当 1/0 完成后，控制器会向 CPU 发出一一个中断信号，CPU <strong>检测到中断信号后</strong>，会保存当前进程的运行环境信息，转去执行中断处理程序处理该中断。处理中断的过程中，CPU 从 I/O 控制器读一个字的数据传送到 CPU 寄存器，再写入主存。接着，<strong>CPU 恢复等待 I/O 的进程。 (或其他进程)的运行环境，然后继续执行</strong>。<br>
+注意： ① CPU 会在 每个指令周期的末尾检查中断;<br>
+② 中断处理过程中需要保存、恢复进程的运行环境，这个过程是需要一定时间开销的。 可见，如果中断发生的频率太高，也会降低系统性能。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-b392d7e2.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>1.完成一次读/写操作的流程 (见右图，Keyword: 中断)<br>
+2. CPU 干预的频率<br>
+每次 I/0 操作开始之前、完成之后需要 CPU 介入。<br>
+<strong>等待 I/0 完成的过程中 CPU 可以切换到别的进程执行</strong>。<br>
+3.数据传送的单位<br>
+每次读/写一个<strong>字</strong><br>
+4.数据的流向<br>
+读操作(数据输入) : I/0 设备 → CPU→内存<br>
+写操作(数据输出) :内存 → CPU→ I/O 设备<br>
+5.主要缺点和主要优点<br>
+<strong>优点</strong>：与“程序直接控制方式”相比，在“中断驱动方式”中，I/O 控制器会通过中断信号主动报告 I/0 已完成，CPU 不再 需要不停地轮询。<strong>CPU 和 I/O 设备可并行工作</strong>，CPU 利用率得到明显提升。<br>
+<strong>缺点</strong>：每个字在 I/O 设备与内存之间的传输，都需要经过 CPU。而<strong>频繁的<br>
+中断处理会消耗较多的 CPU 时间</strong>。</p>
+<h3 id="toc_h3_8">3. DMA 方式</h3>
+<p>与“中断驱动方式”相比，<strong>DMA 方式</strong>( Direct Memory Access，<strong>直接存储器存取</strong>。主要用于块设备的 I/0 控制)有这样几个改进：<br>
+① <strong>数据的传送单位是“块”</strong>。不再是一一个字、一个字的传送;<br>
+② 数据的流向是从设备直接放入内存，或者从内存直接到设备。不再需要 CPU 作为“快递小哥”。<br>
+③ 仅在传送一一个或 多个数据块的开始和结束时，才需要 CPU 干预。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-50fcc5c3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>DMA 控制器</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-50e6ae09.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>DR ( Data Register,数据寄存器) :暂存从设备到内存，或从内存到设备的数据。<br>
+MAR (Memory Address Register,内存地址寄存器) :在输入时，MAR 表示数据应放到内存中的什么位置;输出时 MAR 表示要输出的数据放在内存中的什么位置。<br>
+DC (Data Counter,数据计数器) :表示剩余要读/写的字节数。<br>
+CR (Command Register，命令/状态寄存器) :用于存放 CPU 发来的 I/0 命令， 或设备的状态信息。</p>
+<p>DMA 方式</p>
+<p>1.完成- -次读/写操作的流程(见右图)<br>
+2. CPU 干预的频率<br>
+仅在传送-一个或多个数据块的开始和结束时，才需要 CPU 干预。<br>
+3.数据传送的单位<br>
+每次读/写一个或多个块(注意：每次读写的只能是连续的多个块，<br>
+且这些块读入内存后在内存中也必须是连续的)<br>
+4.数据的流向(不再需要经过 CPU)<br>
+读操作(数据输入) : I/0 设备 ≥内存<br>
+写操作(数据输出):内存 &gt;/0 设备</p>
+<p>5.主要缺点和主要优点<br>
+优点：数据传输以“块”为单位，CPU 介入频率进一步降低。 数据的传输不再需要先经过 CPU 再写入内存，数据传输效率进一步增加。CPU 和/O 设备的并行性得到提升。<br>
+缺点： CPU 每发出一条 I/O 指令，只能读/写一个或多个连续的数据块。<br>
+如果要读/写多个离散存储的数据块，或者要将数据分别写到不同的内存区域时，CPU 要分别发出多条 I/0 指令，进行多次中断处理才能完成。</p>
+<h3 id="toc_h3_9">4. 通信控制方式</h3>
+<p><strong>通道</strong>：一种硬件，可以理解为是“<strong>弱鸡版的 CPU</strong>”。通道可以识别并执行一系列<strong>通道指令</strong>。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-64f7867f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>1.完成一次读写操作的流程</p>
+<p>2.CPU 干预的频率<br>
+极低，通道会根据 CPU 的指示执行相应的通道程序，只有完成一-组数据块的读/写后才需要发出中断信号，请求 CPU 干预。</p>
+<p>3.数据传送的单位<br>
+每次读/写<strong>一组数据块</strong></p>
+<p>4.数据的流向(<strong>在通道的控制下进行</strong>)<br>
+读操作( 数据输入) : I/0 设备 →内存<br>
+写操作( 数据输出) :内存 ≥ I/0 设备</p>
+<p>5.主要缺点和主要优点<br>
+<strong>缺点</strong>：实现复杂，需要专门的通道硬件支持<br>
+<strong>优点</strong>： <strong>CPU、 通道、I/0 设备可并行工作，资源利用率很高</strong>。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/IMG20200106230318-b180b8f0.jpg?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_10">五、IO 核心子系统</h2>
+<p><img src="https://img.hacpai.com/file/2020/01/image-4401307b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>注：假脱机技术(SPOOLing 技术)需要请求“磁盘设备”的设备独立性软件的服务，因此一般来说假脱机技术是在用户层软件实现的。</p>
+<p><strong>I/O 调度</strong>：<strong>用某种算法确定一个好的顺序来处理各个 I/O 请求</strong>。<br>
+如：磁盘调度(先来先服务算法、最短寻道优先算法、SCAN 算法、C-SCAN 算法、LOOK 算法、C-L0OK 算法)。当多个磁盘/0 请求到来时，用某种调度算法确定满足/0 请求的顺序。</p>
+<p>同理，打印机等设备也可以用先来先服务算法、优先级算法、短作业优先等算法来确定 I/O 调度顺序。</p>
+<p>操作系统需要实现<strong>文件保护功能</strong>，不同的用户对各个文件有不同的访问权限(如：只读、读和写等)。<br>
+在 UNIX 系统中，<strong>设备被看做是一种特殊的文件</strong>，每个设备也会有对应的 FCB。当用户请求访问某个设备时，系统根据 FCB 中记录的信息来判断该用户是否有相应的访问权限，以此实现“设备保护”的功能。</p>
+<h2 id="toc_h2_11">六、假脱机技术</h2>
+<h3 id="toc_h3_12">1. 什么是脱机技术</h3>
+<p>手工操作阶段：主机直接从 I/O 设备获得数据，由于设备速度慢，主机速度很快。人机速度矛盾明显，主机要浪费很多时间来等待设备。</p>
+<p>批处理阶段引入了<strong>脱机输入/输出技术</strong>(用磁带完成) :</p>
+<p>引入脱机技术后，缓解了 CPU 与慢速 I/O 设备的速度矛盾。另一方面，即使 CPU 在忙碌，也可以提前将数据输入到磁带;即使慢速的输出设备正在忙碌，也可以提前将数据输出到磁带。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-b6927bb7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_13">2. 假脱机技术--输入井和输出井</h3>
+<p>“<strong>假脱机技术</strong>”，又称“<strong>SPOOLing 技术</strong>”是用软件的方式模拟脱机技术。SPOOLing 系统的组成如下：</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-999583f8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-94705318.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_14">3. 共享打印机原理分析</h3>
+<p><strong>独占式设备</strong>---<strong>只允许各个进程串行使用的设备</strong>。一段时间内只能满足-个进程的请求。<br>
+<strong>共享设备</strong>---<strong>允许多个进程“同时”使用的设备</strong>(宏观上同时使用，微观上可能是交替使用)。可以同时满足多个进程的使用请求。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-f5fd48d6.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>当多个用户进程提出输出打印的请求时，系统会答应它们的请求，但是并不是真正把打印机分配给他们，而是由假脱机管理进程为每个进程做两件事：<br>
+(1)在磁盘输出井中为进程申请-一个空闲缓冲区(也就是说，这个缓冲区是在磁盘上的)，并将要打印的数据送入其中;<br>
+(2)为用户进程申请一张空白的打印请求表，并将用户的打印请求填入表中(其实就是用来说明用户的打印数据存放位置等信息的)，再将该表挂到假脱机文件队列上。<br>
+当打印机空闲时，输出进程会从文件队列的队头取出一张打印请求表，并根据表中的要求将要打印的数据从输出井传送到输出缓冲区，再输出到打印机进行打印。用这种方式可依次处理完全部的打印任务</p>
+<p>虽然系统中只有一个台打印机，但每个进程提出打印请求时，系统都会为在输出井中为其分配一个存储区(相当于分配了-一个逻辑设备)，使每个用户进程都觉得自己在独占一台打印机，从而实现对打印机的共享。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-c5b435df.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_15">七、设备的分配与回收</h2>
+<h3 id="toc_h3_16">1. 设备分配时需要考虑的因素</h3>
+<p><strong>1.设备的固有属性</strong></p>
+<p>设备的固有属性可分为三种：独占设备、共享设备、虚拟设备。<br>
+<strong>独占设备</strong>---一个时段只能分配给一个进程( 如打印机)<br>
+<strong>共享设备</strong>---可同时分配给多个进程使用(如磁盘)，各进程往往是宏观。上同时共享使用设备，而微观上交替使用。<br>
+<strong>虚拟设备</strong>---采用 SPOOLing 技术将独占设备改造成虚拟的共享设备，可同时分配给多个进程使用( 如采用 SPOOLing 技术实现的共享打印机)</p>
+<p><strong>2.设备的分配算法</strong><br>
+先来先服务<br>
+优先级高者优先<br>
+短任务优先</p>
+<p><strong>3.设备分配的安全性</strong></p>
+<p>从进程运行的安全性上考虑，设备分配有两种方式：<br>
+<strong>安全分配方式</strong>：为进程分配一个设备后就将进程阻塞，本次 I/0 完成后才 将进程唤醒。(eg: 考虑<br>
+进程请求打印机打印输出的例子) 。一个时段内每个进程只能使用一个设备。</p>
+<ul>
+<li><strong>优点</strong>：破坏了“请求和保持”条件，不会死锁</li>
+<li><strong>缺点</strong>：对于一个进程来说，CPU 和/O 设 备只能串行工作</li>
+</ul>
+<p><strong>不安全分配方式</strong>：进程发出 I/O 请求后，系统为其分配 I/0 设备，进程可继续执行，之后还可以发出新的 I/O 请求。只有某个 I/0 请求 得不到满足时才将进程阻塞。一个进程可以同时使用多个设备。</p>
+<ul>
+<li><strong>优点</strong>：进程的计算任务和/O 任务可以并行处理，使进程迅速推进</li>
+<li><strong>缺点</strong>：有可能发生死锁(死锁避免、死锁的检测和解除)</li>
+</ul>
+<h3 id="toc_h3_17">2. 静态分配和动态分配</h3>
+<p><strong>静态分配</strong>：进程运行前为其分配全部所需资源，运行结束后归还资源</p>
+<ul>
+<li>破坏了“请求和保持”条件，不会发生死锁</li>
+</ul>
+<p><strong>动态分配</strong>：进程运行过程中动态申请设备资源</p>
+<h3 id="toc_h3_18">3. 设备分配管理中的数据结构</h3>
+<p>“设备、控制器、通道”之间的关系：</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-cef3ed12.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>一个通道可控制多个设备控制器，每个设备控制器可控制多个设备。</p>
+<p>设备控制表(DCT) :系统为每个设备配置一张 DCT, 用于记录设备情况。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-e45819f5.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>注：“进程管理”章节中曾经提到过“系统会根据阻塞原因不同，将进程 PCB 挂到不同的阻塞队列中”。</p>
+<p><strong>控制器控制表(COCT)</strong> :每个设备控制器都会对应一张 COCT。 操作系统根据 COCT 的信息对控制器<br>
+进行操作和管理。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-48c1f257.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>通道控制表(CHCT)</strong>:每个通道都会对应一-张 CHCT。操作系统根据 CHCT 的信息对通道进行操作和<br>
+管理。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-a1ff0598.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>系统设备表(SDT)</strong> :记录了<strong>系统中全部设备</strong>的情况，每个设备对应一个表目。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-30dd2668.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_19">4. 设备分配的步骤</h3>
+<p>① 根据进程请求的<strong>物理设备名</strong>查找 SDT(注：物理设备名是进程请求分配设备时提供的参数)<br>
+② 根据 SDT 找到 DCT，若<strong>设备</strong>忙碌则将进程 PCB 挂到<strong>设备等待队列</strong>中，不忙碌则将<strong>设备</strong>分配给进程。<br>
+③ 根据 DCT 找到 COCT，若<strong>控制器</strong>忙碌则将进程 PCB 挂到<strong>控制器等待队列</strong>中，不忙碌则将<strong>控制器</strong>分配给进程。<br>
+④ 根据 COCT 找到 CHCT，若<strong>通道</strong>忙碌则将进程 PCB 挂到<strong>通道等待队列</strong>中，不忙碌则将<strong>通道</strong>分配给进<br>
+程。</p>
+<p><strong>注：只有设备、控制器、通道三者都分配成功时，这次设备分配才算成功，之后便可启动 I/O 设备<br>
+进行数据传送。</strong></p>
+<p><strong>缺点：</strong><br>
+① 用户编程时必须使用“物理设备名”，底层细节对用户不透明，不方便编程；<br>
+② 若换了一个物理设备，则程序无法运行；<br>
+③ 若进程请求的物理设备正在忙碌，则即使系统中还有同类型的设备，进程也必须阻塞等待。<br>
+改进方法：建立逻辑设备名与物理设备名的映射机制，用户编程时只需提供逻辑设备名。</p>
+<p><strong>设备分配步骤的改进</strong></p>
+<p>① 根据进程请求的逻辑设备名查找 SDT (注：用户编程时提供的逻辑设备名其实就是“设备类型”)<br>
+② 查找 SDT，找到用户进程指定类型的、并且空闲的设备，将其分配给该进程。操作系统在逻辑设备表(LUT)中新增一个表项。<br>
+③ 根据 DCT 找到 COCT，若控制器忙碌则将进程 PCB 挂到控制器等待队列中，不忙碌则将控制器分配给进程。<br>
+④ 根据 COCT 找到 CHCT，若通道忙碌则将进程 PCB 挂到通道等待队列中，不忙碌则将通道分配给进程。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-37a2a38b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>逻辑设备表(LUT)建立了逻辑设备名与物理设备名之间的映射关系。</strong><br>
+某用户进程第一次使用 设备时使用逻辑设备名向操作系统发出请求，操作系统根据用户进程指定的设备类型(逻辑设备名)查找系统设备表，找到一个空闲设备分配给进程，并在 LUT 中增加相应表项。<br>
+<strong>如果之后用户进程再次通过相同的逻辑设备名请求使用设备，则操作系统通过 LUT 表即可知道用户进程实际要使用的是哪个物理设备了，并且也能知道该设备的驱动程序入口地址</strong>。</p>
+<p>逻辑设备表的设置问题：<br>
+整个系统只有一张 LUT:各用户所用的逻辑设备名不允许重复，适用于单用户操作系统。<br>
+每个用户一张 LUT:不同用户的逻辑设备名可重复，适用于多用户操作系统。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-5edd2738.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_20">八、缓冲区管理</h2>
+<p>什么是缓冲区？有什么作用？<br>
+缓冲区是一个存储区域，可以由专门的硬件寄存器组成，也可利用内存作为缓冲区。<br>
+使用<strong>硬件作为缓冲区的成本较高，容量也较小</strong>，一般仅用在对速度要求非常高的场合(如存储器管理中所用的联想寄存器，由于对页表的访问频率极高，因此使用速度很快的联想寄存器来存放页表项的副本)<br>
+一般情况下，更多的是利用<strong>内存作为缓冲区</strong>，“设备独立性软件”的缓冲区管理就是要组织管理好这些缓冲区。</p>
+<p><strong>缓冲区有什么作用？</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-33715e33.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>1）单缓冲</strong></p>
+<p>假设某用户进程请求某种块设备读入若干块的数据。若采用单缓冲的策略，操作系统会<strong>在主存中为其分配一个缓冲区</strong>( 若题目中没有特别说明，一个缓冲区的大小就是一个块)。<br>
+<strong>注意：当缓冲区数据非空时，不能往缓冲区冲入数据，只能从缓冲区把数据传出;当缓冲区为空时，可以往缓冲区冲入数据，但必须把缓冲区充满以后，才能从缓冲区把数据传出。</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-28a8b55b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-41c7cb6f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-66edd54c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>结论：采用单缓冲策略，处理一块数据平均耗时 Max(C, T)+M</strong></p>
+<p><strong>2）双缓冲</strong></p>
+<p>假设某用户进程请求某种块设备读入若干块的数据。若采用<strong>双缓冲</strong>的策略，操作系统会<strong>在主存中为其分配两个缓冲区</strong>(若题目中没有特别说明，一个缓冲区的大小就是一个块)<br>
+双缓冲题目中，假设初始状态为：工作区空，其中<strong>一个缓冲区满，另一个缓冲区空</strong>。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-6c68696c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-1b3f9305.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>结论：采用双缓冲策略，处理一个数据块的平均耗时为 Max (T, C)</strong></p>
+<p><strong>3）使用单/双缓冲在通信时的区别</strong></p>
+<p>两台机器之间通信时，可以配置缓冲区用于数据的发送和接受。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-64f9db35.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>显然，若两个相互通信的机器只设置单缓冲区，在任一时刻只能实现数据的单向传输。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-6a09bc4a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>若两个相互通信的机器设置双缓冲区，则同一时刻可以实现双向的数据传输。<br>
+注：<strong>管道通信中的“管道”其实就是缓冲区。要实现数据的双向传输，必须设置两个管道</strong>。</p>
+<p><strong>4）循环缓冲区</strong></p>
+<p>将多个<strong>大小相等</strong>的缓冲区链接成一个<strong>循环队列</strong>。<br>
+注：以下图示中，橙色表示已充满数据的缓冲区，绿色表示空缓冲区。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-c442e8d4.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>5）缓冲池</strong></p>
+<p><strong>缓冲池</strong>由系统中共用的缓冲区组成。这些缓冲区按使用状况可以分为：空缓冲队列、装满输入数据的缓冲队列(输入队列)、装满输出数据的缓冲队列(输出队列)。<br>
+另外，根据一个缓冲区在实际运算中扮演的功能不同，又设置了四种工作缓冲区：用于收容输入数据的工作缓冲区(hin) 、用于提取输入数据的工作缓冲区(sin) 、用于收容输出数据的工作缓冲区(hout) 、用于提取输出数据的工作缓冲区(sout)</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-00178520.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-1ed5b174.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_21">九、磁盘的结构、调度算法</h2>
+<h3 id="toc_h3_22">1. 磁盘的结构</h3>
+<p><strong>磁盘、磁道、扇区</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-1cb14e2f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>需要把“磁头”移动到想要读/写的扇区所在的磁道。磁盘会转起来，让目标扇区从磁头下面划过，才能完成对扇区的读/写操作。</p>
+<p><strong>磁盘的物理地址</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-d371da8c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>磁盘的分类</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-e39098bd.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-3d939bf7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_23">2. 磁盘调度算法</h3>
+<p><strong>一次磁盘读/写操作需要的时间</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-94ed91eb.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>寻找时间(寻道时间) Ts: 在读/写数据前，将磁头移动到指定磁道所花的时间。<br>
+① <strong>启动磁头臂</strong>是需要时间的。假设耗时为 s;<br>
+② <strong>移动磁头</strong>也是需要时间的。假设磁头匀速移动，每跨越一个磁道耗时为 m，总共需要跨越 n 条磁道。则：<br>
+<strong>寻道时间 Ts = s + m*n</strong></p>
+<p><strong>延迟时间 Tr</strong>:通过旋转磁盘，使磁头定位到目标扇区所需要的时间。设磁盘转速为 r (单位：转/秒， 或转/分)，则<strong>平均所需的延迟时间 Tr = (1/2)*(1/r) = 1/(2r)</strong></p>
+<p><strong>传输时间 Tt</strong>:从磁盘读出或向磁盘写入数据所经历的时间，假设磁盘转速为 r，此次读/写的字节数为 b，每个磁道上的字节数为 N。则：<br>
+<strong>传输时间 Tt = (1/r) * (b/N) = b/(rN)</strong></p>
+<p>总的平均存取时间 Ta= Ts+ 1/2r + b/(rN)</p>
+<p><strong>先来先服务算法 (FCFS)</strong></p>
+<p><strong>根据进程请求访问磁盘的先后顺序进行调度</strong>。<br>
+假设磁头的初始位置是 100 号磁道，有多个进程先后陆续地请求访问 55、58、39、 18、90、160、150、38、 184 号磁道。<br>
+按照 FCFS 的规则，按照请求到达的顺序，磁头需要依次移动到 55、58、39、18、 90、160、 150、38、184 号磁道。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-cfab0333.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>磁头总共移动了 45+3+19+21+72+70+10+112+146=498 个磁道<br>
+响应一个请求平均需要移动 498/9=55.3 个磁道(平均寻找长度)<br>
+优点：公平;如果请求访问的磁道比较集中的话，算法性能还算过的去；<br>
+缺点：如果有大量进程竞争使用磁盘，请求访问的磁道很分散，则 FCFS 在性能 上很差，寻道时间长。</p>
+<p><strong>最短寻找时间优先(SSTF)</strong></p>
+<p>SSTF 算法会<strong>优先处理的磁道是与当前磁头最近的磁道</strong>。可以保证每次的寻道时间最短，但是并不能保证总的寻道时间最短。(其实就是 贪心算法的思想，只是选择眼前最优，但是总体未必最优)<br>
+假设磁头的初始位置是 100 号磁道，有多个进程先后陆续地请求访问 55、58、39、 18、90、160、150、38、 184 号磁道。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-56d7ac04.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>磁头总共移动了(100-18) + (184-18) = 248 个磁道<br>
+响应一个请求平均需要移动 248/9= 27.5 个磁道(平均寻找长度)<br>
+优点：性能较好，平均寻道时间短<br>
+缺点：<strong>可能产生“饥饿”现象</strong><br>
+Eg:本例中，如果在处理 18 号磁道的访问请求时又来了一个 38 号磁道的访问请求，处理 38 号磁道的访问请求时又来了-一个 18 号磁道的访问请求。如果有源源不断的 18 号、38 号磁道的访问请求到来的话，150、 160、184 号磁道的访问请求就永远得不到满足，从而产生“饥饿”现象。</p>
+<p><strong>扫描算法(SCAN)</strong></p>
+<p>SSTF 算法会产生饥饿的原因在于：磁头有可能在一个小区域内来回来去地移动。为了防止这个问题，可以规定，<strong>只有磁头移动到最外侧磁道的时候才能往内移动，移动到最内侧磁道的时候才能往外移动</strong>。这就是<strong>扫描算法(SCAN)<strong>的思想。由于磁头移动的方式很像电梯，因此也叫</strong>电梯算法</strong>。<br>
+假设某磁盘的磁道为 0~200 号，磁头的初始位置是 100 号磁道，且<strong>此时磁头正在往磁道号增大的方向移动</strong>，有多个进程先后陆续地请求访问 55、58、39、 18、 90、160、 150、 38、184 号磁道。<img src="https://img.hacpai.com/file/2020/01/image-c9b96c40.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>磁头总共移动了(200-100) + (200-18) = 282 个磁道<br>
+响应一个请求平均需要移动 282/9=31.3 个磁道(平均寻找长度)<br>
+优点：性能较好，平均寻道时间较短，<strong>不会产生饥饿现象</strong><br>
+缺点： ① 只有到达最边上的磁道时才能改变磁头移动方向，事实上，处理了 184 号磁道的访问请求之后就不需要再往右移动磁头了。<br>
+② SCAN 算法对于各个位置磁道的响应频率不平均(如：假设此时磁头正在往右移动，且刚处理过 90 号磁道，那么下次处理 90 号磁道的请求就需要等磁头移动很长一段距离; 而响应了 184 号磁道的请求之后，很快又可以再次响应 184 号磁道的请求了)。</p>
+<p><strong>LOOK 调度算法（了解）</strong></p>
+<p>扫描算法(SCAN) 中，只有到达最边上的磁道时才能改变磁头移动方向，事实上，处理了 184 号磁，道的访问请求之后就不需要再往右移动磁头了。LOOK 调度算法就是为了解决这个问题，如果在磁头移动方向上已经没有别的请求，就可以立即改变磁头移动方向。( 边移动边观察，因此叫 LOOK)<br>
+假设某磁盘的磁道为 0~200 号，磁头的初始位置是 100 号磁道，且此时磁头正在往磁道号增大的方向移动，有多个进程先后陆续地请求访问 55、58、39、 18、90、160、150、 38、184 号磁道。</p>
+<p><strong>循环扫描算法(C-SCAN)（了解）</strong></p>
+<p>SCAN 算法对于各个位置磁道的响应频率不平均，而 C-SCAN 算法就是为了解决这个问题。规定只有磁头朝某个特定方向移动时才处理磁道访问请求，而返回时直接快速移动至起始端而不处理任何请求。<br>
+假设某磁盘的磁道为 0~200 号，磁头的初始位置是 100 号磁道，且此时 磁头正在往磁道号增大的方向移动，有多个进程先后陆续地请求访问 55、58、39、 18、 90、160、 150、 38、184 号磁道。</p>
+<p><strong>C-LOOK 调度算法（了解）</strong></p>
+<p>C-SCAN 算法的主要缺点是只有到达最边上的磁道时才能改变磁头移动方向，并且磁头返回时不一定需要返回到最边缘的磁道上。C-L0OK 算法就是为了解决这个问题。如果磁头移动的方向上已经没有磁道访问请求了，就可以立即让磁头返回，并且磁头只需要返回到有磁道访问请求的位置即可。<br>
+假设某磁盘的磁道为 0~200 号，磁头的初始位置是 100 号磁道，且此时磁头正在往磁道号增大的方向移动，有多个进程先后陆续地请求访问 55、58、 39、18、 90、160、 150、 38、184 号磁道。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-c0d2cae7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+          <div>
+            <hr>
+
+标题：（9）输入输出系统——计算机操作系统复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2020/01/06/1578296456011.html" target="_blank">https://algerfan.github.io/articles/2020/01/06/1578296456011.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（9）输入输出系统——计算机操作系统复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2020/01/06/1578296456011.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1578296456011"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1578296456011",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1578296456011",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1578296456011', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 26ms, 2022/12/10 22:11:59 -->

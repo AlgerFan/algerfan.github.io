@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（7）文件管理——计算机操作系统复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（7）文件管理——计算机操作系统复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2020/01/03/1578043732844.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（7）文件管理——计算机操作系统复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2020/01/03/1578043732844.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（7）文件管理——计算机操作系统复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2020-01-03</span>
+          <span class="comments">
+            <span data-uvstatcmt="1578043732844">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2020/01/03/1578043732844.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20180804.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0"><img src="https://img.hacpai.com/file/2020/01/image-377bbd20.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="">一、初识文件管理</h2>
+<p>文件系统中，<strong>数据项</strong>是最低级的数据组织方式，分为两种类型：</p>
+<ul>
+<li>基本数据项：用于描述一个对象的某种属性的字符集，又称为字段；</li>
+<li>组合数据项：是由若干个基本的数据项组成，简称组项。</li>
+</ul>
+<p><strong>记录</strong>是一组相关数据项的集合，用于描述一个对象在某方面的属性。</p>
+<p><strong>文件</strong>是由创建者定义的、具有文件名的一组相关元素的集合，分为结构文件和无结构文件两种。</p>
+<p><strong>文件属性</strong>包括：</p>
+<ul>
+<li><strong>文件名</strong>：由创建文件的用户决定文件名，主要是为了方便用户找到文件，同一目录下不允许有重名文件。标识符：一个系统内的各文件标识符唯一，对用户来说毫无可读性，因此标识符只是操作系统用于区分各个文件的一种内部名称。</li>
+<li><strong>类型</strong>：指明文件的类型</li>
+<li><strong>位置</strong>：文件存放的路径(让用户使用)、在外存中的地址(操作系统使用，对用户不可见)</li>
+<li><strong>大小</strong>：指明文件大小</li>
+<li><strong>创建时间、上次修改时间</strong></li>
+<li><strong>文件所有者信息</strong></li>
+<li><strong>保护信息</strong>：对文件进行保护的访问控制信息。</li>
+</ul>
+<p><strong>几个问题：</strong></p>
+<p><strong>1.文件内部的数据应该怎么样组织起来？</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-ad168ede.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>2.文件之间应该怎样组织起来？</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-102fca92.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>3.操作系统应该向上提供哪些功能？</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-04be38ed.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>4.文件应如何存放在外存？</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-fe15bbd1.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-083b06a7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>5.文件共享和文件保护</strong></p>
+<p><strong>文件共享</strong>：使多个用户可以共享使用一个文件。<br>
+<strong>文件保护</strong>：如何保证不同的用户对文件有不同的操作权限。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-093403ba.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_1">二、文件系统的层次结构</h2>
+<p><strong>文件系统的层次结构</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-225e4c11.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>用一个例子来辅助记忆文件系统的层次结构：<br>
+假设某用户请求删除文件“D:/工作目录/学生信息.xlsx”的最后 100 条记录。</p>
+<ol>
+<li>用户需要通过操作系统提供的接口发出上述请求---用户接口</li>
+<li>由于用户提供的是文件的存放路径，因此需要操作系统一层一层地查找目录，找到对应的目录项---文件目录系统</li>
+<li>不同的用户对文件有不同的操作权限，因此为了保证安全，需要检查用户是否有访问权限---存取控制模块(存取控制验证层)</li>
+<li>验证了用户的访问权限之后，需要把用户提供的“记录号”转变为对应的逻辑地址---逻辑文件系统与文件信息缓冲区</li>
+<li>知道了目标记录对应的逻辑地址后，还需要转换成实际的物理地址---物理文件系统</li>
+<li>要删除这条记录，必定要对磁盘设备发出请求---设备管理程序模块</li>
+<li>删除这些记录后，会有一些盘块空闲，因此要将这些空闲盘块回收---辅助分配模块</li>
+</ol>
+<h2 id="toc_h2_2">三、文件的逻辑结构</h2>
+<h3 id="toc_h3_3">1. 按文件结构分</h3>
+<p>文件的逻辑结构分为：无结构文件、有结构文件。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-3019ff8f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>无结构文件</strong>：文件内部的数据就是一-系列二进制流或字符流组成。又称“流式文件”。如：Windows 操作系统中的。txt 文件。</p>
+<p><strong>有结构文件</strong>：由一组相似的记录组成，又称“记录式文件”。每条记录又若干个数据项组成。如：数据库表文件。一般来说，每条记录有一个数据项可作为关键字(作为识别不同记录的 ID)</p>
+<h3 id="toc_h3_4">2. 按组织方式分</h3>
+<h4 id="toc_h4_5">顺序文件</h4>
+<p><strong>顺序文件</strong>：文件中的记录一个接一个地顺序排列(逻辑。上)，记录可以是定长的或可变长的。各个记录在物理上可以顺序存储或链式存储。</p>
+<p><strong>顺序文件的排列方式</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-8fec35fb.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>顺序文件的特性及优缺点</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-3dcb8962.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h4 id="toc_h4_6">索引文件</h4>
+<p><strong>索引表</strong>本身是<strong>定长记录的顺序文件</strong>。因此可以快速找到第 i 个记录对应的索引项。<br>
+可将关键字作为索引号内容，若按关键字顺序排列，则还可以支持按照关键字折半查找。<br>
+每当要增加/删除一个记录时，需要对索引表进行修改。由于索引文件有很快的检索速度，因此<strong>主要用于对信息处理的及时性要求比较高的场合</strong>。</p>
+<p>另外，<strong>可以用不同的数据项建立多个索引表</strong>。如：学生信，息表中，可用关键字“学号”建立一张索引表。也可用“姓名”建立一张索引表。这样就可以根据“姓名”快速地检索文件了。(Eg:SQL 就支持根据某个数据项建立索引的功能)</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-929e2f33.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>索引顺序文件</strong></p>
+<p>索引顺序文件是索引文件和顺序文件思想的结合。索引顺序文件中，同样会为文件建立一张索引表，但不同的是：并不是每个记录对应一个索引表项，而是<strong>一组记录对应一个索引表项</strong>。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-17089872.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>若一个<strong>顺序文件</strong>有 10000 个记录，则根据关键字检索文件，只能从头开始顺序查找(这里指的并不是定长记，录、顺序结构的顺序文件)，<strong>平均须查找 5000 个记录</strong>。<br>
+若采用<strong>索引顺序文件</strong>结构，可把 10000 个记录分为 V10000=100 组，每组 100 个记录。则需要先顺序查找索引表找到分组(共 100 个分组，因此索引表长度为 100，平均需要查 50 次)，找到分组后，再在分组中顺序查找记录(每个分组 100 个记录，因此平均需要查 50 次)。可见，采用索引顺序文件结构后，<strong>平均查找次数减少为 50+50=100 次</strong>。<br>
+同理，若文件共有 106 个记录，则可分为 1000 个分组，每个分组 1000 个记录。根据关键字检索一个记录，平均需要查找 500+500=1000 次。这个<strong>查找次数依然很多</strong>，如何解决呢？</p>
+<p><strong>多级索引文件</strong></p>
+<p>为了进一步提高检索效率，可以为顺序文件建立多级索引表。例如，对于一个含 106 个记录的文件，可先为该文件建立一张低级索引表， 每 100 个记录为- -组，故低级索引表中共有 10000 个表项( 即 10000 个定长记录)，再把这 10000 个定长记录分组，每组 100 个， 为其建立顶级索引表，故顶级索引表中共有 100 个表。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-14d77dd8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-99f67a87.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_7">四、文件目录</h2>
+<p>目录本身就是一种有结构文件，由一条条记录组成。每条记录对应一一个在该放在该目录下的文件。</p>
+<p>目录文件中的一条记录就是一个“<strong>文件控制块</strong>（PCB）”。</p>
+<p>FCB 的有序集合称为“文件目录”，一个 FCB 就是一个文件<strong>目录项</strong>。<br>
+FCB 中包含了文件的<strong>基本信息(文件名、物理地址、逻辑结构、物理结构等</strong>)，存取控制信息(是否可读/可写、禁止访问的用户名单等)，使用信息(如文件的建立时间、修改时间等)。<strong>最重要，最基本的还是文件名、文件存放的物理地址。</strong></p>
+<p>需要对目录进行哪些操作？<br>
+<strong>搜索</strong>：当用户要使用一一个文件时，系统要根据文件名搜索目录，找到该文件对应的目录项<br>
+<strong>创建文件</strong>：创建- 一个新文件时，需要在其所属的目录中增加一一个目录项<br>
+<strong>删除文件</strong>：当删除-一个文件时，需要在目录中删除相应的目录项<br>
+<strong>显示目录</strong>：用户可以请求显示目录的内容，如显示该目录中的所有文件及相应属性<br>
+<strong>修改目录</strong>：某些文件属性保存在目录中，因此这些属性变化时需要修改相应的目录项(如：文件重命名)</p>
+<h3 id="toc_h3_8">单级目录</h3>
+<p><strong>单级目录</strong>实现了“<strong>按名存取</strong>”，但是不允许文件重名。<br>
+在创建一个文件时， 需要先检查目录表中有没有重名文件，确定不重名后才能允许建立文件，并将新文件对应的目录项插入目录表中。</p>
+<p>早期的多用户操作系统，采用<strong>两级目录结构</strong>。分为<strong>主文件目录</strong>(MFD, Master File Directory)和<strong>用户文件目录</strong>(UFD，User Flie Directory)。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-b6eaa58a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_9">树形结构目录</h3>
+<p>现在 OS 中，最通用且实用的文件目录无疑是<strong>树形结构目录</strong>，也叫多级目录结构。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-8264bddb.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>用户(或用户进程)要访问某个文件时要用文件路径名标识文件，文件路径名是个字符串。各级目录之间<br>
+用“/”隔开。<strong>从根目录出发的路径称为绝对路径</strong>。<br>
+例如：自拍.jpg 的绝对路径是“/照片/2015-08/ 自拍.jpg”<br>
+系统根据绝对路径一层一层地找到下一-级目录。刚开始<strong>从外存读入根目录的目录表</strong>;找到“照片”目录的存放位置后，<strong>从外存读入对应的目录表</strong>;再找到“2015-08”目录的存放位置，<strong>再从外存读入对应目录表</strong>;最后才找到文件“自拍 jpg”的存放位置。整个过程<strong>需要 3 次读磁盘 I/O 操作</strong>。</p>
+<p>很多时候，用户会连续访问同一目录内的多个文件(比如：接连查看“2015-08" 目录内的多个照片文件)，<br>
+显然，每次都从根目录开始查找，是很低效的。因此可以设置一个“<strong>当前目录</strong>”。例如，此时已经打开了“照片’的目录文件，也就是说，这张目录表已调入内存，那么可以把它设置为“当前目录”。当用户想要访问某个文件时，可以使用<strong>从当前目录出发的“相对路径</strong>。</p>
+<p>树形目录结构可以很方便地对文件进行分类，层次结构清晰，也能够更有效地进行文件的管理和保护。但<br>
+是，树形结构<strong>不便于实现文件的共享</strong>。为此，提出了“<strong>无环图目录结构</strong>”。</p>
+<h3 id="toc_h3_10">无环图目录结构</h3>
+<p><img src="https://img.hacpai.com/file/2020/01/image-5abf29d8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>可以用不同的文件名指向同一个文件</strong>，甚至可以指向同一个目录(共享同一目录下的所有内容)。<br>
+需要为<strong>每个共享结点设置一个共享计数器</strong>，用于记录此时有多少个地方在共享该结点。用户提出删除结点的请求时，只是删除该用户的 FCB、并使<strong>共享计数器减 1</strong>，并不会直接删除共享结点。<strong>只有共享计数器减为 0 时，才删除结点</strong>。<br>
+注意：共享文件不同于复制文件。在<strong>共享文件中，由于各用户指向的是同一个文件，因此只要其中一个<br>
+用户修改了文件数据，那么所有用户都可以看到文件数据的变化</strong>。</p>
+<h3 id="toc_h3_11">索引结点</h3>
+<p>其实在查找各级目录的过程中只需要用到“文件名”这个信息，只有文件名匹配时，才需要读出文件的其他信息。因此可以考虑让目录表“瘦身”来提升效率。除了文件名之外的信息都存在索引节点中。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-ac172fd5.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>思考有何好处？</strong><br>
+假设一个 FCB 是 64B，磁盘块的大小为 1KB，则每个盘块中只能存放 16 个 FCB。若-一个文件目录中共有 640 个目录项，则共需要占用 640/16= 40 个盘块。因此按照某文件名检索该目录，平均需要查询 320 个目录项。<strong>平均需要启动磁盘 20 次(每次磁盘 I/0 读入一块)</strong>。</p>
+<p>若<strong>使用索引结点机制</strong>，文件名占 14B，索引结点指针站 2B，则每：个盘块可存放 64 个目录项，那么按文件名检索目录<strong>平均只需要读入 320/64=5 个磁盘块</strong>。显然，这<strong>将大大提升文件检索速度</strong>。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-54f54cc7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_12">五、文件共享</h2>
+<h3 id="toc_h3_13">基于索引结点的共享方式(硬链接)</h3>
+<p>知识回顾：<strong>索引结点，是一种文件目录瘦身策略</strong>。由于检索文件时只需用到文件名，因此可以<strong>将除<br>
+了文件名之外的其他信息放到索引结点中</strong>。这样目录项就只需要包含文件名、索引结点指针。</p>
+<p>索引结点中设置一个链接计数变量 <strong>count,用于表示链接到本索引结点上的用户目录项数</strong>。<br>
+若 count= 2，说明此时有两个用户目录项链接到该索引结点上，或者说是有两个用户在共享此文件。<br>
+若某个用户决定“删除”该文件，则只是要把用户目录中与该文件对应的目录项删除，且索引结点的 count 值减 1。</p>
+<p>若 count&gt;O，说明还有别的用户要使用该文件，暂时不能把文件数据删除，否则会导致指针悬空。<br>
+当 count=0 时系统负责删除文件。<br>
+<img src="https://img.hacpai.com/file/2020/01/image-6ef2546f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-bd1fb69a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-0460d347.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_14">基于符号链的共享方式</h3>
+<p>允许一个文件或子目录有多个父目录，但仅用一个作为主目录，其他的几个父目录都是通过链接的方式与之相链接的。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-210a5660.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>当 User3 访问“cc”时，操作系统判断文件“cc”属于 Link 类型文件，于是会根据其中记录的路径层层查找目录，最终找到 User1 的目录表中的“aa”表项，于是就找到了文件 1 的索引结点。</p>
+          <div>
+            <hr>
+
+标题：（7）文件管理——计算机操作系统复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2020/01/03/1578043732844.html" target="_blank">https://algerfan.github.io/articles/2020/01/03/1578043732844.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（7）文件管理——计算机操作系统复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2020/01/03/1578043732844.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1578043732844"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1578043732844",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1578043732844",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1578043732844', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 20ms, 2022/12/10 22:11:59 -->

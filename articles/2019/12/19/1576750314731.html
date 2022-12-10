@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（4）网络层——计算机网络学习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（4）网络层——计算机网络学习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/12/19/1576750314731.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（4）网络层——计算机网络学习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/12/19/1576750314731.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（4）网络层——计算机网络学习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-12-19</span>
+          <span class="comments">
+            <span data-uvstatcmt="1576750314731">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/12/19/1576750314731.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20190829.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">1. 网络层提供的两种服务</h2>
+<p>网络层关注的是如何将分组从源端沿着网络路径送达目的端。<br>
+两种服务：网络层应该向运输层提供怎样的服务？</p>
+<ul>
+<li>虚电路服务</li>
+<li>数据报服务</li>
+</ul>
+<p><strong>虚电路</strong></p>
+<p>虚电路表示这只是一条<strong>逻辑上的连接</strong>，分组都沿着这条逻辑连接按照存储转发方式传送，而并不是真正建立了一条物理连接。</p>
+<p><strong>数据报服务</strong></p>
+<p>网络层向上只提供<strong>简单灵活的、无连接的、尽最大努力交付的数据报服务</strong>。<br>
+网络在发送时不需要先建立连接。每一个分组（即 IP 数据报）独立发送，与其前后的分组无关（不进行编号）。<br>
+网络层不提供服务质量的承诺。即所传送的分组可能出错、丢失、重复和失序。当然也不保证分组传送的时限。<br>
+好处：</p>
+<ul>
+<li>由于传输网络不提供端到端的可靠传输服务，就使得网络中的路由器可以做得比较简单，而且价格低廉。</li>
+<li>如果主机中的进程之间的通信需要是可靠的，那么就由网络的主机中的传输层负责。</li>
+</ul>
+<p>| 对比的方面 | 虚电路服务 | 数据报服务 |<br>
+| - | - | - |<br>
+| 思路 | 可靠通信应当由网络来保证 | 可靠通信应当由用户主机来保证 |<br>
+| 连接的建立 | 必须有 | 不需要 |<br>
+| 终点地址 | 仅在连接建立阶段使用，每个分组使用短的虚电路号 | 每个分组都有终点的完整地址 |<br>
+| 分组的转发 | 属于同一条虚电路的分组均按照同一路由进行转发 | 每个分组独立选择路由进行转发 |<br>
+| 当结点出故障时 | 所有通过出故障的结点的虚电路均不能工作 | 出故障的结点可能会丢失分组，一些路由可能会发生变化 |<br>
+| 分组的顺序 | 总是按发送顺序到达终点 | 到达终点时不一定按发送顺序 |<br>
+| 端到端的差错处理和流量控制 | 可以由网络负责，也可以由用户主机负责 | 由用户主机负责 |</p>
+<h2 id="toc_h2_1">2. 网际协议 IP</h2>
+<h3 id="toc_h3_2">2.1 虚拟互连网络</h3>
+<p>网络互连的设备<br>
+中间设备又称为中间系统或中继系统</p>
+<ul>
+<li>物理层中继系统：转发器（集线器）</li>
+<li>数据链路层中继系统：网桥或桥接器（交换机）</li>
+<li>网络层中继系统：路由器</li>
+<li>网络层以上的中继系统：网关</li>
+</ul>
+<p>网络互联的问题<br>
+互连在一起的网络要进行通信，会遇到许多问题需要解决，如：</p>
+<ul>
+<li>不同的寻址方案</li>
+<li>不同的最大分组长度</li>
+<li>不同的网络接入机制</li>
+<li>不同的超时控制</li>
+<li>不同的差错恢复方法</li>
+<li>不同的状态报告方法</li>
+<li>不同的路由选择技术</li>
+<li>不同的用户接入控制</li>
+<li>不同的服务(面向连接服务和无连接服务)</li>
+<li>不同的管理与控制方式</li>
+</ul>
+<h3 id="toc_h3_3">2.2 IP 协议</h3>
+<p><strong>IP 协议简介</strong></p>
+<p>网际协议 IP 是 TCP/IP 体系中两个最主要的协议之一。与 IP 协议相关的还有四个协议：</p>
+<ul>
+<li>地址解析协议 ARP</li>
+<li>逆地址解析协议 RARP</li>
+<li>网际控制报文协议 ICMP</li>
+<li>网际组管理协议 IGMP</li>
+</ul>
+<p>网络层 4 个协议之间层次<br>
+<img src="https://img.hacpai.com/file/2019/12/image-e0b6427d.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>IP 层次结构</strong></p>
+<p>层次化 IP 地址<br>
+<img src="https://img.hacpai.com/file/2019/12/image-898a6b3c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>网络地址<br>
+网络地址唯一制定了每个网络。同一网络中的每台计算机都共享相同的网络地址，并用它作为自己 IP 地址的一部分。</p>
+<h3 id="toc_h3_4">2.3 分类的 IP 地址</h3>
+<p>IP 地址的类别<br>
+<img src="https://img.hacpai.com/file/2019/12/image-270376de.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>IP 地址及其表示方法</strong><br>
+我们把整个因特网看成为一个单一的、抽象的网络。IP 地址就是给每个接在因特网上的主机的每一个接口分配一个在全世界范围是唯一的 32 位的标识符。</p>
+<p>IP 地址现在由因特网名字与号码指派公司 ICANN  进行分配。<br>
+IP 地址的编址方法</p>
+<ul>
+<li>分类的 IP 地址</li>
+<li>子网的划分</li>
+<li>构成超网</li>
+</ul>
+<p><strong>分类 IP 地址</strong></p>
+<ul>
+<li>每一类地址都由两个固定长度的字段组成，其中一个字段是网络号 net-id，它标识主机所连接到的网络，而另一个字段则是主机号 host-id，它标识该主机。</li>
+<li>两级的 IP 地址可以记为：	IP 地址 ::= {&lt; 网络号 &gt;,&lt; 主机号 &gt;}</li>
+</ul>
+<p>A 类地址：1-126<br>
+B 类地址：128-191<br>
+C 类地址：192-223<br>
+<img src="https://img.hacpai.com/file/2019/12/image-e82b9264.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-2ec7c396.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>特殊的几个地址</p>
+<ul>
+<li>0.0.0.0 本网络</li>
+<li>127.0.0.1 本地环回地址</li>
+<li>169.254.0.0 无法分配时</li>
+<li>保留的私网地址
+<ul>
+<li>10.0.0.0</li>
+<li>172.16.0.0	--- 172.31.0.0</li>
+<li>192.168.0.0	--- 192.168.255.0</li>
+</ul>
+</li>
+</ul>
+<h2 id="toc_h2_5">3. 划分子网和构造超网 CIDR</h2>
+<h3 id="toc_h3_6">3.1 划分子网</h3>
+<p><strong>子网掩码作用</strong><br>
+子网掩码又叫网络掩码、地址掩码，它是一种用来指明一个 IP 地址的哪些位标识的是主机所在的子网以及哪些位标识是主机的位掩码。子网掩码不能单独存在，它必须结合 IP 地址一起使用。子网掩码只有一个作用，就是将某个 IP 地址划分成网络地址和主机地址两个部分。</p>
+<p>例子：如果一台计算机的 IP 地址配置为 172.16.122.204，子网掩码为 255.255.0.0。将其 IP 地址和子网掩码都写成二进制，进行与运算，即 1 和 1 与运算得 1，0 和 1 或 1 和 0 做与运算得 0。这样主机位归零，网络位不变，得到 172.16.0.0。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-ab688535.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>从两级 IP 地址到三级 IP 地址</strong></p>
+<ul>
+<li>第一，IP 地址空间的利用率有时很低；</li>
+<li>第二，给每个物理网络分配一个网络号会使路由表变得太大因而使网络性能变坏；</li>
+<li>第三，两级 IP 不够灵活。</li>
+</ul>
+<p>划分子网的方法是从网络的主机号借用若干位作为子网号，当然主机号也相应减少了同样的位数，两级 IP 变成了三级 IP：网络号、子网号、主机号。<br>
+IP 地址 ::= {&lt; 网络号 &gt;,&lt; 子网号 &gt;,&lt; 主机号 &gt;}</p>
+<p><strong>把 C 类网等分成两个子网</strong><br>
+划分两个子网后网络规划如图所示<br>
+<img src="https://img.hacpai.com/file/2019/12/image-3be929b5.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-4a0dfeae.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+子网掩码是 128</p>
+<p><strong>等分成四个子网</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-7cd4214a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+可以用的网段：1-62	65-126	129-190	193-253<br>
+（0 的 IP 是网段的网络地址，而 63 的 IP 是网段的广播地址，其他类似）<br>
+子网掩码是 192</p>
+<p><strong>等分成八个子网</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-06d03924.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+可以用的网段：同理<br>
+子网掩码是 224</p>
+<p>点对点的子网掩码是 252</p>
+<p>划分子网只能等分划分</p>
+<p><strong>变长子网划分</strong></p>
+<p>变长子网掩码 VLSM 可进一步提高 IP 地址资源利用率</p>
+<ul>
+<li>100 50 20 10 可以划分为：<br>
+<img src="https://img.hacpai.com/file/2019/12/image-5068d214.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></li>
+</ul>
+<p>实例：判断 192.168.0.101/26 所属的子网<br>
+<img src="https://img.hacpai.com/file/2019/12/image-077aed1e.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h3 id="toc_h3_7">3.2 构造超网 CIDR</h3>
+<p>如何让两个子网的计算机划分在一个网段？<br>
+如图，将 192.168.0.0 和 192.168.1.0 两个 C 类网络合并。将 IP 地址第 3 个字节和第 4 个字节写成二进制，可以看到将子网掩码往左移动 1 位，网络部分就一样了，这两个网段就在一个网段了。这就是<strong>构造超网</strong>。<br>
+在 VLSM 的基础上更进一步研究出<strong>无分类编址</strong>方法，正式命名为<strong>无分类域间路由选择 CIDR（构造超网）</strong><br>
+CIDR 消除了传统的 A 类、B 类和 C 类地址以及划分子网的概念，能更加有效的分配 IPv4 的地址空间。</p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-6b6a7b16.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>CIDR 地址块划分举例<br>
+<img src="https://img.hacpai.com/file/2019/12/image-1d0741a3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>合并网络的规律总结<br>
+<img src="https://img.hacpai.com/file/2019/12/image-3c9ac3cf.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h3 id="toc_h3_8">3.3 IP 地址与硬件地址</h3>
+<p><img src="https://img.hacpai.com/file/2019/12/image-e560c846.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>两个计算机之间的通信过程<br>
+<img src="https://img.hacpai.com/file/2019/12/image-d9c89654.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>地址解析协议 ARP&amp;逆地址解析协议 RARP</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-469b700a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>由于 IP 协议使用了 ARP 协议，因此 ARP 协议通常划归网络层。ARP 协议的用途是为了从网络层使用的 IP 地址，解析出在数据链路层使用的硬件地址。一个旧的协议叫做逆地址解析协议 RARP。<br>
+由于更换适配器会使主机的硬件地址改变，地址解析协议 ARP 解决解决的方法是在主机 ARP 高速缓存中存放一个从 IP 地址到硬件地址的映射表，并且这个映射表还经常动态更新。</p>
+<h3 id="toc_h3_9">3.4 IP 数据报的格式</h3>
+<p>在 TCP/IP 的标准中，各种数据格式常常以 32 位为单位来描述。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-9a00aeb1.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>各字段含义：</p>
+<ul>
+<li>版本：占 4 位，IP 的版本是 IPv4 还是 IPv6；</li>
+<li>首部长度：占 4 位，IP 的首部长度最大是 60 字节；</li>
+<li>区分服务：占 8 位，用于获得更好的服务。只有在使用区分服务时，这个字段才起作用；</li>
+<li>总长度：占 16 位，指首部和数据之和的长度。最大长度为 65535 字节；</li>
+<li>标识：占 16 位，是一个计数器，用于记录产生数据报个数；</li>
+<li>标志：最低位记为 MF，MF=1 表示后面“还有分片”，中间一位记为 DF，意思是“不能分片”；</li>
+<li>片偏移：占 13 位，分片后，某片在原分组中的相对位置，即偏移量；</li>
+<li>生存时间：占 8 位，英文缩写 TTL，数据报在网络中的寿命； ping ip 地址 -i 5 可以看到至 ip 地址第 5 个路由器的 ip；</li>
+<li>首部检验和：占 16 位，检验首部是否有错误；</li>
+<li>源地址</li>
+<li>目的地址</li>
+</ul>
+<p>IP 数据报分片例子<br>
+<img src="https://img.hacpai.com/file/2019/12/image-d810bde4.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>首部校验过程<br>
+<img src="https://img.hacpai.com/file/2019/12/image-822d5aed.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>IP 数据报首部的可变长度</strong>是一个选项字段，用来支持排错、测量以及安全等措施，内容很丰富。长度从 1 个字节到 40 个字节不等。</p>
+<h3 id="toc_h3_10">3.5 IP 转发分组的流程</h3>
+<p>路由表必须包含以下三项内容：<strong>目的网络地址</strong>、<strong>子网掩码</strong>、<strong>下一跳地址</strong>。</p>
+<p>数据路由，路由器在不同网段转发数据报<br>
+网络畅通的条件：能去能回</p>
+<ul>
+<li>沿途的路由器必须知道到目标网络下一跳给哪个接口</li>
+<li>沿途的路由器必须知道到源网络下一跳给哪个接口</li>
+</ul>
+<p>例子：计算机 PC0 ping PC1，网络要想通，要求沿途的路由器 Router0、Router1、Router2 和 Router3 都必须有到 192.168.1.0/24 网络的路由，这样数据报才能到达 PC1。<br>
+PC1 要回应数据报给 PC0，沿途所有的路由器必须有到 192.168.0.0/24 网络的路由，这样数据报才能回来。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-8513dd7d.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>添加默认路由实战命令：</p>
+<pre><code>Router1&gt;en
+Router1#config t
+Router1#show ip route
+Router1#config t
+Routerl (config)#ip route 192.168.0.0 255.255.255.0 172.16.0.1
+Router1# 
+Router1#show ip route
+Router1#
+Router1#config t
+Router1 (config)#no ip route 192.168.0.0 255.255.255.0 172.16.0.1
+</code></pre>
+<h2 id="toc_h2_11">4. 网际控制报文协议 ICMP</h2>
+<p>为了提高 IP 数据报交付成功的机会，在网际层使用了网际控制报文协议 ICMP。</p>
+<ul>
+<li>ICMP 允许主机或路由器报告差错情况和提供有关异常情况的报告；</li>
+<li>ICMP 不是高层协议，而是 IP 层的协议</li>
+<li>ICMP 报文作为 IP 层数据报的数据，加上数据报的首部，组成 IP 数据报发送出去。</li>
+</ul>
+<p>ICMP 报文格式<br>
+<img src="https://img.hacpai.com/file/2019/12/image-d6d00131.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h3 id="toc_h3_12">4.1 ICMP 报文的种类</h3>
+<p>ICMP 报文的种类有两种，即<strong>ICMP 差错报告报文</strong>和<strong>ICMP 询问报文</strong>。<br>
+ICMP 报文的前 4 个字节是统一的格式，共有三个字段：即类型、代码和检验和。接着的 4 个字节的内容与 ICMP 的类型有关。</p>
+<p>差错报告报文有五种：终点不可达，源点抑制，时间超过，参数问题，改变路由（重定向）<br>
+询问报文有两种：回送请求和回答报文，时间戳请求和回答报文。</p>
+<p>差错报告报文的数据字段的的内容<br>
+<img src="https://img.hacpai.com/file/2019/12/image-336feb64.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h3 id="toc_h3_13">4.2 ICMP 的应用案例</h3>
+<p>ICMP 的一个重要应用就是分组网间探测 PING，用来测试两台主机之间的连通性。PING 使用了 ICMP 回送请求和回送回答请求报文。PING 是应用层直接使用网络层 ICMP 的一个例子，没有通过传输层的 TCP 或 UDP。</p>
+<p>另一个非常有用的应用是 traceroute（这是 UNIX 操作系统中名字），它用来跟踪一个分组从源点到终点的路径，在 Windows 操作系统的命令是 tracert。</p>
+<h2 id="toc_h2_14">5. 互联网的路由选择协议</h2>
+<h3 id="toc_h3_15">5.1 有关路由选择协议的几个基本概念</h3>
+<p><strong>理想的路由算法</strong></p>
+<ul>
+<li>算法必须是正确的和完整的</li>
+<li>算法在计算上应简单</li>
+<li>算法应能适应通信量和网络拓扑的变化</li>
+<li>算法应具有稳定性</li>
+<li>算法应是公平的</li>
+<li>算法应是最佳的</li>
+</ul>
+<p>所谓“最佳”只能是相对于某一种特定要求下得出的较为合理的选择而已。</p>
+<p>** 静态路由选择策略<strong>与</strong>动态路由选择策略**<br>
+静态路由选择也叫做非自适应路由选择，其特点是简单和开销较小，但不能及时适应网络状态的变化。对于很简单的小网络，完全可以使用，人工配种每一个路由。<br>
+动态路由选择也叫做自适应路由选择，其特色是能较好地适应网络状态变化，但实现起来较为复杂，开销也比较大。因此动态路由选择适合复杂的大网络。</p>
+<p><strong>分层次的路由选择协议</strong></p>
+<p>互联网采用的路由选择协议主要是自适应的，分布式路由选择协议。原因：一是互联网规模非常大，二是许多单位不愿意外界了解自己单位网络的布局细节和采用的路由选择协议。<br>
+因此把互联网划分为很多小的<strong>自治系统（AS）</strong>。一个 AS 对其他 AS 表现出的是<strong>一个单一的和一致的路由选择策略</strong>。<br>
+目前互联网把路由选择协议分为了<strong>内部网络协议 IGP</strong>（如：RIP 和 OSPF）和<strong>外部网络协议 EGP</strong>（BGP-4）。也叫做域间路由选择和域内路由选择。</p>
+<h3 id="toc_h3_16">5.2 内部网关协议 RIP</h3>
+<p>RIP 是内部网关协议 IGP 最先得到广泛使用的协议，是<strong>一种基于距离向量的路由选择协议</strong>。<br>
+RIP 协议要求网络中每一个路由器都要维护从它自己到其它每一个目的网络的距离记录，距离定义：从一路由器到直接连接的网络的距离定义为 1，到非直接连接的路由器没经过一个路由器加 1，也称为**“跳数”**，允许一条路径最多包含 15 个路由器，因此适用于小型互联网。</p>
+<p>三个要点，即 RIP 协议的特点：和哪些路由器交换信息？交换什么信息？在什么时候交换信息？</p>
+<ul>
+<li>仅和相邻路由交换信息；</li>
+<li>交换的信息是当前本路由器所知道的全部信息，即自己现在的路由表；</li>
+<li>按固定的时间间隔交换路由信息，每隔 30s 更新一次。</li>
+</ul>
+<p>路由表中最主要的信息就是：到某个网络的距离，以及应经过的下一跳地址。路由表更新的原则是找出到每个目的网络的最短距离，也称为距离向量算法。</p>
+<p><strong>距离向量算法</strong><br>
+对每一个相邻路由器发送过来的 RIP 报文，都进行以下步骤：<br>
+（1）对地址为 X 的相邻路由器发来的 RIP 报文，先修改此报文中的所有项目：把下一跳字段中的地址都改为 X，并把所有的“距离”字段的值加 1。每一个项目都有三个关键数据：到目的网络 N、距离是 d、下一跳路由器是 X。<br>
+（2）对修改后的 RIP 报文中的每一个项目，进行以下步骤：</p>
+<ul>
+<li>若原来的路由表中没有目的网络 N，则把该项目添加到路由表中</li>
+<li>否则（有目的地址，就查看下一跳路由器地址）
+<ul>
+<li>若下一跳路由器地址是 X，则把收到的项目替换原路由表中的项目；</li>
+<li>否则（到目的网络 N，但下一跳路由器不是 X）
+<ul>
+<li>若收到的项目中的距离 d 小于路由表中的距离，则进行更新。</li>
+<li>否则什么都不做。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="toc_h3_17">5.3 内部网关协议 OSPF</h3>
+<p>这个协议的名字是<strong>开放最短路径优先 OSPF</strong>。<br>
+OSPF 最主要的特征就是使用分布式的<strong>链路状态协议</strong>，而不像 RIP 哪有的距离向量协议。</p>
+<ul>
+<li>向本自治系统中<strong>所有路由器</strong>发送信息。</li>
+<li>发送的信息就是与本路由器<strong>相邻的所有路由器的链路状态</strong>，但这只是路由器所知道的部分信息。</li>
+<li>只有当链路状态<strong>发生变化</strong>时，路由器才向所有路由器用洪泛法发送此信息。</li>
+</ul>
+<p>由于频繁交换链路状态信息，因此所有路由器都能建立一个<strong>链路状态数据库</strong>，这个数据库实际上就是<strong>全网的拓扑结构图</strong>。在全网范围内是一致的（链路状态数据库的同步）。</p>
+<p>OSPF 和 RIP 都是动态路由协议，OSPF 的度量值是带宽，支持多区域、负载均衡、触发式更新、支持无分类编址 CIDR<br>
+OSPF 有三个表</p>
+<ul>
+<li>邻居表（问候：Hello）</li>
+<li>链路状态表</li>
+<li>计算路由表</li>
+</ul>
+<p>OSPF 不用 UDP 而是直接用 IP 数据报传送（其 IP 数据报首部的协议字段值是 89），构成的数据报很短。其中有：版本、类型、分组长度、路由器标识符、区域标识符、检验和、鉴别类型、鉴别。</p>
+<h3 id="toc_h3_18">5.4 外边网关协议 BGP</h3>
+<p>BGP 是不同自治系统的路由器之间交换路由信息的协议，BGP 较新版本是 BGP-4。<br>
+BGP 协议只能是力求寻找一条能够到达目的网络且比较好的路由，而并非要寻找一条最佳路由。每个自治系统的管理员都要选择至少一个路由器作为该自治系统的“BGP 发言人”。</p>
+<p>BGP 发言人和自治系统 AS 的关系<br>
+<img src="https://img.hacpai.com/file/2019/12/image-9acc1e8e.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>BGP 发言人交换路径向量<br>
+<img src="https://img.hacpai.com/file/2019/12/image-54a51a84.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>BGP 协议的特点</p>
+<ul>
+<li>BGP 协议交换路由信息数量不是很多；</li>
+<li>BGP 发言人数不多，路由选择相对简单；</li>
+<li>BGP 协议支持 CIDR；</li>
+<li>BGP 建立时，交换整个路由表但之后只交换变化部分。</li>
+</ul>
+<h3 id="toc_h3_19">5.5 路由器的组成</h3>
+<p>典型的路由器的结构<br>
+<img src="https://img.hacpai.com/file/2019/12/image-194701c9.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h2 id="toc_h2_20">6. IPv6</h2>
+<p>** IPv6 的基本首部**</p>
+<p>IPv6 仍支持无连接的传送，但将协议数据单元 PDU 称为分组，而不是 IPv4 的数据报。</p>
+<ul>
+<li>更大的地址空间</li>
+<li>扩展的地址层次结构</li>
+<li>灵活的首部格式</li>
+<li>改进的选项</li>
+<li>允许协议继续扩充</li>
+<li>支持即插即用</li>
+<li>支持资源的预分配</li>
+<li>IPv6 首部改为 8 字节对齐</li>
+</ul>
+<p>IPv6 数据报有两部分组成：基本头部和有效载荷（净负荷）</p>
+<p>** IPv6 的地址**</p>
+<p>目的地址可以是单播、多播、任播。地址使用冒号十六进制记法。</p>
+<h2 id="toc_h2_21">7. 虚拟专用网 VPN 和网络地址转换 NAT</h2>
+<h3 id="toc_h3_22">7.1 虚拟专用网 VPN</h3>
+<p><strong>专用地址</strong>只能用于一个机构的内部通信，而不能与互联网的主机通信。互联网的所有路由器，对目的地址是专用地址的数据报一律不转发。<br>
+利用共用的互联网作为主机构各专用网之间的通信载体，这样的专用网称为<strong>虚拟专用网 VPN</strong>。</p>
+<h3 id="toc_h3_23">7.2 网络地址转换 NAT</h3>
+<p>网络地址转换 NAT 方法于 1994 年提出。<br>
+需要再专用网连接到因特网的路由器上安装 NAT 软件。装有 NAT 软件的路由器叫做 NAT 路由器，它至少有一个有效的外部全球地址 IP。<br>
+所有使用本地地址的主机和外界通信时都要在 NAT 路由器上将其本地地址转换成 IP，才能和因特网连接。</p>
+<p>使用端口号的 NAT 也叫做网络地址与端口号转换 NAPT。</p>
+          <div>
+            <hr>
+
+标题：（4）网络层——计算机网络学习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/12/19/1576750314731.html" target="_blank">https://algerfan.github.io/articles/2019/12/19/1576750314731.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（4）网络层——计算机网络学习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/12/19/1576750314731.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1576750314731"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1576750314731",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1576750314731",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1576750314731', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 17ms, 2022/12/10 22:11:59 -->

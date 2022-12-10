@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>AlgerFan | Blog</title>
+    <link>https://algerfan.github.io</link>
+    <atom:link href="https://algerfan.github.io/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>Step by step, the sun</description>
+    <generator>Solo, v4.4.0, https://b3log.org/solo</generator>
+    <lastBuildDate>Sat, 10 Dec 2022 22:11:59 +0800</lastBuildDate>
+    <language>zh-cn</language>
+    <item>
+      <title>我在 GitHub 上的开源项目</title>
+      <link>https://algerfan.github.io/my-github-repos</link>
+      <description>
+        <![CDATA[<ol>
+<li>spring-boot-example Java 🤩3&nbsp;&nbsp;⭐️13&nbsp;&nbsp;🖖3 Spring Boot示例代码，附有博客文章，包含以下内容：配置讲解、日志、Druid、JPA、MyBatis、启动原理、数据校验、异常处理、定时任务、缓存、MQ、ElasticSearch、Spring Security、Shiro。  2. agricultural-share Java 🤩5&nbsp;&nbsp;⭐️2&nbsp;&nbsp;🖖1 农资共享平台，用于农资产品（土地，农具等）租赁、买卖交易的平台。  3. spring-cloud-sell Java 🤩2&nbsp;&nbsp;⭐️2&nbsp;&nbsp;🖖1 SpringCloud学习记录(Finchley版本、已升级至Greenwich.SR2)、包含以下内容：服务注册与发现、应用通信、配置中心、消息与异步、服务网关、服务容错、服务追踪。  4. smsrt JavaScript 🤩4&nbsp;&nbsp;⭐️1&nbsp;&nbsp;🖖1 惠农云商，提供一个农资产品销....</li>
+</ol>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/my-github-repos</guid>
+      <category>开源</category>
+      <category>GitHub</category>
+      <pubDate>Sun, 17 Apr 2022 15:55:13 +0800</pubDate>
+    </item>
+    <item>
+      <title>IDEA 无需破解学生免费申请（可用学生证和教育邮箱申请）</title>
+      <link>https://algerfan.github.io/articles/2019/03/06/1551868940012.html</link>
+      <description>
+        <![CDATA[<p>相信很多学生所在的学校不提供教育邮箱，那么没关系，JetBrains 不仅支持教育邮箱，而且支持学生证申请，本人已经帮助很多人申请到了<strong>一年的 JetBrains 全家桶</strong>，<strong>到期的前七天一定要去续签</strong>，至于能续多少次，目前还不清楚。</p>
+<p>IDEA 等 JetBrains 开发工具免费提供学生和教师使用，<strong>支持高中、学院、大学等学校</strong>。</p>
+<p>目前支持四种方式：教育邮箱、ISIC 认证、<strong>官方证明文件（学生证）</strong>、GitHub。直接步入正题：</p>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/03/06/1551868940012.html</guid>
+      <category>开发工具</category>
+      <pubDate>Sun, 28 Mar 2021 21:26:42 +0800</pubDate>
+    </item>
+    <item>
+      <title>Typora+PicGo+坚果云实现完美云笔记</title>
+      <link>https://algerfan.github.io/articles/2021/03/26/1616747664638.html</link>
+      <description>
+        <![CDATA[<p>完美的云笔记是怎样的？</p>
+<ul>
+<li>好的写作体验，写得舒服</li>
+<li>快速便捷的插入图片</li>
+<li>多端同步的云盘</li>
+</ul>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2021/03/26/1616747664638.html</guid>
+      <category>工具</category>
+      <pubDate>Fri, 26 Mar 2021 16:34:24 +0800</pubDate>
+    </item>
+    <item>
+      <title>2019年未来软件工作室年会总结</title>
+      <link>https://algerfan.github.io/articles/2019/05/04/1556966644012.html</link>
+      <description>
+        <![CDATA[<p>学习方面   学习一些博客或视频的时候，注重发现别人好的地方，好的工具、好的开发方式等等。   深度遍历的同时进行广度遍历，这两项并不冲突。   精力不好或容易犯困的时候不要学深度的东西，可以看一下论坛文章等等。   专业课一定要重视，数据结构、计算机网络是面试的基本</p>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/05/04/1556966644012.html</guid>
+      <category>关于我</category>
+      <pubDate>Tue, 23 Mar 2021 22:48:48 +0800</pubDate>
+    </item>
+    <item>
+      <title>关于我</title>
+      <link>https://algerfan.github.io/articles/2018/07/16/1531678851012.html</link>
+      <description>
+        <![CDATA[<p>一句话  Try my best !  关于我  一个编程爱好者，喜欢研究一些新技术。 平时喜欢整理个人博客，逛逛技术论坛。  参与社区  CSDN博客：<a href="https://blog.csdn.net/qq_40914991" target="_blank">https://blog.csdn.net/qq_40914991</a> Github：<a href="https://github.com/AlgerFan" target="_blank">https://github.com/AlgerFan</a>  联系我  Email: <a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a></p>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2018/07/16/1531678851012.html</guid>
+      <category>关于我</category>
+      <pubDate>Mon, 22 Mar 2021 15:56:23 +0800</pubDate>
+    </item>
+    <item>
+      <title>（转）（5）创建本地镜像(commit、Dockerfile)</title>
+      <link>https://algerfan.github.io/articles/2019/07/26/1564149742396.html</link>
+      <description>
+        <![CDATA[<p>在<a href="https://www.algerfan.cn/articles/2019/07/26/1564133511398.html" target="_blank">（3）Docker容器内信息获取、命令的执行、容器的导入和导出</a>中，将一个由镜像导出的 tar 包，本地导入 tar 包为镜像，也是本地创建镜像的一种方式。<br>
+通常我们自己制作镜像都是以某一镜像为基础，在此之上安装或者定制自己需要的镜像，推荐使用 Dockerfile。</p>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/07/26/1564149742396.html</guid>
+      <category>转载好文</category>
+      <pubDate>Fri, 19 Mar 2021 10:43:36 +0800</pubDate>
+    </item>
+    <item>
+      <title>（转）（4）镜像的概念、管理(查看、下载、删除)</title>
+      <link>https://algerfan.github.io/articles/2019/07/26/1564144493288.html</link>
+      <description>
+        <![CDATA[<p>镜像是一个包含程序运行必要依赖环境和代码的只读文件，它采用分层的文件系统，将每一次改变以读写层的形式增加到原来的只读文件上。镜像是容器运行的基石。</p>
+<ul>
+<li>下图展示的是 Docker 镜像的系统结构。其中，镜像的最底层必须是一个称为启动文件系统(bootfs)的镜像，用户不会与这一层直接打交道。bootfs 的上层镜像就是我们熟知的根镜像。</li>
+</ul>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/07/26/1564144493288.html</guid>
+      <category>转载好文</category>
+      <pubDate>Fri, 19 Mar 2021 10:43:31 +0800</pubDate>
+    </item>
+    <item>
+      <title>（转）（3）Docker容器内信息获取、命令的执行、容器的导入和导出</title>
+      <link>https://algerfan.github.io/articles/2019/07/26/1564133511398.html</link>
+      <description>
+        <![CDATA[<p>一、依附容器</p>
+<p>依附操作 attach 通常用在由 docker start 或者 docker restart 启动的交互型容器中。由于 docker start 启动的交互型容器并没有具体终端可以依附，而容器本身是可以接收用户交互的，这时就需要通过 attach 命令来将终端依附到容器上。</p>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/07/26/1564133511398.html</guid>
+      <category>转载好文</category>
+      <pubDate>Fri, 19 Mar 2021 10:43:26 +0800</pubDate>
+    </item>
+    <item>
+      <title>（转）（2）Docker容器的管理(创建、查看、启动、终止、删除)</title>
+      <link>https://algerfan.github.io/articles/2019/07/26/1564132693596.html</link>
+      <description>
+        <![CDATA[<p>docker 官方文档地址如下：<a href="https://docs.docker.com" target="_blank">https://docs.docker.com</a></p>
+<h2>一、创建</h2>
+<ul>
+<li><code>docker create</code> :创建容器，处于停止状态。<br>
+命令： <code>docker create centos:latest</code></li>
+</ul>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/07/26/1564132693596.html</guid>
+      <category>转载好文</category>
+      <pubDate>Fri, 19 Mar 2021 10:43:21 +0800</pubDate>
+    </item>
+    <item>
+      <title>（2）一条SQL更新语句是如何执行的——MySQL学习笔记</title>
+      <link>https://algerfan.github.io/articles/2019/08/06/1565054800728.html</link>
+      <description>
+        <![CDATA[<p>前言</p>
+<p>前面了解了一个查询语句的执行流程，并介绍了执行过程中涉及的处理模块。一条查询语句的执行过程一般是经过连接器、分析器、优化器、执行器等功能模块，最后到达存储引擎。那么 MySQL 如何做到可以恢复到半个月内任意一秒的状态的？</p>
+<p>首先，可以确定的说，查询语句的那一套流程，更新语句也是同样会走一遍。与查询流程不一样的是，更新流程还涉及两个重要的日志模块：redo log（重做日志）和 binlog（归档日志）。</p>]]>
+      </description>
+      <author>AlgerFan</author>
+      <guid>https://algerfan.github.io/articles/2019/08/06/1565054800728.html</guid>
+      <category>MySQL</category>
+      <pubDate>Fri, 19 Mar 2021 10:11:53 +0800</pubDate>
+    </item>
+  </channel>
+</rss>

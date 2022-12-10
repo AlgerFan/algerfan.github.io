@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（5）存储器管理——计算机操作系统复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（5）存储器管理——计算机操作系统复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/12/31/1577771001209.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（5）存储器管理——计算机操作系统复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/12/31/1577771001209.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（5）存储器管理——计算机操作系统复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-12-31</span>
+          <span class="comments">
+            <span data-uvstatcmt="1577771001209">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/12/31/1577771001209.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20171119.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">一、内存的基础知识</h2>
+<p><strong>什么是内存？有何作用？</strong><br>
+内存是用于存放数据的硬件。**程序执行前需要先放到内存中才能被 CPU 处理。**内存地址从 0 开始，每个地址对应一个存储单元。</p>
+<p>程序编译时只需确定变量 x 存放的相对地址（也就是相对于进程在内存中的起始位置而言的地址），<strong>相对地址又称逻辑地址，绝对地址又称为物理地址。</strong></p>
+<p><strong>从写程序到程序运行</strong></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-b0a33822.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>编译：由编译程序将用户源代码编译成若干个目标模块(<strong>编译就是把高级语言翻译为机器语言</strong>)。</p>
+<p>链接：由链接程序将编译后形成的一组目标模块，以及所需库函数链接在一起，形成一个完整的装入模块。</p>
+<p>装入(装载):由装入程序将装入模块装入内存运行。</p>
+<h2 id="toc_h2_1">二、程序的装入和链接</h2>
+<h3 id="toc_h3_2">程序的装入的三种方式</h3>
+<p>装入的三种方式(用三种不同的方法完成逻辑地址到物理地址的转换) :<br>
+<strong>1. 绝对装入</strong>：在编译时，如果知道程序将放到内存中的哪个位置，编译程序将产生绝对地址的目标代码。</p>
+<p>装入程序按照装入模块中的地址，将程序和数据装入内存。<br>
+Eg:如果知道装入模块要从地址为 100 的地方开始存放...</p>
+<p><strong>绝对装入只适用于单道程序环境。</strong><br>
+程序中使用的绝对地址，可在编译或汇编时给出，也可由程序员直接赋予。通常情况下都是编译或汇编时再转换为绝对地址。</p>
+<p><strong>2. 静态重定位：<strong>又称</strong>可重定位装入</strong>。编译、链接后的装入模块的地址都是从 0 开始的，指令中使用的地址、数据存放的地址都是相对于起始地址而言的逻辑地址。可根据内存的当前情况，将装入模块装入到内存的适当位置。装入时对地址进行“<strong>重定位</strong>”，将逻辑地址变换为物理地址(地址变换是在装入时一次完成的)。</p>
+<p>静态重定位的特点是在一个作业装入内存时，<strong>必须分配其要求的全部内存空间</strong>，如果没有足够的内存，就不能装入该作业。作业一旦进入内存后，<strong>在运行期间就不能再移动</strong>，也不能再申请内存空间。</p>
+<p><strong>3. 动态重定位</strong>：又称<strong>动态运行时装入</strong>。编译、链接后的装入模块的地址都是从 0 开始的。装入程序把装入模块装入内存后，并不会立即把逻辑地址转换为物理地址，而是<strong>把地址转换推迟到程序真正要执行时才进行</strong>。因此装入内存后所有的地址依然是逻辑地址。这种方式需要一个<strong>重定位寄存器</strong>的支持。</p>
+<p>采用动态重定位时<strong>允许程序在内存中发生移动。</strong></p>
+<h3 id="toc_h3_3">链接的三种方式</h3>
+<p>1.静态链接：在程序运行之前，先将各目标模块及它们所需的库函数连接成一个完整的可执行文件(装入模块)，之后不再拆开。<br>
+2.装入时动态链接：将各目标模块装入内存时，边装入边。链接的链接方式。<br>
+3. 运行时动态链接：在程序执。行中需要该目标模块时，才对它进行链接。其优点是便于修改和更新，便于实现对目标模块的共享。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-f9d0c5f8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-8e753b30.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_4">三、连续分配存储管理方式</h2>
+<h3 id="toc_h3_5">1.单一连续分配</h3>
+<p>在单一连续分配方式中，内存被分为<strong>系统区和用户区</strong>。系统区通常位于内存的低地址部分，用于存放操作系统相关数据;用户区用于存放用户进程相关数据。内存中<strong>只能有一道用户程序</strong>，用户程序独占整个用户区空间。<br>
+<strong>优点</strong>：实现简单;无外部碎片;可以采用覆盖技术扩充内存;不一定需要采取内存保护(eg: 早期的 PC 操作系统 MS-DOS)<br>
+<strong>缺点</strong>：只能用于单用户、单任务的操作系统中;<strong>有内部碎片</strong>：存储器利用率极低。</p>
+<h3 id="toc_h3_6">2.固定分区分配</h3>
+<p>固定分区分配将<strong>整个用户空间划分为若干个固定大小的分区</strong>，<strong>在每个分区中只装入一道作业</strong>，这样就形成了最早的、最简单的一种可运行多道程序的内存管理方式。</p>
+<p>固定分区分配有两种分配方式：分区大小相等、分区大小不等。</p>
+<p><strong>分区大小相等</strong>：<strong>缺乏灵活性</strong>，但是很适合用于用一台计算机控制多个相同对象的场合。<br>
+<strong>分区大小不等</strong>：<strong>增加了灵活性</strong>，可以满足不同大小的进程需求。根据常在系统中运行的作业大小情况进行划分。</p>
+<p>操作系统需要建立一个数据结构---<strong>分区说明表</strong>，来实现各个分区的分配与回收。每个表项对应一个分区，通常按分区大小排列。每个表项包括对应分区的<strong>大小、起始地址、状态</strong>(是否已分配)。</p>
+<p><strong>优点</strong>：实现简单，<strong>无外部碎片</strong>。<br>
+<strong>缺点</strong>：a.当用户程序太大时，可能所有的分区都不能满足需求，此时不得不采用覆盖技术来解决，但这又会降低性能; b. <strong>会产生内部碎片</strong>，内存利用率低。</p>
+<h3 id="toc_h3_7">3.动态分区分配</h3>
+<p><strong>动态分区分配</strong>又称为<strong>可变分区分配</strong>。这种分配方式<strong>不会预先划分内存分区</strong>，而是在进程装入内存时，<strong>根据进程的大小动态地建立分区</strong>，并使分区的大小正好适合进程的需要。因此系统分区的大小和数目是可变的。</p>
+<p><strong>三个问题</strong></p>
+<p>1.系统要用什么样的数据结构记录内存的使用情况？</p>
+<p>两种常用的数据结构是：</p>
+<ul>
+<li><strong>空闲分区表</strong>
+<ul>
+<li>每个空闲分区对应一个表项。表项中包含分区号、分区大小、分区起始地址等信息。</li>
+</ul>
+</li>
+<li><strong>空闲分区链</strong>
+<ul>
+<li>每个分区的起始部分和末尾部分分别设置前向指针和后向指针。起始部分处还可记录分区大小等信息。</li>
+</ul>
+</li>
+</ul>
+<p>2.当很多个空闲分区都能满足需求时，应该选择哪个分区进行分配？</p>
+<p>把一个新作业装入内存时，须按照一定的<strong>动态分区分配算法</strong>，从空闲分<br>
+区表(或空闲分区链)中选出一个分区分配给该作业。</p>
+<p>3.如何进行分区的分配与回收操作？</p>
+<p>在进行分区回收的时候，发现有一些分区是相邻的，我们需要把这些相邻的分区进行合并。</p>
+<p><strong>动态分区分配没有内部碎片，但是有外部碎片</strong>。<br>
+<strong>内部碎片</strong>，分配给某进程的内存区域中，如果有些部分没有用上。<br>
+<strong>外部碎片</strong>，是指内存中的某些空闲分区由于太小而难以利用。</p>
+<p>如果内存中空闲空间的总和本来可以满足某进程的要求，但由于进程需要的是一整块连续的内存空间，因此这些“碎片”不能满足进程的需求。可以通过<strong>紧凑(拼凑，Compaction)</strong> 技术来解决外部碎片。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-9260f21e.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_8">4.动态分区分配算法</h3>
+<p><strong>首次适应算法</strong></p>
+<p><strong>算法思想</strong>：每次都从低地址开始查找，找到第--个能满足大小的空闲分区。<br>
+<strong>如何实现</strong>：<strong>空闲分区以地址递增的次序排列</strong>。每次分配内存时顺序查找空闲分区链(或空闲分区表)，找到大小能满足要求的第一个空闲分区。</p>
+<p><strong>最佳适应算法</strong></p>
+<p><strong>算法思想</strong>：由于动态分区分配是--种连续分配方式，为各进程分配的空间必须是连续的一整片区域。因此为了保证当“大进程”到来时能有连续的大片空间，可以尽可能多地留下大片的空闲区，即，优先使用更小的空闲区。<br>
+<strong>如何实现</strong>：空闲分区<strong>按容量递增次序链接</strong>。每次分配内存时顺序查找空闲分区链(或空闲分区表)，找到大小能满足要求的第一个空闲分区。</p>
+<p><strong>缺点</strong>：每次都选最小的分区进行分配，会留下越来越多的、很小的、难以利用的内存块。因此这种方法会产生很多的外部碎片。</p>
+<p><strong>最坏适应算法</strong></p>
+<p>又称<strong>最大适应算法</strong>(Largest Fit)<br>
+<strong>算法思想</strong>：为了解决最佳适应算法的问题--即留下太多难以利用的小碎片，可以在每次分配时优先使用最大的连续空闲区，这样分配后剩余的空闲区就不会太小，更方便使用。<br>
+<strong>如何实现</strong>：空闲分区<strong>按容量递减次序链接</strong>。每次分配内存时顺序查找空闲分区链( 或空闲分区表)，找到大小能满足要求的第一个空闲分区。</p>
+<p><strong>缺点</strong>：每次都选最大的分区进行分配，虽然可以让分配后留下的空闲区更大，更可用，但是这种方式会导致较大的连续空闲区被迅速用完。如果之后有“大进程”到达，就没有内存分区可用了。</p>
+<p><strong>邻近适应算法</strong></p>
+<p><strong>算法思想</strong>：首次适应算法每次都从链头开始查找的。这可能会导致低地址部分出现很多小的空闲分区，而每次分配查找时，都要经过这些分区，因此也增加了查找的开销。如果每次都从上次查找结束的位置开始检索，就能解决上述问题。<br>
+<strong>如何实现</strong>：空闲分区<strong>以地址递增的顺序排列</strong>(可排成一个循环链表)。每次分配内存时<strong>从上次查找结束的位置开始查找</strong>空闲分区链(或空闲分区表)，找到大小能满足要求的第一个空闲分区。</p>
+<p><strong>首次适应算法与邻近适应算法对比</strong></p>
+<p>首次适应算法每次都要从头查找，每次都需要检索低地址的小分区。但是这种规则也决定了当低地址部分有更小的分区可以满足需求时，会更有可能用到低地址部分的小分区，也会更有可能把高地址部分的大分区保留下来(最佳适应算法的优点)<br>
+邻近适应算法的规则可能会导致无论低地址、高地址部分的空闲分区都有相同的概率被使用，也就导致了高地址部分的大分区更可能被使用，划分为小分区，最后导致无大分区可用(最大适应算法的缺点)</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-b43202bd.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_9">四、覆盖和对换（Swapping）</h2>
+<p><strong>覆盖技术</strong></p>
+<p>覆盖技术的思想：<strong>将程序分为多个段(多个模块)</strong>。常用的段常驻内存，不常用的段在需要时调入内存。缺点是<strong>对用户不透明</strong>。<br>
+内存中分为<strong>一个“固定区”和若干个“覆盖区”</strong>。<br>
+需要常驻内存的段放在“<strong>固定区</strong>”中，<strong>调入后就不再调出</strong>( 除非运行结束)。<br>
+不常用的段放在“<strong>覆盖区</strong>”，需要<strong>用到时调入内存，用不到时调出内存</strong>。</p>
+<p><strong>交换技术（对换技术）</strong></p>
+<p>交换(对换)技术的设计思想：内存空间紧张时，系统将内存中某些进程暂时换出外存，把外存中某些已具备运行条件的进程<strong>换入</strong>内存(进程在内存与磁盘间动态调度)<br>
+暂时换出外存等待的进程状态为<strong>挂起状态(挂起态，suspend)</strong><br>
+挂起态又可以进一步细分为<strong>就绪挂起</strong>、<strong>阻塞挂起</strong>两种状态</p>
+<p><strong>三个问题</strong>：</p>
+<p>1.应该在外存的什么位置保存被换出的进程？</p>
+<p>具有对换功能的操作系统中，通常把<strong>磁盘空间分为文件区和对换区两部分</strong>。<strong>文件区</strong>主要用于存放文件，主要<strong>追求存储空间的利用率</strong>，因此对文件区空间的管理采用离散分配方式;<strong>对换区</strong>空间只占磁盘空间的小部分，<strong>被换出的进程数据就存放在对换区</strong>。由于对换的速度直接影响到系统的整体速度，因此对换区空间的管理主要<strong>追求换入换出速度</strong>，因此通常对换区采用连续分配方式。总之，对换区的 I/0 速度比文件区的更快。</p>
+<p>2.什么时候应该交换？</p>
+<p>交换通常在许多进程运行且内存吃紧时进行，而系统负荷降低就暂停。例如：在发现许多进程运行时经常发生缺页，就说明内存紧张，此时可以换出一些进程;如果缺页率明显下降，就可以暂停换出。</p>
+<p>3.应该换出哪些进程？</p>
+<p>可优先换出阻塞进程;可换出优先级低的进程;为了防止优先级低的进程在被调入内存后很快又被换出，有的系统还会考虑进程在内存的驻留时间...</p>
+<p>(注意：<strong>PCB 会常驻内存</strong>，不会被换出外存)</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-4b8a5c97.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_10">五、分页存储管理方式</h2>
+<h3 id="toc_h3_11">1. 分页存储的基本概念</h3>
+<p>基本分页存储管理的思想——<strong>把内存分为一个个相等的小分区，再按照分区大小把进程拆分成一个个小部分</strong>。</p>
+<p>显然，<strong>如果把分区大小设置的更小一些，内部碎片会更小，内存利用率会更高</strong>。</p>
+<p>将内存空间分为一个个<strong>大小相等的分区</strong>(比如：每个分区 4KB)，每个分区就是一个“<strong>页框</strong>”，或称“<strong>页帧</strong>”、“<strong>内存块</strong>”、“<strong>物理块</strong>"。每个页框有一个编号，即“<strong>页框号</strong>”(或者“<strong>内存块号</strong>”、“<strong>页帧号</strong>”、“<strong>物理块号</strong>”)页框号从 0 开始。</p>
+<p>将用户进程的地址空间也分为<strong>与页框大小相等</strong>的一个个区域，称为“<strong>页</strong>”或“<strong>页面</strong>”每个页面也有一个编号，即“<strong>页号</strong>”，页号也是从 0 开始。(注：进程的最后一个页面可能没有一个页框那么大。因此，页框不能太大，否则可能产生过大的内部碎片)</p>
+<p>操作系统<strong>以页框为单位为各个进程分配内存空间</strong>。进程的每个页面分别放入一个页框中。也就是说，进程的页面与内存的页框有一一对应的关系。</p>
+<h3 id="toc_h3_12">2. 如何实现地址的转换</h3>
+<p>CPU 执行指令 1，需要访问逻辑地址为 80 的内存单元，如何转化为物理地址？<br>
+逻辑地址为 80 的内存单元：<br>
+应该在 1 号页，该页在内存中的起始位置为 450，逻辑地址为 80 的内存单元相对于该页的起始地址而言，“偏移量”应该是 30。实际物理地址 = 450+ 30 = 480</p>
+<p><strong>转换物理地址的步骤：</strong></p>
+<ol>
+<li>要算出逻辑地址对应的<strong>页号</strong></li>
+<li>要知道该页号对应<strong>页面在内存中的起始地址</strong></li>
+<li>要算出逻辑地址<strong>在页面内的“偏移量”</strong></li>
+<li>物理地址 = 页面始址 + 页内偏移量</li>
+</ol>
+<p><strong>如何计算：</strong></p>
+<p><strong>页号</strong> = 逻辑地址/页面长度(取除法的整数部分)<br>
+<strong>页内偏移量</strong> = 逻辑地址 % 页面长度(取除法的余数部分)<br>
+<strong>页面在内存中的起始位置</strong>：操作系统需要用某种数据结构记录进程各个页面的起始位置。</p>
+<p>即：<strong>页号</strong>=80/50= 1，<strong>页内偏移量</strong> = 80%50 =30。1 号页在内存中存放的<strong>起始位置</strong> 450。</p>
+<h3 id="toc_h3_13">3. 页表</h3>
+<p>为了能知道进程的每个页面在内存中存放的位置，操作系统要<strong>为每个进程建立一张页表</strong>。</p>
+<ol>
+<li>一个进程对应一张页表</li>
+<li>进程的每一页对应-一个页表项</li>
+<li>每个页表项由“页号”和“块号”组成</li>
+<li>页表记录进程页面和实际存放的内存块之间的对应关系</li>
+</ol>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-d786b413.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_14">4. 基本地址变换机构</h3>
+<p>基本地址变换机构可以借助进程的页表将逻辑地址转换为物理地址。通常会在系统中设置一个<strong>页表寄存器</strong>(PTR)，存放<strong>页表在内存中的起始地址 F</strong> 和<strong>页表长度 M</strong>。<br>
+进程未执行时，页表的始址和页表长度放在<strong>进程控制块</strong>(<strong>PCB</strong>)中，当进程被调度时，操作系统内核会把它们放到页表寄存器中。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-29677bf3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>注意：<strong>页面大小是 2 的整数幂</strong><br>
+设页面大小为 L，逻辑地址 A 到物理地址 E 的变换过程如下：</p>
+<p>① 计算页号 P 和页内偏移量 W (如果用十进制数手算，则 P=A/L，W=A % L; 但是在计算机实际运行时，逻辑地址结构是固定不变的，因此计算机硬件可以更快地得到二进制表示的页号、页内偏移量)</p>
+<p>② 比较页号 P 和页表长度 M，若 P2M，则产生越界中断，否则继续执行。(注意： 页号是从 0 开始的，而页表长度至少是 1，因此<strong>P=M 时也会越界</strong>)</p>
+<p>③ 页表中页号 P 对应的<strong>页表项地址 = 页表起始地址 F+ 页号 P*页表项长度</strong>，取出该页表项内容 b, 即为内存块号。(注意区分页表项长度、 页表长度、页面大小的区别。<strong>页表长度</strong>指的是这个页表中总共有几个页表项，即总共有几个页;<strong>页表项长度</strong>指的是每个页表项占多大的存储空间;<strong>页面大小</strong>指的是一个页面占多大的存储空间)</p>
+<p>④ 计算 E = b * L + W,用得到的物理地址 E 去访存。( 如果内存块号、页面偏移量是用二进制表示的，那么把二者拼接起来就是最终的物理地址了)</p>
+<p>例子：</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-e47c00ee.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-cab035d8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_15">5. 具有快表的地址变换机构</h3>
+<p><strong>时间局部性</strong>：如果执行了程序中的某条指令，那么不久后这条指令很<br>
+有可能再次执行;如果某个数据被访问过，不久之后该数据很可能再次被访问。(因为程序中存在大量的循环)<br>
+<strong>空间局部性</strong>： 一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也很有可能被访问。(因为很多数据在内存中都是连续存放的)</p>
+<p>基本地址变换机构中，每次要访问一个逻辑地址，都需要<strong>查询内存中的页表</strong>。由于局部性原理，<strong>可能连续很多次查到的都是同一个页表项</strong>。</p>
+<p><strong>快表</strong>，又称<strong>联想寄存器</strong>(TLB) ，是一种<strong>访问速度比内存快很多</strong>的高速缓冲存储器，用来存放当前访问的若干页表项，以加速地址变换的过程。与此对应，内存中的页表常称为<strong>慢表</strong>。</p>
+<p><strong>引入快表后，地址的变换过程</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-9bf18163.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>① CPU 给出逻辑地址，由某个硬件算得页号、页内偏移量，将页号与快表中的所有页号进行比较。<br>
+② 如果找到匹配的页号，说明要访问的页表项在快表中有副本，则直接从中取出该页对应的内存块。号，再将内存块号与页内偏移量拼接形成物理地址，最后，访问该物理地址对应的内存单元。因此，若<strong>快表命中</strong>，则访问某个逻辑地址仅需<strong>一次访存</strong>即可。<br>
+③ 如果没有找到匹配的页号，则需要<strong>访问内存中的页表</strong>，找到对应页表项，得到页面存放的内存块。号，再将内存块号与页内偏移量拼接形成物理地址，最后，访问该物理地址对应的内存单元。因此，若<strong>快表未命中</strong>，则访问某个逻辑地址需要<strong>两次访存</strong>(<strong>注意：在找到页表项后，应同时将其存入快表</strong>，以便后面可能的再次访问。但若快表已满，则必须按照一定的算法对旧的页表项进行替换)</p>
+<p>由于查询快表的速度比查询页表的速度快很多，因此只要快表命中，就可以节省很多时间。因为局部性原理，--般来说快表的命中率可以达到 90% 以上。</p>
+<p><strong>基本地址变换机构与具有快表的变换对比</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-746ccfc7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_16">六、分段存储管理方式</h2>
+<h3 id="toc_h3_17">1. 分段</h3>
+<p>进程的地址空间：按照程序<strong>自身的逻辑关系划分为若干个段</strong>，每个段都有一个段名(在低级语言中，程序员使用段名来编程)，每段从 0 开始编址。<br>
+内存分配规则：以段为单位进行分配，<strong>每个段在内存中占据连续空间</strong>，但<strong>各段之间可以不相邻</strong>。</p>
+<p>分段系统的逻辑地址结构由段号(段名)和段内地址(段内偏移量)所组成。<strong>段号的位数决定了每个进程最多可以分几个段</strong>。<strong>段内地址位数决定了每个段的最大长度是多少</strong>。</p>
+<h3 id="toc_h3_18">2. 段表</h3>
+<p>程序分多个段，各段离散地装入内存，为了能够从物理内存中找到各个逻辑段的存放位置。为此，需为每个进程建立一张段映射表，简称“<strong>段表</strong>”。</p>
+<p>1.每个段对应一个段表项，其中记录了该段在内存中的<strong>起始位置</strong>(又称“<strong>基址</strong>”)和<strong>段的长度</strong>。</p>
+<p><strong>2.各个段表项的长度是相同的</strong>。例如：某系统按字节寻址，采用分段存储管理，逻辑地址结构为( 段号 16 位，段内地址 16 位)，因此用 16 位即可表示最大段长。物理内存大小为 4GB (可用 32 位表示整个物理内存地址空间)。因此，可以让每个段表项占 16+32 = 48 位，即 6B。由于段表项长度相同，因此<strong>段号可以是隐含的，不占存储空间</strong>。若段表存放的起始地址为 M，则 K 号段对应的段表项存放的地址为 M+K*6。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-c8905a6f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_19">3. 分段、分页管理的对比</h3>
+<p><strong>页是信息的物理单位</strong>。分页的主要目的是为了实现离散分配，提高内存利用率。分页仅仅是系统管理。上的需要，完全是系统行为，<strong>对用户是不可见的</strong>。<br>
+<strong>段是信息的逻辑单位</strong>。分段的主要目的是更好地满足用户需求。一个段通常包含着一组属于一个逻辑模块的信息。<strong>分段对用户是可见的</strong>，用户编程时需要显式地给出段名。<br>
+页的大小固定且由系统决定。段的长度却不固定，决定于用户编写的程序。<br>
+<strong>分页</strong>的用户进程<strong>地址空间是一维的</strong>，程序员只需给出一个记忆符即可表示一个地址。<br>
+<strong>分段</strong>的用户进程<strong>地址空间是二维的</strong>，程序员在标识-一个地址时，既要给出段名，也要给出段内地址。</p>
+<p>分段比分页<strong>更容易实现信息的共享和保护</strong>。不能被修改的代码称为<strong>纯代码或可重入代码</strong>(不属于临界资源)，这样的代码是可以共享的。可修改的代码是不能共享的。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-87eda527.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_20">七、段页式存储管理方式</h2>
+<p><strong>分页、分段的优缺点分析</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-4c6ff869.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>分段 + 分页 = 段页式管理</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-d28ff8c9.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>段号的位数决定了每个进程最多可以分几个段。<br>
+页号位数决定了每个段最大有多少页。<br>
+页内偏移量决定了页面大小、内存块大小是多少。</strong></p>
+<p><strong>段页式管理的地址结构是二维的。</strong></p>
+<p>每个段对应一个段表项，每个段表项由<strong>段号</strong>、<strong>页表长度</strong>、<strong>页表存放块号</strong>(页表起始地址)组成。每个<strong>段表项长度相等，段号是隐含的</strong>。<br>
+每个页面对应一一个页表项，每个页表项由页号、页面存放的内存块号组成。每个页表项长度相等，页号是隐含的。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-62dfe482.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-0956541d.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+          <div>
+            <hr>
+
+标题：（5）存储器管理——计算机操作系统复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/12/31/1577771001209.html" target="_blank">https://algerfan.github.io/articles/2019/12/31/1577771001209.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（5）存储器管理——计算机操作系统复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/12/31/1577771001209.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1577771001209"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1577771001209",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1577771001209",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1577771001209', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 19ms, 2022/12/10 22:11:59 -->

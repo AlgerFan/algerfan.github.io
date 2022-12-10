@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（3）数据链数层——计算机网络复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（3）数据链数层——计算机网络复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/12/15/1576381085019.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（3）数据链数层——计算机网络复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/12/15/1576381085019.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（3）数据链数层——计算机网络复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-12-15</span>
+          <span class="comments">
+            <span data-uvstatcmt="1576381085019">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/12/15/1576381085019.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20190902.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">数据链路的几个基本概念</h2>
+<p>数据链路层使用的信道主要有以下两种类型：</p>
+<ul>
+<li><strong>点对点信道</strong>。这种信道使用一对一的点对点通信方式。</li>
+<li><strong>广播信道</strong>。这种信道使用一对多的广播通信方式，因此过程比较复杂。广播信道上连接的主机很多，因此必须使用专用的共享信道协议来协调这些主机的数据发送。</li>
+</ul>
+<h2 id="toc_h2_1">1. 使用点对点信道的数据链路层</h2>
+<h3 id="toc_h3_2">1.1 链路与数据链路</h3>
+<p><strong>链路</strong>是一条点对点的物理线路段，中间没有任何其他交换结点。</p>
+<ul>
+<li>一条链路只是一条通路的一个组成部分。</li>
+</ul>
+<p><strong>数据链路</strong>除了物理线路外，还必须有通信协议来控制这些数据的传输。若把实现这些协议的硬件和软件加到链路上，就构成了数据链路。</p>
+<ul>
+<li>现最常用的方法是使用适配器来实现这些协议的硬件和软件。</li>
+<li>一般的适配器都包含了数据链路层和物理层这两层的功能。</li>
+</ul>
+<h3 id="toc_h3_3">1.2 数据链路层的三个基本问题</h3>
+<p><strong>封装成帧</strong><br>
+封装成帧就是在一段数据的前后分别添加首部和尾部，这样就构成了一个帧。确定帧的边界。<br>
+首部和尾部的一个重要作用就是进行帧定界。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-0f24fcd3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>透明传输</strong><br>
+<strong>“透明”<strong>表示某一个实际存在的事物看起来却好像不存在一样。<br>
+发送端的数据链路层在数据中出现控制字符“SOH”或“EOT”的前面插入一个</strong>转义字符</strong>“ESC”。而接收端的数据链路层再把数据送往网络层之前删除这个插入的转义字符。这种方法称为<strong>字节填充</strong>或<strong>字符填充</strong>。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-f8f0f4d8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>差错控制</strong><br>
+比特在传输过程中可能会产生差错：1 可能变成 0，而 0 可能变成 1，这就叫做<strong>比特差错</strong>。<br>
+错误类型</p>
+<ul>
+<li>比特同步错误</li>
+<li>比特传输错误</li>
+</ul>
+<p>在一段时间内，传输错误的比特占所传输比特总数的比率称为<strong>误码率</strong>。</p>
+<p>在数据链里层传输的帧中，广泛使用了<strong>循环冗余检验 CRC</strong>的检错技术。</p>
+<p>帧检验序列 FCS</p>
+<ul>
+<li>CRC 是一种常用的检错方法，而 FCS 是添加在数据后面的冗余码</li>
+<li>FCS 可以用 CRC 这种方法得出，但 CRC 并非用来获得 FCS 的唯一方法</li>
+</ul>
+<p><strong>循环冗余检验原理的例子</strong></p>
+<p>其中 M = 101001，假定除数 P = 1101（即 n=3），进行模 2 运算，得到最终的余数 R = 001。</p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-844265f2.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>仅用循环冗余检验 CRC 差错检测技术只能做到<strong>无差错接受</strong>。要做到“可靠传输”就必须再加上确认和重传机制。考虑：帧重复、帧丢失、帧乱序。<br>
+可以说“CRC 是一种<strong>无比特差错</strong>，而不是<strong>无传输差错</strong>的检测机制”</p>
+<h2 id="toc_h2_4">2. 点对点协议 PPP</h2>
+<p>1992 年制订了 PPP 协议。经过 1993 年和 1994 年的修订。PPP 协议已成为因特网的正式标准[RFC 1661] 。<br>
+PPP 协议有三个组成部分</p>
+<ul>
+<li>数据链路层协议可以用于异步串行或同步串行介质。</li>
+<li>它使用 LCP(链路控制协议)建立并维护数据链路连接。</li>
+<li>网络控制协议(NCP)允许在点到点连接上使用多种网络层协议。</li>
+</ul>
+<h3 id="toc_h3_5">2.1 PPP 协议应该满足的要求</h3>
+<ul>
+<li>简单——这是首要的要求</li>
+<li>封装成帧</li>
+<li>透明性</li>
+<li>多种网络层协议</li>
+<li>差错检测</li>
+<li>检测连接状态</li>
+<li>最大传送单元</li>
+<li>网络层地址协商</li>
+<li>数据压缩协商</li>
+</ul>
+<h3 id="toc_h3_6">2.2 各字段的意义</h3>
+<p><strong>标志字段 F</strong> =0x7E（符号“0x”表示后面的字符是十六进制表示的，十六进制的 7E 表示为 01111110）<br>
+<strong>地址字段 A</strong> 只置为 0xFF，地址字段实际上并不起作用。<br>
+<strong>控制字段 C</strong> 通常置为 0x03。</p>
+<p>PPP 是<strong>面向字节</strong>的，所有的 PPP 帧的长度都是整数字节。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-f4e03263.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h3 id="toc_h3_7">2.3 字节填充</h3>
+<p>当信息字段中出现了和标志字段一样的比特组合时，需要进行转义</p>
+<ul>
+<li>将信息字段中出现的每个 0x7E 字节转变成 2 字节序列（0x7D，0x5E）</li>
+<li>若信息字段中出现一个 0x7D 的字节，则将其转变成 2 字节序列（0x7D，0x5D）</li>
+<li>若信息字段中出现 ASCII 码的控制字符（即数值小于 0x20 的字符），则在该字符前面要加入一个 0x7D 字节，同时将该字符的编码加以改变。</li>
+</ul>
+<h3 id="toc_h3_8">2.4 零比特填充</h3>
+<p>在发送端，先扫描整个信息字段，只要发现有 5 个连续的 1，则立即填入 0。接收端在收到一个帧时，先找到标志字段 F 以确定一个帧的边界，接着对比特流进行扫描，当发现 5 个连续 1 时，就把这 5 个 1 后的一个 0 删除，以还原原来的信息比特流，保证了透明传输。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-6b38ef03.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h3 id="toc_h3_9">2.5 PPP 协议的工作状态</h3>
+<p><img src="https://img.hacpai.com/file/2019/12/image-59b2c501.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h2 id="toc_h2_10">3. 使用广播信道的数据链路层</h2>
+<h3 id="toc_h3_11">3.1 局域网的数据链路层</h3>
+<p>局域网最重要的特点是：网络为一个单位所拥有，且地理范围和站点数目均有限。<br>
+主要优点有：</p>
+<ul>
+<li>具有广播功能，从一个站点很方便的访问全网</li>
+<li>便于系统的扩展和逐渐演变</li>
+<li>提高了系统的可靠性、可用性和生存性</li>
+</ul>
+<p>按网络拓扑分类：星型网（由于集线器而广泛使用）、环形网、树形网、总线网</p>
+<p>共享信道的两种方法</p>
+<ul>
+<li>静态划分信道</li>
+<li>动态划分信道
+<ul>
+<li>随机接入</li>
+<li>受控接入</li>
+</ul>
+</li>
+</ul>
+<h3 id="toc_h3_12">3.2 认识以太网</h3>
+<p>总线上的每一个工作的计算机都能检测到 B 发送的数据信号。由于只有计算机 D 的地址与数据帧首部写入的地址一致，因此只有 D 才接收这个数据帧。</p>
+<h4 id="toc_h4_13">以太网的两个标准</h4>
+<p>DIX Ethernet V2 是世界上第一个局域网产品的规范<br>
+IEEE 的 802.3 标准</p>
+<ul>
+<li>DIX Ethernet V2 标准与 IEEE 的 802.3 标准只有很小的差别，因此可以将 802.3 局域网简称为“以太网”。</li>
+<li>严格来说，“以太网”应当是指符合 DIX Ethernet V2 标准的局域网。</li>
+</ul>
+<h4 id="toc_h4_14">以太网与数据链路层的两个子层</h4>
+<p>为了是数据链路层能更好地适应多种局域网标准，802 委员会就把局域网的数据链路层拆成两个子层。</p>
+<ul>
+<li>逻辑链路控制 LLC 子层</li>
+<li>媒体接入控制 Mac 子层</li>
+</ul>
+<h4 id="toc_h4_15">以太网提供的服务</h4>
+<p>以太网提供的服务是<strong>不可靠的交付</strong>，即<strong>尽最大努力的交付</strong>。</p>
+<p>当接收站收到有差错的数据帧时就丢弃此帧，其他什么都不做。差错的纠正由高层来决定。如果高层发现丢失了一些数据而进行重传，以太网并不知道这是重传的帧。</p>
+<h3 id="toc_h3_16">3.3 CSMA/CD 协议</h3>
+<p>简单概述：</p>
+<ul>
+<li>发送前先检测</li>
+<li>边发边检测</li>
+<li>如果线路忙就停一会</li>
+<li>如果遇到冲突就停止</li>
+</ul>
+<h4 id="toc_h4_17">载波监听多点接入/碰撞检测</h4>
+<ul>
+<li>多点接入：表示许多计算机以多点接入的方式连接在一根总线上。</li>
+<li>载波监听：是指每一个站在发送数据之前先要检测一下总线上是否有其他计算机在发送数据，如果有，则暂时不要发送数据，以免发生碰撞。</li>
+<li>碰撞检测：就是计算机边发送数据边检测信道上的信号电压大小。
+<ul>
+<li>当几个站同时在总线上发送数据时，总线上的信号电压摆动值将会增大。</li>
+<li>当一个站检测到的信号电压摆动值超过一定的门限值时，就认为总线上至少有两个站同时发送数据，表明发生了碰撞。</li>
+<li>所谓“碰撞”就是发生了冲突。因此“碰撞检测”也称为“冲突检测”。</li>
+</ul>
+</li>
+<li>检测碰撞后，都要停止发送，然后等待一段随机时间后再次发送。</li>
+</ul>
+<h4 id="toc_h4_18">重要特性</h4>
+<ul>
+<li>使用 CSMA/CD 协议的以太网不能进行全双工通信而只能进行双向交替通信（半双工）</li>
+<li>每个站在发送数据之后的一小段时间内，存在着遭遇碰撞的可能性</li>
+<li>这种发送的不确定性使整个以太网的平均通信量远小于以太网的最高数据率</li>
+</ul>
+<h4 id="toc_h4_19">争用期</h4>
+<p>最先发送数据帧的站，在发送数据帧后至多经过时间 2t（两倍的端到端往返时延）就可知道发送的数据帧是否遭受了碰撞。<br>
+经过争用期这段时间还没有检测到碰撞，才能肯定这次发送不会发送碰撞。</p>
+<p>以太网的争用期</p>
+<ul>
+<li>以太网的端到端往返时延 2t 称为争用期，或碰撞窗口。通常，取 51.2us 为争用期的长度。</li>
+<li>对于 10Mb/s 以太网，在争用期内可发送 512bit，即 64 字节。</li>
+<li>以太网在发送数据时，若前 64 字节未发生冲突，则后续的数据就不会发生冲突。</li>
+</ul>
+<p>最短有效帧长</p>
+<ul>
+<li>如果发生冲突，就一定是在发送的前 64 字节之内</li>
+<li>由于一检测到冲突即中止发送，这时发送出去的数据一定小于 64 字节</li>
+<li>以太网规定了最短有效帧长为 64 字节，凡长度小于 64 字节的帧都是由于冲突而异常中止的无效帧。</li>
+</ul>
+<h4 id="toc_h4_20">二进制指数类型退避算法</h4>
+<p>发生碰撞的站在停止发送数据后，要推迟一个随机时间才能再次发送数据。</p>
+<ul>
+<li>确定基本退避时间，一般取为争用期；</li>
+<li>定义参数 k 	k=Min[重传次数，10]；</li>
+<li>从整数集合[0,1,2,~~,(2 的 k 次方-1)]中随机地取出一个数，记为 r；</li>
+<li>当重传达 16 次仍不能成功时即丢弃该帧，并向高层报告。</li>
+</ul>
+<h3 id="toc_h3_21">3.4 集线器</h3>
+<p>集线器是使用电子器件来模拟实际电缆线的工作，因此整个系统仍像一个传统的以太网哪有运行。也就是说<strong>使用集线器的以太网在逻辑上仍是一个总线网，各工作站使用的还是 CSMA/CD 协议，并共享逻辑上的总线。同一时刻至多只允许一个站发送数据。</strong><br>
+集线器很像一个多接口的转发器，<strong>工作在物理层</strong>。</p>
+<h3 id="toc_h3_22">3.5 信道利用率</h3>
+<p>争用期长度为 2t，即端到端传播时延的两倍。检测到碰撞后不发送干扰信号。<br>
+帧长为 L（bit），数据发送速率为 C （b/s），因而帧的发送时间为 L/C=T0(s)</p>
+<p>以太网的信道利用率<br>
+例子：一个帧从开始发送，经可能发生的碰撞后，将再重传数次，到发送成功且信道转为空闲（即再经过时间 t 使得信道上无信号在传播）时为止，是发送一帧所需的平均时间。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-d0716d47.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>以太网的信道利用率：参数 a</p>
+<ul>
+<li>要提高以太网的信道利用率，就必须减小 t 和 T0 之比。在以太网中定义了参数 a，它是以太网单程端到端延时 t 与帧的发送时间 T0 之比。	<strong>a=t/T0</strong></li>
+<li>a—&gt;0 表示一发生碰撞就立即可以检测出来，并立即停止发送，因而信道利用率很高。</li>
+<li>a 越大，表明争用期所占的比例增大，每发生一次碰撞就浪费许多信道资源，使得信道利用率明显降低。</li>
+</ul>
+<p>对以太网参数的要求</p>
+<ul>
+<li>当数据率一定时，以太网的连线的长度受到限制，否则 t 的数值会太大。</li>
+<li>以太网的帧长不能太短，否则 T0 的值会太小，使 a 值太大。</li>
+</ul>
+<p>信道利用率的最大值</p>
+<ul>
+<li>在理想化的情况下，发送数据都不会发生碰撞，即总线一旦空闲就有某一个站立即发送数据；</li>
+<li>发送一帧占用线路的时间是 T0+t，而帧本身的发送时间是 T0。于是我们可计算出理想情况下的极限信道利用率 Smax 为：	<strong>Smax=T0/T0+t=1/1+a</strong></li>
+</ul>
+<h3 id="toc_h3_23">3.6 以太网的 Mac 地址</h3>
+<p>在局域网中，硬件地址又称为物理地址，或 Mac 地址。</p>
+<p>802 标准所说的“地址”严格地讲应当是每一个站的“名字”或标识符。</p>
+<ul>
+<li>IEEE 的注册管理机构 RA 负责向厂家分配地址字段的前三个字节（即高位 24 位）。</li>
+<li>一个地址块的后三个字节由厂家自行指派，称为扩展标识符，必须保证生产的适配器没有重复地址。</li>
+<li>一个地址块可以生成 2 的 24 次方个不同的地址，这种 48 位地址称为 MAC-48，通用名称是 EUI-48。</li>
+<li>“Mac 地址”实际上就是适配器地址或适配器标识符 EUI-48。</li>
+</ul>
+<p>适配器检查 Mac 地址<br>
+适配器从网络上每收到一个 Mac 帧就首先用硬件检查 Mac 帧中的 Mac 地址</p>
+<ul>
+<li>如果是发往本站的帧则收下，然后再进行其他的处理。</li>
+<li>否则就将此帧丢弃，不再进行其他的处理。</li>
+</ul>
+<p>“发往本站的帧”包括以下三种帧：</p>
+<ul>
+<li>单播（一对一）</li>
+<li>广播（一对全体）</li>
+<li>多播（一对多）</li>
+</ul>
+<p>最常用的 Mac 帧是以太网 V2 的格式<br>
+<img src="https://img.hacpai.com/file/2019/12/image-15d6cb2c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>无效的 Mac 帧</p>
+<ul>
+<li>帧的长度不是整数个字节；</li>
+<li>用收到的帧检验序列 FCS 查出有差错；</li>
+<li>数据字段的长度不在 46-1500 字节之间；</li>
+<li>有效的 Mac 帧长度为 64-1518 字节之间；</li>
+<li>对于检查出的无效 Mac 帧就简单的丢弃。以太网不负责重传丢弃的帧。</li>
+</ul>
+<p>帧间最小间隔<br>
+帧间的最小间隔为 9.6us，相当于 96us 的发送时间。<br>
+一个站在检测到总线开始空闲后，还要等待 9.6us 才能再次发送数据。这样做是为了使刚刚收到数据帧的站的接收缓存来得及清理，做好接收下一帧的准备。</p>
+<h2 id="toc_h2_24">4. 扩展的以太网</h2>
+<h3 id="toc_h3_25">4.1 在物理层考虑扩展</h3>
+<p>主机使用光纤和一对光纤调制解调器连接到集线器<br>
+<img src="https://img.hacpai.com/file/2019/12/image-a4dcfc77.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><img src="https://img.hacpai.com/file/2019/12/image-7d808147.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>一个更大的碰撞域<br>
+<img src="https://img.hacpai.com/file/2019/12/image-05f08f5b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>用集线器扩展局域网优点</p>
+<ul>
+<li>使原来属于不同碰撞域的局域网上的计算机能够进行跨碰撞域的通信；</li>
+<li>扩大了局域网覆盖的地理范围。</li>
+</ul>
+<p>用集线器扩展局域网缺点</p>
+<ul>
+<li>碰撞域增大了，但总的吞吐量并未提高；</li>
+<li>如果不同的碰撞域使用不同的数据率，那么就不能用集线器将它们互连起来。</li>
+</ul>
+<h3 id="toc_h3_26">4.2 在数据链路层考虑扩展</h3>
+<p>在数据链路层局域网使用<strong>网桥</strong><br>
+网桥工作在数据链路层，它根据 Mac 帧的目的地址对收到的帧进行<strong>转发</strong>。<br>
+网桥具有<strong>过滤</strong>的功能。当网桥收到一个帧时，并不是向所有的接口转发此帧，而是先检查此帧的目的地址，然后再确定将该帧转发到哪一个接口。</p>
+<p>交换式集线器常称为以太网交换机或第二层交换机，工作在数据链路层。<br>
+以太网交换机实质上就是一个<strong>多接口的网桥</strong>。相互通信的主机都是<strong>独占传输媒体，无碰撞地传输数据</strong>。</p>
+<p><strong>使用网桥扩展以太网</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-7e05fdb3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>使用网桥的优点：</p>
+<ul>
+<li>过滤通信量</li>
+<li>扩大了物理范围</li>
+<li>提高了可靠性</li>
+<li>可互连不同物理层、不同 Mac 子层和不同速率（如 10Mb/s 和 100Mb/s 以太网）的局域网</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>存储转发增加了时延</li>
+<li>在 Mac 子层并没有流量控制功能</li>
+<li>具有不同 Mac 子层的网段桥接在一起时时延更大</li>
+<li>网桥只适合于用户数不太多和通信量不太大的局域网，否则有时还会因传播过多的广播信息而产生网络堵塞。这就是所谓的广播风暴。</li>
+</ul>
+<p><strong>透明网桥</strong><br>
+目前使用得最多的网桥是透明网桥。<br>
+透明是指局域网上的站点并不知道所发送的帧将经过哪几个网桥，因为网桥对各站来说是看不见的，是一种即插即用设备，其标准是 IEEE 802.1D 。</p>
+<p><strong>自学习算法</strong><br>
+按照以下自学习算法处理收到的帧和建立转发表</p>
+<ul>
+<li>若从 A 发出的帧从接口 x 进入了某网桥，那么从这个接口出发沿相反方向一定可把一个帧传送到 A；</li>
+<li>网桥每收到一个帧，就记下其源地址和进入网桥的接口，作为转发表中的一个项目；</li>
+<li>在建立转发表时是把帧首部中的源地址写在“地址”这一栏的下面；</li>
+<li>在转发帧时，则是根据收到的帧首部中的目的地址来转发的。这时就把在“地址”栏下面已经记下的源地址当作目的地址，而把记下的进入接口当作转发接口。</li>
+</ul>
+<p>小结：自学习与帧转发<br>
+网桥收到一帧后先进行自学习。查找转发表中与收到帧的源地址有无相匹配的项目。如没有，就在转发表中增加一个项目（源地址、进入的接口和时间）。如有，则吧原有的项目进行更新。<br>
+转发帧，查找转发表中与收到的帧的目的地址有无相匹配的项目。</p>
+<ul>
+<li>如没有，则通过所有其他接口进行转发；</li>
+<li>如有，则按转发表中的接口进行转发；</li>
+<li>若转发表中给出的接口就是该帧进入网桥的接口，则应丢弃这个帧。</li>
+</ul>
+<h3 id="toc_h3_27">4.3 虚拟局域网</h3>
+<p>LAN 和 VLAN<br>
+交换机的使用使得 VLAN 的创建称为可能<br>
+虚拟局域网 VLAN 是由一些局域网网段构成的与物理位置无关的逻辑组。</p>
+<ul>
+<li>这些网段具有某些共同的需求。</li>
+<li>每一个 VLAN 的帧都有一个明确的标识符，指明发送这个帧的工作站是属于哪一个 VLAN。</li>
+</ul>
+<p>虚拟局域网其实只是局域网给用户提供的一种服务，而并不是一种新型局域网。</p>
+<h2 id="toc_h2_28">5. 高速以太网</h2>
+<p>速率达到或超过 100Mb/s 的以太网称为高速以太网。<br>
+在双绞线上传送 100Mb/s 基带信号的星型拓扑以太网，仍使用 IEEE 802.3 的 CSMA/CD 协议。100BASE-T 以太网又称为快速以太网</p>
+<p>100BASE-T 以太网的物理层</p>
+<ul>
+<li>100BASE-TX：使用 2 对 UTP 5 类线或屏蔽双绞线 STP</li>
+<li>100BASE-FX：使用 2 对光纤</li>
+<li>100BASE-T4：使用 4 对 UTP 3 类线或 5 类线</li>
+</ul>
+<p>100BASE-T 特点</p>
+<ul>
+<li>可在全双工方式下工作而无冲突发生。</li>
+<li>最短帧长不变，但将一个网段的最大电缆长度减小到 100m。</li>
+<li>帧间时间间隔从原来的 9.6us 改为现在的 0.96us。</li>
+</ul>
+<p>吉比特以太网<br>
+允许在 1Gb/s 下全双工和半双工两种方式工作。与 10BASE-T 和 100BASE-T 技术向后兼容。</p>
+<p>吉比特以太网的物理层<br>
+1000BASE-X 基于光纤通道的物理层</p>
+<ul>
+<li>1000BASE-SX	SX 表示短波长	多模光纤</li>
+<li>1000BASE-LX	LX 表示长波长	单模光纤</li>
+<li>1000BASE-CX	CX 表示铜线	使用 2 对屏蔽双绞线电缆 STP</li>
+<li>1000BASE-T	使用 4 对 UTP5 类线</li>
+</ul>
+<p>吉比特以太网的配置<br>
+<img src="https://img.hacpai.com/file/2019/12/image-e21d4b7b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>端到端的以太网传输<br>
+吉比特以太网的出现，以太网的工作范围已经从局域网扩大到城域网和广域网，从而实现了端到端的以太网传输<br>
+好处：</p>
+<ul>
+<li>成熟的技术</li>
+<li>互操作性好</li>
+<li>在广域网中使用以太网时价格便宜</li>
+<li>统一的帧格式简化了操作和管理</li>
+</ul>
+          <div>
+            <hr>
+
+标题：（3）数据链数层——计算机网络复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/12/15/1576381085019.html" target="_blank">https://algerfan.github.io/articles/2019/12/15/1576381085019.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（3）数据链数层——计算机网络复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/12/15/1576381085019.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1576381085019"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1576381085019",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1576381085019",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1576381085019', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 19ms, 2022/12/10 22:11:59 -->

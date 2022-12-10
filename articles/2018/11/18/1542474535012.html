@@ -1,0 +1,968 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>Webflux响应式编程（SpringBoot 2.0新特性）——完整版 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="Webflux响应式编程（SpringBoot 2.0新特性）——完整版 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2018/11/18/1542474535012.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="Webflux响应式编程（SpringBoot 2.0新特性）——完整版 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2018/11/18/1542474535012.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">Webflux响应式编程（SpringBoot 2.0新特性）——完整版</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2018-11-18</span>
+          <span class="comments">
+            <span data-uvstatcmt="1542474535012">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2018/11/18/1542474535012.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>&nbsp;
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20181116.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<ul>
+<li>学习 webflux 前需要学习三个基础：</li>
+</ul>
+<ol>
+<li>函数式编程和 lambda 表达式</li>
+<li>Stream 流编程</li>
+<li>Reactive stream 响应式流</li>
+<li>实战开发</li>
+</ol>
+<ul>
+<li>接下来进入学习</li>
+</ul>
+<h3 id="toc_h3_0">一、函数式编程和 lambda 表达式</h3>
+<h4 id="toc_h4_1">1. 什么是函数式编程</h4>
+<p>  函数式编程是一种相对于命令式编程的一种编程范式，它不是一种具体的技术，而是一种如何搭建应用程序的方法论</p>
+<h4 id="toc_h4_2">2. 为什么要使用函数式编程</h4>
+<ul>
+<li>能让我们以一种更加优雅的方式进行编程</li>
+<li>函数式编程与命令式编程相比<br>
+1）不同点：<br>
+关注点不同，命令式编程我们关注的是怎么样做，而函数式编程关注的是做什么。<br>
+2）优点：<br>
+可以使代码更加的简短，更加的好读。</li>
+</ul>
+<h4 id="toc_h4_3">3. lambda 表达式初接触</h4>
+<p>  具体看一个例子，求数组中的最大值，如果数据量太大，想要处理更高效，jdk8 以前，只能自己创建线程池，自己拆分，而 jdk8 以后只需要加上 parallel()，意思就是告诉它我要多线程的处理该数据，以此可以看到他的魅力</p>
+<pre><code class="language-java">public class MinDemo {
+    public static void main(String[] args) {
+        int[] arr = {15,24,12,451,156};
+        int min = Integer.MAX_VALUE;
+        for (int a :
+                arr) {
+            if (a &lt; min) {
+                min = a;
+            }
+        }
+        System.out.println(min);
+
+        //jdk8 lambda，parallel()多线程处理
+        int min2 = IntStream.of(arr).parallel().min().getAsInt();
+        System.out.println(min2);
+
+    }
+</code></pre>
+<h4 id="toc_h4_4">4. 当然还有很多其他的特性，这里只简单介绍一下</h4>
+<ul>
+<li>jdk8 接口新特性<br>
+1.接口里只有一个要实现的方法，单一责任制<br>
+2.新增默认方法</li>
+<li>函数接口<br>
+1.只需要知道输入输出的类型<br>
+2.支持链式操作</li>
+<li>方法引用<br>
+1.静态方法引用<br>
+2.非静态方法引用<br>
+3.构造方法引用</li>
+<li>级联表达式和柯里化<br>
+1.级联表达式是返回函数的函数<br>
+2.柯里化把多个参数的函数转换为只有一个参数的函数</li>
+<li>变量引用<br>
+1.引用外边的变量必须是 final 类型</li>
+</ul>
+<h4 id="toc_h4_5">5. 以下是函数式编程常用的接口</h4>
+<p><img src="https://img.algerfan.cn/blog/image/20190619/cf43f593e2bc4126a14f0aec691ec5e8.png" alt="2018111715515752.png"></p>
+<h3 id="toc_h3_6">二、 Stream 流编程</h3>
+<h4 id="toc_h4_7">1. 是什么，不是什么</h4>
+<p>是一个高级的迭代器，不是一个数据结构、不是一个集合、不会存放数据、关注的是怎么把数据高效处理</p>
+<h4 id="toc_h4_8">2. 创建/中间操作/终止操作</h4>
+<ol>
+<li>创建<br>
+<img src="https://img.algerfan.cn/blog/image/20190619/d4c42763ed91498ab1c77c3be2aaafe9.png" alt="2120181121134619822.png"><br>
+代码演示</li>
+</ol>
+<pre><code class="language-java">		List&lt;String&gt; list = new ArrayList&lt;&gt;();
+
+		// 从集合创建
+		list.stream();
+		list.parallelStream();
+
+		// 从数组创建
+		Arrays.stream(new int[] { 2, 3, 5 });
+
+		// 创建数字流
+		IntStream.of(1, 2, 3);
+		IntStream.rangeClosed(1, 10);
+
+		// 使用random创建一个无限流
+		new Random().ints().limit(10);
+		Random random = new Random();
+
+		// 自己产生流
+		Stream.generate(() -&gt; random.nextInt()).limit(20);
+</code></pre>
+<ol start="2">
+<li>中间操作<br>
+<img src="https://img.algerfan.cn/blog/image/20190619/19f0fe876aec45a782c8d52df4dfa2d4.png" alt="2220181121134619822.png"></li>
+</ol>
+<pre><code class="language-java">		String str = "my name is AlgerFan";
+
+		System.out.println("--------------filter------------");
+		// 把每个单词的长度调用出来
+		Stream.of(str.split(" ")).filter(s -&gt; s.length() &gt; 2)
+				.map(String::length).forEach(System.out::println);
+
+		System.out.println("--------------flatMap------------");
+		// flatMap A-&gt;B属性(是个集合), 最终得到所有的A元素里面的所有B属性集合
+		// intStream/longStream 并不是Stream的子类, 所以要进行装箱 boxed
+		Stream.of(str.split(" ")).flatMap(s -&gt; s.chars().boxed())
+				.forEach(i -&gt; System.out.println((char) i.intValue()));
+
+		System.out.println("--------------peek------------");
+		// peek 用于debug. 是个中间操作,和 forEach 是终止操作
+		Stream.of(str.split(" ")).peek(System.out::println)
+				.forEach(System.out::println);
+
+		System.out.println("--------------limit------------");
+		// limit 使用, 主要用于无限流
+		new Random().ints().filter(i -&gt; i &gt; 100 &amp;&amp; i &lt; 1000).limit(5)
+				.forEach(System.out::println);
+</code></pre>
+<ol start="3">
+<li>终止操作<br>
+<img src="https://img.algerfan.cn/blog/image/20190619/6138476eeed541429cbfcbb724c4bf7a.png" alt="2320181117155856158.png"></li>
+</ol>
+<pre><code class="language-java">		String str = "my name is AlgerFan";
+
+		System.out.println("-------并行流parallel--------");
+		// 使用并行流
+		str.chars().parallel().forEach(i -&gt; System.out.print((char) i));
+		System.out.println();
+		// 使用 forEachOrdered 保证顺序
+		str.chars().parallel().forEachOrdered(i -&gt; System.out.print((char) i));
+		System.out.println();
+
+		System.out.println("-------collect收集到list--------");
+		// 收集到list
+		List&lt;String&gt; list = Stream.of(str.split(" "))
+				.collect(Collectors.toList());
+		System.out.println(list);
+
+		System.out.println("-------使用 reduce 拼接字符串--------");
+		// 使用 reduce 拼接字符串
+		Optional&lt;String&gt; letters = Stream.of(str.split(" "))
+				.reduce((s1, s2) -&gt; s1 + "|" + s2);
+		System.out.println(letters.orElse(""));
+
+		System.out.println("-------带初始化值的reduce--------");
+		// 带初始化值的reduce
+		String reduce = Stream.of(str.split(" ")).reduce("",
+				(s1, s2) -&gt; s1 + "|" + s2);
+		System.out.println(reduce);
+
+		System.out.println("-------计算所有单词总长度--------");
+		// 计算所有单词总长度
+		Integer length = Stream.of(str.split(" ")).map(s -&gt; s.length())
+				.reduce(0, (s1, s2) -&gt; s1 + s2);
+		System.out.println(length);
+
+		System.out.println("-------max 的使用--------");
+		// max 的使用
+		Optional&lt;String&gt; max = Stream.of(str.split(" "))
+				.max((s1, s2) -&gt; s1.length() - s2.length());
+		System.out.println(max.get());
+
+		System.out.println("-------使用 findFirst 短路操作--------");
+		// 使用 findFirst 短路操作
+		OptionalInt findFirst = new Random().ints().findFirst();
+		System.out.println(findFirst.getAsInt());
+</code></pre>
+<ol>
+<li>并行流<br>
+以上已经接触了 parallel()并行流，能够多线程的处理数据</li>
+<li>收集器<br>
+示例代码：</li>
+</ol>
+<pre><code class="language-java">		// 测试数据
+		List&lt;Student&gt; students = Arrays.asList(
+				new Student("小明", 10, Gender.MALE, Grade.ONE),
+				new Student("大明", 9, Gender.MALE, Grade.THREE),
+				new Student("小白", 8, Gender.FEMALE, Grade.TWO),
+				new Student("小黑", 13, Gender.FEMALE, Grade.FOUR),
+				new Student("小红", 7, Gender.FEMALE, Grade.THREE),
+				new Student("小黄", 13, Gender.MALE, Grade.ONE),
+				new Student("小青", 13, Gender.FEMALE, Grade.THREE),
+				new Student("小紫", 9, Gender.FEMALE, Grade.TWO),
+				new Student("小王", 6, Gender.MALE, Grade.ONE),
+				new Student("小李", 6, Gender.MALE, Grade.ONE),
+				new Student("小马", 14, Gender.FEMALE, Grade.FOUR),
+				new Student("小刘", 13, Gender.MALE, Grade.FOUR));
+
+		// 得到所有学生的年龄列表
+		// s -&gt; s.getAge() --&gt; Student::getAge , 不会多生成一个类似 lambda$0这样的函数
+		Set&lt;Integer&gt; ages = students.stream().map(Student::getAge)
+				.collect(Collectors.toCollection(TreeSet::new));
+		System.out.println("所有学生的年龄:" + ages);
+
+		// 统计汇总信息
+		IntSummaryStatistics agesSummaryStatistics = students.stream()
+				.collect(Collectors.summarizingInt(Student::getAge));
+		System.out.println("年龄汇总信息:" + agesSummaryStatistics);
+
+		// 分块
+		Map&lt;Boolean, List&lt;Student&gt;&gt; genders = students.stream().collect(
+				Collectors.partitioningBy(s -&gt; s.getGender() == Gender.MALE));
+		System.out.println("男女学生列表:" + genders);
+
+		// 分组
+		Map&lt;Grade, List&lt;Student&gt;&gt; grades = students.stream()
+				.collect(Collectors.groupingBy(Student::getGrade));
+		System.out.println("学生班级列表:" + grades);
+
+		// 得到所有班级学生的个数
+		Map&lt;Grade, Long&gt; gradesCount = students.stream().collect(Collectors
+				.groupingBy(Student::getGrade, Collectors.counting()));
+		System.out.println("班级学生个数列表:" + gradesCount);
+</code></pre>
+<p>测试结果</p>
+<pre><code class="language-java">所有学生的年龄:[6, 7, 8, 9, 10, 13, 14]
+年龄汇总信息:IntSummaryStatistics{count=12, sum=121, min=6, average=10.083333, max=14}
+男女学生列表:{false=[[name=小白, age=8, gender=FEMALE, grade=TWO], 
+[name=小黑, age=13, gender=FEMALE, grade=FOUR], [name=小红, age=7, 
+gender=FEMALE, grade=THREE], [name=小青, age=13, gender=FEMALE, 
+grade=THREE], [name=小紫, age=9, gender=FEMALE, grade=TWO], [name=小马, 
+age=14, gender=FEMALE, grade=FOUR]], true=[[name=小明, age=10, gender=
+MALE, grade=ONE], [name=大明, age=9, gender=MALE, grade=THREE], [name=
+小黄, age=13,gender=MALE, grade=ONE], [name=小王, age=6, gender=MALE, 
+grade=ONE], [name=小李, age=6, gender=MALE, grade=ONE], [name=小刘, 
+age=13, gender=MALE, grade=FOUR]]}
+学生班级列表:{FOUR=[[name=小黑, age=13, gender=FEMALE, grade=FOUR], 
+[name=小马, age=14, gender=FEMALE, grade=FOUR], [name=小刘, age=13, 
+gender=MALE, grade=FOUR]], ONE=[[name=小明, age=10, gender=MALE, 
+grade=ONE], [name=小黄, age=13, gender=MALE, grade=ONE], [name=小王, 
+age=6, gender=MALE, grade=ONE], [name=小李, age=6, gender=MALE, 
+grade=ONE]], THREE=[[name=大明, age=9, gender=MALE, grade=THREE], 
+[name=小红, age=7, gender=FEMALE, grade=THREE], [name=小青, age=13, 
+gender=FEMALE, grade=THREE]], TWO=[[name=小白, age=8, gender=FEMALE, 
+grade=TWO], [name=小紫, age=9, gender=FEMALE, grade=TWO]]}
+班级学生个数列表:{FOUR=3, ONE=4, THREE=3, TWO=2}
+</code></pre>
+<ol start="5">
+<li>运行机制<br>
+演示一个测试代码</li>
+</ol>
+<pre><code class="language-java">		Random random = new Random();
+		// 随机产生数据
+		Stream&lt;Integer&gt; stream = Stream.generate(random::nextInt)
+				// 产生300个 ( 无限流需要短路操作. )
+				.limit(300)
+				// 第1个无状态操作，print(s)执行耗时操作5s
+				.peek(s -&gt; print("peek: " + s))
+				// 第2个无状态操作
+				.filter(s -&gt; {
+					print("filter: " + s);
+					return s &gt; 1000000;
+				})
+				// 有状态操作
+				/*.sorted((i1, i2) -&gt; {
+					print("排序: " + i1 + ", " + i2);
+					return i1.compareTo(i2);
+				})*/
+				// 又一个无状态操作
+				.peek(s -&gt; {
+					print("peek2: " + s);
+				});
+
+		// 终止操作
+		stream.count();
+</code></pre>
+<p>分析以上代码，发现 Stream 创建了一个 256 长度的数组</p>
+<ol>
+<li>所有操作是链式调用， 一个元素只迭代一次</li>
+<li>每一个中间操作返回一个新的流。 流里面有一个属性 sourceStage<br>
+指向同一个 地方，就是 Head</li>
+<li>Head-&gt;nextStage-&gt;nextStage-&gt;... -&gt; null</li>
+<li>有状态操作会把无状态操作阶段，单独处理</li>
+<li>并行环境下， 有状态的中间操作不一定能并行操作。</li>
+<li>parallel/ sequetial 这 2 个操作也是中间操作(也是返回 stream)<br>
+但是他们不创建流， 他们只修改 Head 的并行标志</li>
+</ol>
+<h3 id="toc_h3_9">三、Reactive stream 响应式流</h3>
+<ul>
+<li>Reactive stream 是 jdk9 新特性，提供了一套 API，就是一种订阅发布者模式</li>
+<li>被压，背压是指在异步场景中，发布者发送事件速度远快于订阅者的处理速度的情况下，一种告诉上游的发布者降低发送速度的策略，简而言之，背压就是一种流速控制的策略。<br>
+举个例子：假设以前是没有水龙头的，只能自来水厂主动的往用户输送水，但是不知道用户需要多少水，有了 Reactive stream，就相当于有了水龙头，用户可以主动的请求用水，而自来水厂也知道了用户的需求<br>
+示例代码（需要 jdk9 以上版本的支持）</li>
+</ul>
+<pre><code class="language-java">import java.util.concurrent.Flow.Subscriber;
+import java.util.concurrent.Flow.Subscription;
+import java.util.concurrent.SubmissionPublisher;
+
+public class FlowDemo {
+    public static void main(String[] args) throws Exception {
+        // 1. 定义发布者, 发布的数据类型是 Integer
+        // 直接使用jdk自带的SubmissionPublisher, 它实现了 Publisher 接口
+        SubmissionPublisher&lt;Integer&gt; publiser = new SubmissionPublisher&lt;Integer&gt;();
+        
+        // 2. 定义订阅者
+        Subscriber&lt;Integer&gt; subscriber = new Subscriber&lt;Integer&gt;() {
+            private Subscription subscription;
+
+            @Override
+            public void onSubscribe(Subscription subscription) {
+                // 保存订阅关系, 需要用它来给发布者响应
+                this.subscription = subscription;
+                // 请求一个数据
+                this.subscription.request(1);
+            }
+
+            @Override
+            public void onNext(Integer item) {
+                // 接受到一个数据, 处理
+                System.out.println("接受到数据: " + item);
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // 处理完调用request再请求一个数据
+                this.subscription.request(1);
+                // 或者 已经达到了目标, 调用cancel告诉发布者不再接受数据了
+                // this.subscription.cancel();
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                // 出现了异常(例如处理数据的时候产生了异常)
+                throwable.printStackTrace();
+                // 我们可以告诉发布者, 后面不接受数据了
+                this.subscription.cancel();
+            }
+
+            @Override
+            public void onComplete() {
+                // 全部数据处理完了(发布者关闭了)
+                System.out.println("处理完了!");
+            }
+        };
+
+        // 3. 发布者和订阅者 建立订阅关系
+        publiser.subscribe(subscriber);
+
+        // 4. 生产数据, 并发布
+        // 这里忽略数据生产过程
+        for (int i = 0; i &lt; 1000; i++) {
+            System.out.println("生成数据:" + i);
+            // submit是个block方法
+            publiser.submit(i);
+        }
+
+        publiser.submit(111);
+        publiser.submit(222);
+        publiser.submit(333);
+
+        // 5. 结束后 关闭发布者
+        // 正式环境 应该放 finally 或者使用 try-resouce 确保关闭
+        publiser.close();
+
+        // 主线程延迟停止, 否则数据没有消费就退出
+        Thread.currentThread().join(1000);
+    }
+}
+
+</code></pre>
+<h3 id="toc_h3_10">四、Webflux 响应式编程</h3>
+<p>先来一张图，这是 Spring 文档的一张截图，介绍了 Spring 如今的两种开发模式，MVC 和 webflux 两种开发模式，可见 webflux 的重要性</p>
+<p><img src="https://img.algerfan.cn/blog/image/20190619/19a36ac4c2bf478d98b0363247a027cf.png" alt="20181117163117958.png"></p>
+<h4 id="toc_h4_11">1. 初识 SpringWebFlux</h4>
+<p>webflux 是 spring5 推出的一种响应式 Web 框架，它是一种非阻塞的开发模式，可以在一个线程里处理多个请求（非阻塞），运行在 Netty 环境，也可以可以运行在 servlet3.1 之后的容器，支持异步 servlet， 可以支持更高的并发量</p>
+<h4 id="toc_h4_12">2. 异步 servlet</h4>
+<ul>
+<li>我们知道同步 servlet 阻塞了 Tomcat 容器的线程，当一个网络请求到我们的 Tomcat 容器之后，容器会给每个请求启动一个线程去处理，线程里面会调用一个 servlet 去处理，当使用同步 servlet 时，业务代码花多长时间，你的线程就要等待多长时间，这就是堵塞（同步和异步是服务器后台才有异步这个概念，对于浏览器来说所有的请求都是异步，前台都要花费业务逻辑时间）</li>
+<li>异步 servlet 的主要作用是它不会堵塞 Tomcat 容器的 servlet 线程，它可以把一些耗时的操作放在一个独立的线程池，那么我们的 servlet 就可以立马返回，处理下一个请求，以此就可以达到高并发。<br>
+通过代码比较一下同步 servlet 与异步 servlet</li>
+</ul>
+<p>同步 servlet</p>
+<pre><code class="language-java">@WebServlet(urlPatterns = "/SyncServlet")
+public class SyncServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public SyncServlet() {
+        super();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse 
+response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse 
+response) throws ServletException, IOException {
+        long t1 = System.currentTimeMillis();
+        // 执行业务代码
+        doSomeThing(request, response);
+        System.out.println("sync use:" + (System.currentTimeMillis() - t1));
+    }
+    private void doSomeThing(HttpServletRequest request,
+                             HttpServletResponse response) throws IOException {
+        // 模拟耗时操作
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        response.getWriter().append("done");
+    }
+}
+
+</code></pre>
+<p>异步 servlet</p>
+<pre><code class="language-java">@WebServlet(asyncSupported = true, urlPatterns = { "/AsyncServlet" })
+public class AsyncServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public AsyncServlet() {
+        super();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse 
+response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse 
+response) throws ServletException, IOException {
+        long t1 = System.currentTimeMillis();
+
+        // 开启异步
+        AsyncContext asyncContext = request.startAsync();
+
+        // 执行业务代码,放入一个线程池里
+        CompletableFuture.runAsync(() -&gt; doSomeThing(asyncContext,
+                asyncContext.getRequest(), asyncContext.getResponse()));
+
+        System.out.println("async use:" + (System.currentTimeMillis() - t1));
+    }
+    private void doSomeThing(AsyncContext asyncContext,
+                             ServletRequest servletRequest, ServletResponse servletResponse) {
+
+        // 模拟耗时操作
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            servletResponse.getWriter().append("done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 业务代码处理完毕, 通知结束
+        asyncContext.complete();
+    }
+}
+</code></pre>
+<p><img src="https://img.algerfan.cn/blog/image/20190406/f026fac298e34169a2e8fec581b628f3.png" alt="20181218173222926.png"></p>
+<ul>
+<li>通过以上两段代码控制台的打印结果可以看出，异步 servlet 把耗时操作放在一个独立的线程池，那么我们的 servlet 就可以立马返回，处理下一个请求。</li>
+</ul>
+<h4 id="toc_h4_13">3. CRUD 完整示例</h4>
+<ul>
+<li><strong>通过下图可以看出 MVC 和 wenflux 的区别</strong><br>
+<img src="https://img.algerfan.cn/blog/image/20190619/feb1151b28bc435695d5f0c407bb8019.png" alt="20181117165349636.png"></li>
+<li><strong>以下通过一个例子了解一下 webflux 开发</strong></li>
+</ul>
+<ol>
+<li>实体类</li>
+</ol>
+<pre><code class="language-java">@Document(collection = "user")
+@Data
+public class User {
+
+	@Id
+	private String id;
+
+	@NotBlank
+	private String name;
+
+	@Range(min=10, max=100)
+	private int age;
+
+}
+</code></pre>
+<ol start="2">
+<li>Controller 层</li>
+</ol>
+<pre><code class="language-java">@RestController
+@RequestMapping("/user")
+public class UserController {
+
+	private final UserRepository repository;
+
+	public UserController(UserRepository repository) {
+		this.repository = repository;
+	}
+
+	/**
+	 * 以数组形式一次性返回数据
+	 */
+	@GetMapping("/")
+	public Flux&lt;User&gt; getAll() {
+		return repository.findAll();
+	}
+
+	/**
+	 * 以SSE形式多次返回数据
+	 */
+	@GetMapping(value = "/stream/all", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux&lt;User&gt; streamGetAll() {
+		return repository.findAll();
+	}
+
+	/**
+	 * 新增数据
+	 */
+	@PostMapping("/")
+	public Mono&lt;User&gt; createUser(@Valid @RequestBody User user) {
+		// spring data jpa 里面, 新增和修改都是save. 有id是修改, id为空是新增
+		// 根据实际情况是否置空id
+		user.setId(null);
+		CheckUtil.checkName(user.getName());
+		return this.repository.save(user);
+	}
+
+	/**
+	 * 根据id删除用户 存在的时候返回200, 不存在返回404
+	 */
+	@DeleteMapping("/{id}")
+	public Mono&lt;ResponseEntity&lt;Void&gt;&gt; deleteUser(
+			@PathVariable("id") String id) {
+		// deletebyID 没有返回值, 不能判断数据是否存在
+		// this.repository.deleteById(id)
+		return this.repository.findById(id)
+				// 当你要操作数据, 并返回一个Mono 这个时候使用flatMap
+				// 如果不操作数据, 只是转换数据, 使用map
+				.flatMap(user -&gt; this.repository.delete(user).then(
+						Mono.just(new ResponseEntity&lt;Void&gt;(HttpStatus.OK))))
+				.defaultIfEmpty(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * 修改数据 存在的时候返回200 和修改后的数据, 不存在的时候返回404
+	 */
+	@PutMapping("/{id}")
+	public Mono&lt;ResponseEntity&lt;User&gt;&gt; updateUser(@PathVariable("id") String id,
+			@Valid @RequestBody User user) {
+		CheckUtil.checkName(user.getName());
+		return this.repository.findById(id)
+				// flatMap 操作数据
+				.flatMap(u -&gt; {
+					u.setAge(user.getAge());
+					u.setName(user.getName());
+					return this.repository.save(u);
+				})
+				// map: 转换数据
+				.map(u -&gt; new ResponseEntity&lt;User&gt;(u, HttpStatus.OK))
+				.defaultIfEmpty(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * 根据ID查找用户 存在返回用户信息, 不存在返回404
+	 */
+	@GetMapping("/{id}")
+	public Mono&lt;ResponseEntity&lt;User&gt;&gt; findUserById(
+			@PathVariable("id") String id) {
+		return this.repository.findById(id)
+				.map(u -&gt; new ResponseEntity&lt;User&gt;(u, HttpStatus.OK))
+				.defaultIfEmpty(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * 根据年龄查找用户
+	 */
+	@GetMapping("/age/{start}/{end}")
+	public Flux&lt;User&gt; findByAge(@PathVariable("start") int start,
+			@PathVariable("end") int end) {
+		return this.repository.findByAgeBetween(start, end);
+	}
+
+	/**
+	 * 根据年龄查找用户
+	 */
+	@GetMapping(value = "/stream/age/{start}/{end}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux&lt;User&gt; streamFindByAge(@PathVariable("start") int start,
+			@PathVariable("end") int end) {
+		return this.repository.findByAgeBetween(start, end);
+	}
+	
+	/**
+	 *  得到20-30用户
+	 */
+	@GetMapping("/old")
+
+	public Flux&lt;User&gt; oldUser() {
+		return this.repository.oldUser();
+	}
+
+	/**
+	 * 得到20-30用户
+	 */
+	@GetMapping(value = "/stream/old", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux&lt;User&gt; streamOldUser() {
+		return this.repository.oldUser();
+	}
+
+}
+</code></pre>
+<ol start="3">
+<li>Repository 层</li>
+</ol>
+<pre><code class="language-java">@Repository
+public interface UserRepository extends ReactiveMongoRepository&lt;User, String&gt; {
+
+	/**
+	 * 根据年龄查找用户
+	 */
+	Flux&lt;User&gt; findByAgeBetween(int start, int end);
+	
+	@Query("{'age':{ '$gte': 20, '$lte' : 30}}")
+	Flux&lt;User&gt; oldUser();
+}
+</code></pre>
+<ul>
+<li>以上代码没有进行校验，当然没有校验的代码是不能用的，校验代码我就不放了，想了解的<a href="https://github.com/AlgerFan/webflux" target="_blank">GitHub</a>上有完整代码。</li>
+</ul>
+          <div>
+            <hr>
+
+标题：Webflux响应式编程（SpringBoot 2.0新特性）——完整版<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2018/11/18/1542474535012.html" target="_blank">https://algerfan.github.io/articles/2018/11/18/1542474535012.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="Webflux响应式编程（SpringBoot 2.0新特性）——完整版"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2018/11/18/1542474535012.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1542474535012"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1542474535012",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1542474535012",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1542474535012', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 36ms, 2022/12/10 22:11:59 -->

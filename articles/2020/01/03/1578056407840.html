@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（8）磁盘存储器的管理——计算机操作系统复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（8）磁盘存储器的管理——计算机操作系统复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2020/01/03/1578056407840.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（8）磁盘存储器的管理——计算机操作系统复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2020/01/03/1578056407840.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（8）磁盘存储器的管理——计算机操作系统复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2020-01-03</span>
+          <span class="comments">
+            <span data-uvstatcmt="1578056407840">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2020/01/03/1578056407840.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20190701.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">一、文件的物理结构</h2>
+<p><strong>几个基本概念</strong></p>
+<p>类似于内存分页，磁盘中的存储单元也会被分为一个个“块/磁盘块/物理块”。很多操作系统中，<strong>磁盘块的大小与内存块、页面的大小相同</strong>。<br>
+内存与磁盘之间的数据交换(即读/写操作、磁盘 I/O) 都是<strong>以“块”为单位进行</strong>的。即每次读入一块，或每次写出一块。</p>
+<p>在内存管理中，进程的逻辑地址空间被分为一个一个页面。<br>
+同样的，在外存管理中，为了方便对文件数据的管理，<strong>文件的逻辑地址空间也被分为了一个一个的文件。</strong>“块”。于是文件的逻辑地址也可以表示为(<strong>逻辑块号，块内地址</strong>)的形式。</p>
+<p>操作系统为文件分配存储空间都是<strong>以块为单位</strong>的用户通过逻辑地址来操作自己的文件，操作系统要负责实现从逻辑：<strong>地址到物理地址的映射</strong>。</p>
+<h3 id="toc_h3_1">1. 连续分配</h3>
+<p><strong>连续分配</strong>方式要求<strong>每个文件在磁盘上占有一组连续的块</strong>。</p>
+<p>用户给出要访问的逻辑块号，操作系统找到该文件对应的目录项(FCB)<br>
+<strong>物理块号 = 起始块号 + 逻辑块号</strong><br>
+当然，还需要检查用户提供的逻辑块号是否合法(逻辑块号 ≥长度就不合法)<br>
+可以直接算出逻辑块号对应的物理块号，因此<strong>连续分配支持顺序访问和直接访问(即随机访问)。</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-78cfcc91.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-01fc9f70.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""><br>
+读取某个磁盘块时，需要移动磁头。访问的两个磁盘块相隔越远，移动磁头所需时间就越长。<br>
+结论：<strong>连续分配的文件在顺序读/写时速度最快</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-d6daae25.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>若此时文件 A 要拓展，需要再增加一一个磁盘块(总共需要连续的 4 个磁盘块)。由于采用连续结构，因此文件 A 占用的磁盘块必须是连续的。因此只能将文件 A 全部“迁移”到绿色区域。<br>
+结论：<strong>物理上采用连续分配的文件不方便拓展</strong>。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-3b0cbbb5.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>结论：物理上<strong>采用连续分配，存储空间利用率低，会产生难以利用的磁盘碎片</strong>。<br>
+可以用<strong>紧凑</strong>来处理碎片，但是需要耗费很大的时间代价。</p>
+<p><strong>连续分配总结</strong></p>
+<p><strong>优点</strong>：支持顺序访问和直接访问(即随机访问) ;连续分配的文件在顺序访问时速度最快；<br>
+<strong>缺点</strong>：不方便文件拓展;存储空间利用率低，会产生磁盘碎片。</p>
+<h3 id="toc_h3_2">2. 链接分配</h3>
+<p><strong>链接分配</strong>采取离散分配的方式，可以为文件分配离散的磁盘块。分为<strong>隐式链接</strong>和<strong>显式链接</strong>两种。</p>
+<h4 id="toc_h4_3">隐式链接分配</h4>
+<p><img src="https://img.hacpai.com/file/2020/01/image-e781a800.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>用户给出要访问的逻辑块号 i,操作系统找，到该文件对应的目录项(FCB)</p>
+<p>从目录项中找到起始块号( 即 0 号块)，将 0 号逻辑块读入内存，由此知道 1 号逻辑块存放的物理块号，于是读入 1 号逻辑块，再找到 2 号逻辑块的存放位....以此类推。因此，读入 i 号逻辑块，总共需要 i+1 次磁盘 I/O 。</p>
+<p><strong>链式分配(隐式链接)总结</strong></p>
+<p><strong>优点</strong>：很方便文件拓展，不会有碎片问题，外存利用率高。<br>
+<strong>缺点</strong>：只支持顺序访问，不支持随机访问，查找效率低，指向下一个盘块的指针也需要耗费少量的存储空间。</p>
+<h4 id="toc_h4_4">显式链接方式</h4>
+<p>把用于链接文件各物理块的指针显式地存<strong>放在一张表中</strong>。即文件分配表(FAT, File Allocation Table )<br>
+假设某个新创建的文件“aa”依次存放在磁盘块 2&gt;5&gt;0&gt;1<br>
+假设某个新创建的文件“bbb”依次存放在磁盘块 4&gt;23&gt;3</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-6c1c8e83.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>**注意：一个磁盘仅设置一 张 FAT。开机时，将 FAT 读入内存，并常驻内存。**FAT 的各个表项在物理。上连续存储，且每一个表项长度相同，因此“物理块号”字段可以是隐含的。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-eb913905.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>用户给出要访问的逻辑块号 i,操作系统找到该文件对应的目录项(FCB)</p>
+<p>从目录项中找到起始块号，若 i&gt;0， 则查询内存中的文件分配表 FAT,往后找到 i 号逻辑块对应的物理块号。<strong>逻辑块号转换成物理块号的过程不需要读磁盘操作</strong>。</p>
+<p><strong>链式分配(显式链接)总结</strong></p>
+<p><strong>优点</strong>：很方便文件拓展，不会有碎片问题，外存利用率高，并且支持随机访问。相比于隐式链接来说，地址转换时不需要访问磁盘，因此文件的访问效率更高。<br>
+<strong>缺点</strong>：文件分配表的需要占用一定的存储空间。</p>
+<h3 id="toc_h3_5">3. 索引分配</h3>
+<p><strong>索引分配</strong>允许文件离散地分配在各个磁盘块中，系统会<strong>为每个文件建立一张索引表</strong>， 索引表中<strong>记录了文件的各个逻辑块对应的物理块</strong>(索引表的功能类似于内存管理中的页表--- 建立逻辑页面到物理页之间的映射关系)。索引表存放的磁盘块称为<strong>索引块</strong>。文件数据存放的磁盘块称为<strong>数据块</strong>。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-9467eacf.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>索引分配方式可以支持随机访问</strong>。<strong>文件拓展也很容易实现</strong>(只需要给文件分配一个空闲块，并增加一一个索引表项即可)但是<strong>索引表需要占用一定的存储空间</strong>。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-b13b5652.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>① 链接方案：如果索引表太大，一个索引块装不下，那么可以将多个索引块链接起来存放。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-89a18900.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>② <strong>多层索引</strong>：建立多层索引( <strong>原理类似于多级页表</strong>)。使第一层索引块指向第二层的索引块。还可根据文件大小的要求再建立第三层、第四层索引块。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-ed271145.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>③ <strong>混合索引</strong>：多种索引分配方式的结合。例如，一个文件的顶级索引表中，既包含<strong>直接地址索引</strong>(直接指向<strong>数据块</strong>)，又包含<strong>一级间接索引</strong>(指向单层索引表)、还包含<strong>两级间接索引</strong>(指向两层索引表)。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-42805042.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h4 id="toc_h4_6">索引分配总结</h4>
+<p><strong>索引分配</strong>允许文件离散地分配在各个磁盘块中，系统会<strong>为每个文件建立一张索引表</strong>，索引表中<strong>记录了文件的各个逻辑块对应的物理块</strong>(索引表的功能类似于内存管理中的页表一 建立逻辑页面到物理页之间的映射关系)。 索引表存放的磁盘块称为<strong>索引块</strong>。文件数据存放的磁盘块称为<strong>数据块</strong>。<br>
+若文件太大，索引表项太多，可以采取以下三种方法解决：<br>
+① <strong>链接方案</strong>：如果索引表太大，一个索引块装不下，那么可以将多个索引块链接起来存放。<strong>缺点</strong>：若文件很大，索引表很长，就需要将很多个索引块链接起来。想要找到 i 号索引块，必须先依次读入 0~i-1 号索引块，这就导致磁盘 I/O 次数过多，查找效率低下。<br>
+② <strong>多层索引</strong>：建立多层索引(<strong>原理类似于多级页表</strong>)。使第一层索引块指向第二层的索引块。还可根据文件大小的要求再建立第三层、第四层索引块。采用 K 层索引结构，<strong>且顶级索引表未调入内存</strong>，则访问一个数据块只需要 K+1 次读磁盘操作。缺点：即使是小文件，访问一个数据块依然需要 K+1 次读磁盘。<br>
+③ <strong>混合索引</strong>：多种索引分配方式的结合。例如，一个文件的顶级索引表中，既包含<strong>直接地址索引</strong>(直接指向数据块)，又包含<strong>一级间接索引</strong>( 指向单层索引表)、还包含<strong>两级间接索引</strong>(指向两层索引表)。<strong>优点</strong>：对于小文件来说，访问一个数据块所需的读磁盘次数更少。</p>
+<p><strong>超级超级超级重要考点</strong>： ① 要会根据多层索引、混合索引的结构计算出文件的最大长度(<strong>Key</strong>: 各级索引表最大不能超过一一个块) ; ② 要能自己分析访问某个数据块所需要的读磁盘次数(<strong>Key</strong>: FCB 中 会存有指向顶级索引块的指针，因此可以根据 FCB 读入顶级索引块。每次读入下- -级的索引块都需要一次读磁盘操作。另外，要<strong>注意题目条件---顶级索引块是否已调入内存</strong>)</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-ebe8f808.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_7">二、文件存储空间的管理</h2>
+<h3 id="toc_h3_8">存储空间的划分与初始化</h3>
+<p><img src="https://img.hacpai.com/file/2020/01/image-a42c3b8b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_9">存储空间管理一一空闲表法</h3>
+<p>适用于“连续分配方式”</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-30bfc184.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_10">存储空间管理一一空闲链表法</h3>
+<p>空闲链表法分为两种</p>
+<ul>
+<li>空闲盘块链：以盘块为单位组成一条空闲链；</li>
+<li>空闲盘区链：以盘区为单位组成一条空闲链。</li>
+</ul>
+<p><img src="https://img.hacpai.com/file/2020/01/image-eb015b3c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>空闲盘块链</strong></p>
+<p>操作系统保存着<strong>链头、链尾指针</strong>。<br>
+<strong>如何分配</strong>：若某文件申请 K 个盘块，则从链头开始依次摘下 K 个盘块分配，并修改空闲链的链头指针。<br>
+<strong>如何回收</strong>：回收的盘块依次挂到链尾，并修改空闲链的链尾指针。<br>
+适用于离散分配的物理结构。为文件分配多个盘块时可能要重复多次操作。</p>
+<p><strong>空闲盘区链</strong></p>
+<p>操作系统保存着<strong>链头、链尾指针</strong>。<br>
+<strong>如何分配</strong>：若某文件申请 K 个盘块，则可以采用首次适应、最佳适应等算法，从链头开始检索，按照算法规则找到-一个大小符合要求的空闲盘区，分配给文件。若没有合适的连续空闲块，也可以将不同盘区的盘块同时分配给-一个文件， 注意分配后可能要修改相应的链指针、盘区大小等数据。<br>
+<strong>如何回收</strong>：若回收区和某个空闲盘区相邻，则需要将回收区合并到空闲盘区中。若回收区没有和任何空闲区相邻，将回收区作为单独的一个空闲盘区挂到链尾。</p>
+<h3 id="toc_h3_11">存储空间管理一一位示图法</h3>
+<p><img src="https://img.hacpai.com/file/2020/01/image-43c6fb7e.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p><strong>位示图</strong>：每个二进制位对应一一个盘块。在本例中，“0” 代表盘块空闲，“1”代表盘块已分配。<br>
+<strong>如何分配</strong>：若文件需要 K 个块，① 顺序扫描位示图，找到 K 个相邻或不相邻的“0”; ② 根据字号、位号算出对应的盘块号，将相应盘块分配给文件; ③ 将相应位设置为“1”<br>
+<strong>如何回收</strong>： ① 根据回收的盘块号计算出对应的字号、位号; ② 将相应二进制位设为“0’</p>
+<h3 id="toc_h3_12">存储空间管理一一成组链接法</h3>
+<p>空闲表法、空闲链表法不适用于大型文件系统，因为空闲表或空闲链表可能过大。UNIX 系统中采用了<strong>成组链接法</strong>对磁盘空闲块进行管理。<br>
+<strong>文件卷的目录区中</strong>专门用一个磁盘块作为“<strong>超级块</strong>”，当系统启动时需要将<strong>超级块读入内存</strong>。并且要保。证内存与外存中的“超级块”数据一致。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-68f58f40.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>如何分配？<br>
+Eg:需要 1 个空闲块<br>
+① 检查第一个分组的块数是否足够。1&lt;100，因此是足够的。<br>
+② 分配第一个分组中的 1 个空闲块，并修改相应数据</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-0e65acad.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>Eg:需要 100 个空闲块<br>
+① 检查第一个分组的块数是否足够。100=100， 是足够的。<br>
+② 分配第一个分组中的 100 个空闲块。但是<strong>由于 300 号块内存放了再下一组的信息，因此 300 号块的数据需要复制到超级块中</strong>。</p>
+<p>如何回收？<br>
+Eg:假设每个分组最多为 100 个空闲块，此时第一一个分组己有 99 个块，还要再回收一块。</p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-c6c900f7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+<p>Eg:假设每个分组最多为 100 个空闲块，此时第一个分组已有 100 个块，还要再回收一块。<strong>需要将超级块中的数据复制到新回收的块中，并修改超级块的内容，让新回收的块成为第一个分组</strong>。</p>
+<p><strong>总结</strong></p>
+<p><img src="https://img.hacpai.com/file/2020/01/image-9e1b19ea.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt=""></p>
+          <div>
+            <hr>
+
+标题：（8）磁盘存储器的管理——计算机操作系统复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2020/01/03/1578056407840.html" target="_blank">https://algerfan.github.io/articles/2020/01/03/1578056407840.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（8）磁盘存储器的管理——计算机操作系统复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2020/01/03/1578056407840.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1578056407840"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1578056407840",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1578056407840",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1578056407840', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 31ms, 2022/12/10 22:11:59 -->

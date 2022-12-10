@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（5）运输层——计算机网络复习笔记 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（5）运输层——计算机网络复习笔记 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2019/12/23/1577072671762.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（5）运输层——计算机网络复习笔记 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2019/12/23/1577072671762.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（5）运输层——计算机网络复习笔记</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2019-12-23</span>
+          <span class="comments">
+            <span data-uvstatcmt="1577072671762">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2019/12/23/1577072671762.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20180514.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">1. 运输层概述</h2>
+<p><strong>进程间的通信</strong></p>
+<p>从通信和信息处理的角度看，运输层向它上面的应用层提供通信服务，它属于面向通信部分的最高层，也是用户功能中的最低层。<br>
+通信的真正端点不是主机而是主机中的进程。网络层为主机之间提供逻辑通信，运输层提供应用进程间端到端的逻辑通信。</p>
+<p><strong>运输层的两个主要协议</strong></p>
+<p>两个对等运输实体在通信时传送的数据单元叫做运输协议数据单元。</p>
+<p>用户数据报协议 UDP：一个数据包就能完成数据通信，不建立会话，支持多播。</p>
+<ul>
+<li>传送的协议数据单元是 TCP 报文段</li>
+</ul>
+<p>传输控制协议 TCP：提供可靠的、面向连接的服务，分段传输、编号、流量控制、建立会话，增加了很多开销，比如：确认、流量控制、计时器及连接管理。</p>
+<ul>
+<li>传送的协议数据单元是 UDP 报文或用户数据报</li>
+</ul>
+<p>TCP/IP 体系中的运输层协议<br>
+<img src="https://img.hacpai.com/file/2019/12/image-e8c4e288.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>运输层的端口</strong></p>
+<p>在协议栈层间的抽象的协议端口是软件端口，和硬件端口是完全不同的。硬件端口是不同硬件设备进行交互的端口，而软件端口是应用间的各种协议进程与运输实体进行层间交互的一种地址。</p>
+<p><strong>服务器端使用的端口</strong></p>
+<p>分为两类：<br>
+一类是熟知端口号或者说系统端口号，常用的熟知端口号有：</p>
+<p>| 应用程序 | FTP | TELNET | SMTP | DNS | TFTP | HTTP | SNMP | SNMP(trap) | HTTPS |<br>
+| - | - | - | - | - | - | - | - | - | - |<br>
+| 熟知端口号 | 21 | 23 | 25 | 53 | 69 | 80 | 161 | 162 | 443 |</p>
+<p>另一类叫做登记端口号，数值在 1024~65535</p>
+<p><strong>客户端使用的端口号</strong></p>
+<p>数值是 49152~65535，又称为短暂端口号。</p>
+<p>查看自己计算机侦听的端口：netstat -an<br>
+测试远程计算机打开的端口：telnet IP 地址</p>
+<h2 id="toc_h2_1">2. 用户数据报协议 UDP</h2>
+<h3 id="toc_h3_2">2.1 UDP 概述</h3>
+<ul>
+<li>UDP 是无连接的；</li>
+<li>UDP 使用尽最大努力交付；</li>
+<li>UDP 是面向报文的；<br>
+<img src="https://img.hacpai.com/file/2019/12/image-16dd4869.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></li>
+<li>UDP 没有拥塞控制；</li>
+<li>UDP 支持一对一、一对多、多对一和多对多的交互通信；</li>
+<li>UDP 的首部开销小，只有 8 个字节，比 TCP 的 20 个字节的首部要短。</li>
+</ul>
+<p><strong>UDP 的首部格式</strong></p>
+<p>用户数据报 UDP 有两个字段：数据字段和首部字段。首部字段很简单，只有 8 个字节，由四个字段组成，每个字段的长度都是两个字节。各字段有：</p>
+<ul>
+<li>源端口：在需要对方回信时选用。不需要时可用全 0；</li>
+<li>目的端口：这在终点交付报文时必须使用；</li>
+<li>长度：用户数据报的长度，最小值是 8；</li>
+<li>检验和：检测 UDP 用户数据报在传输中是否有错。有错就丢弃。</li>
+</ul>
+<p><img src="https://img.hacpai.com/file/2019/12/image-85c8b28e.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h2 id="toc_h2_3">3. 传输控制协议 TCP 概述</h2>
+<p><strong>TCP 最主要的特点</strong></p>
+<ul>
+<li>TCP 是面向连接的运输层协议；</li>
+<li>每一条 TCP 连接只能有两个端点，每一条 TCP 连接只能是点对点的；</li>
+<li>TCP 提供可靠交付的服务；</li>
+<li>TCP 提供全双工通信；</li>
+<li>面向字节流。TCP 中的“流”指的是流入到进程或从进程流出的字节序列。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-cf02e6e6.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></li>
+</ul>
+<p><strong>TCP 的连接</strong></p>
+<p>TCP 把连接作为最基本的抽象<br>
+每一条 TCP 连接有两个端点。TCP 连接的端点不是主机、IP 地址、应用程序，而是套接字。<br>
+套接字 socket=（IP 地址：端口号）<br>
+TCP 连接：:={socket, socket}={(IP1: port1), (IP2: port2)}</p>
+<h2 id="toc_h2_4">4. 可靠传输的工作原理</h2>
+<p>停止等待协议<br>
+<img src="https://img.hacpai.com/file/2019/12/image-96a8c459.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>确认丢失和确认迟到<br>
+<img src="https://img.hacpai.com/file/2019/12/image-29f23473.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>使用上述的确认和重传机制，我们就可以<strong>在不可靠的传输网络上实现可靠的通信</strong>。这种可靠传输协议常称为<strong>自动重传请求 ARQ</strong>。<br>
+ARQ 表明重传的请求是自动进行的。接收方不需要请求发送方重传某个出错的分组。</p>
+<p><strong>信道利用率</strong><br>
+停止等待协议的优点是简单，但是缺点是信道利用率太低。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-2ec8cbdf.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+信道利用率 U=TD/TD+RTT+TA。</p>
+<p><strong>流水线传输</strong><br>
+发送方可连续发送多个分组，不必每发完一个分组就停顿下来等待对方的确认。<br>
+由于信道上一直有数据不间断地传送，这种传输方式可获得很高的信道利用率。<br>
+<img src="https://img.hacpai.com/file/2019/12/image-0722a4fa.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>连续 ARQ 协议<br>
+<img src="https://img.hacpai.com/file/2019/12/image-1ab7dc0d.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h2 id="toc_h2_5">5. TCP 报文段的首部格式</h2>
+<p><img src="https://img.hacpai.com/file/2019/12/image-e4952e0a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>TCP 报文首部的前 20 个字节是固定的。</p>
+<ul>
+<li>源端口和目的端口：各占 2 字节</li>
+<li>序号：占 4 字节，共 2 的 32 次方个序号，范围是[0, 2 的 32 次方]。在一个 TCP 连接中传送的字节流中的每一个字节都按顺序编号。首部的序号字段值则指的是本报文段所发送的数据的第一个字节的序号。</li>
+<li>确认号：占 4 个字节，<strong>是期望收到对方下一个报文段的第一个数据字节的序号。</strong></li>
+<li>数据偏移：占 4 位，它指出 TCP 报文段的数据起始处距离 TCP 报文段的起始处有多远，实际就是 TCP 报文段的首部长度。数据偏移的单位是 32 位字（即 4 字节的字为单位），4 位二进制最大能表示的十进制是 15，因此数据偏移最大值是 60。</li>
+<li>保留：占 6 位，保留今后使用。</li>
+<li>紧急 URG：当 URG=1 时，表明紧急指针字段有效。告诉系统此报文段是否有紧急数据，应尽快传送。</li>
+<li>确认 ACK：当 ACK=1 时确认号有效。TCP 规定，在连接建立后所有传送的报文段都必须把 ACK 置 1。</li>
+<li>推送：通信时，有时希望在一端进行一个操作后就立即收到对方的响应，这种情况就可以使用推送（push）操作。接收方收到 PSH=1 的报文段，就尽快地交付接收应用进程，不再等整个缓存都填满了再向上交付。</li>
+<li>复位 RST：当 RST=1 时，表明 TCP 连接中出现了严重错误，必须释放连接，然后再重新建立运输连接。</li>
+<li>同步 SYN：在连接建立时用来同步序号。当 SYN=1 而 ACK=0 时，表明这是一个连接请求报文段。</li>
+<li>窗口：占 2 字节。窗口指的是发送本报文段的一方的接收窗口。告诉对方从报文段首部的确认号算起，接收方允许对方发送的数据量。<strong>窗口值作为接收方让发送方设置其发送窗口的依据。</strong></li>
+<li>检验和：占 2 字节。检验和字段检验的范围包括首部和数据这两部分。在计算检验和时，要在 TCP 报文段的前面加上 12 字节的伪首部，把伪首部第 4 个字段的 17 改成 6（因为 TCP 的协议号是 6），把第 5 字段的 UDP 长度改成 TCP 长度。</li>
+<li>紧急指针：占 2 字节。紧急指针只有在 URG=1 时才有意义，指出本报文段中紧急数据的字节数。</li>
+<li>选项：长度可变，最长可达 40 字节。TCP 最初规定了一个选项：最大报文段长度<strong>MSS，是每一个 TCP 报文段中的数据字段的最大长度</strong>。</li>
+</ul>
+<h2 id="toc_h2_6">6. TCP 可靠传输的实现</h2>
+<p>发送缓存用来暂时存放</p>
+<ul>
+<li>发送应用程序传送到发送方 TCP 准备发送的数据；</li>
+<li>TCP 已发送但尚未收到确认的数据。</li>
+</ul>
+<p>接收缓存用来暂时存放</p>
+<ul>
+<li>按序到达的、但尚未被接收应用程序读取的数据；</li>
+<li>未按序到达的数据。</li>
+</ul>
+<p>以字节为单位的滑动窗口<br>
+<img src="https://img.hacpai.com/file/2019/12/image-930d15fd.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-7f0e644b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-9044494c.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-ee9ca5a3.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>重传时间的选择</strong></p>
+<p>TCP 采用了一种自适应算法，记录一个报文段发出的时间，以及收到相应确认的时间。这两个时间差就是报文段的往返时间 RTT。TCP 保留了 RTT 的一个加权平均往返时间 RTTs（平滑的往返时间）。</p>
+<p>新的 RTTs=(1 - a)*(旧的 RTTs)+a+(+(新的 RTT 样本)</p>
+<p>超时计时器设置的<strong>超时重传时间 RTO</strong>应略大于上面得出的加权平均往返时间 RTTs。RFC6298 建议使用下式计算 RTO：</p>
+<p>RTO=RTTs+4*RTTD</p>
+<p>Karn 提出了一个算法：在计算加权平均 RTTs 时，只要报文段重传了，就不采用其往返时间样本。这样得出的加权平均 RTTs 和 RTO 就较准确。</p>
+<h2 id="toc_h2_7">7. TCP 的流量控制</h2>
+<p>所谓流量控制就是<strong>让发送方的发送速率不要太快，要让接收方来得及接收。</strong></p>
+<p>发送方的发送窗口不能超过接收方给出的接收窗口的数值。TCP 的窗口单位是字节，不是报文段。</p>
+<p>利用可变窗口进行流量控制<br>
+<img src="https://img.hacpai.com/file/2019/12/image-f4cdf16b.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<h2 id="toc_h2_8">8. TCP 的拥塞控制</h2>
+<p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏，这种情况就叫做拥塞。即对资源的需求 &gt; 可用资源</p>
+<p>网络拥塞往往是由多种因素引起的。例如，当某个结点缓存的容量太小时，到达该结点的分组因无存储空间暂存而不得不丢弃。</p>
+<p><strong>拥塞控制就是防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载</strong>。拥塞控制所要做的都有一个前提，就是<strong>网络能够承受现有的网络负荷</strong>。并且拥塞是一个全局性的过程。流量控制往往是指点对点通信量的控制，是一个端到端的问题。</p>
+<p>下图中横坐标是提供的负载，表示单位时间内输入网络的分组数目。纵坐标是吞吐量，表示单位时间内从网络输出的分组数目。<br>
+<strong>拥塞控制所起的作用</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-a2f34697.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>发送方维持一个 <strong>拥塞窗口 cwnd</strong>：</p>
+<ul>
+<li>只要网络没有出现拥塞，拥塞窗口就在增大一些，以便更多的分组发送出去；</li>
+<li>只要网络出现拥塞，拥塞窗口就减小一些，以减少注入网络中的分组数。</li>
+</ul>
+<p><strong>慢开始算法的原理</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-1c76cafe.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p><strong>慢开始和拥塞避免算法的实现</strong><br>
+慢开始门限的初始值设置为 16 个报文段，即 ssthresh=16<br>
+<img src="https://img.hacpai.com/file/2019/12/image-17f622b0.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>但是“拥塞避免”并非指完全能够避免了拥塞，只是在拥塞避免阶段把拥塞窗口控制为按线性规律增长，使网络比较不容易出现拥塞。</p>
+<p><strong>快重传</strong></p>
+<p>当接收方发现没有按顺序接收时，就判断出现了丢包现象，有可能出现了拥塞，立即通知发送方重新发送，连续发送三个重复的确认。</p>
+<p>从连续收到三个重复的确认转入拥塞避免<br>
+<img src="https://img.hacpai.com/file/2019/12/image-7551b7b8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>一旦出现了拥塞，发送方调整门限值，ssthresh=cwnd/2，拥塞窗口直接从新的慢开始门限开始加法增加，即设置拥塞窗口 cwnd=ssthresh，这就是<strong>快恢复</strong>。</p>
+<p>发送方的发送窗口的上限值应当取为接收方窗口 rwnd 和拥塞窗口 cwnd 这两个变量中较小的一个，即应按以下公式确认：发送窗口的上限值 =Min[rwnd, cwnd]</p>
+<p>最简单的情况下，路由器的队列通常是按照“先进先出”的规则处理到来的分组。<br>
+为了避免发生网络中的全局同步现象，1998 年提出了主动队列管理 AQM。所谓“主动”就是不要等到路由器的队列长度已经达到最大值时才不得不丢弃后面到达的分组。可以有不同的时限方法，可以使用随机早期检测 RED。</p>
+<h2 id="toc_h2_9">9. TCP 的传输连接管理</h2>
+<p>运输连接有三个阶段，即<strong>连接建立、数据传送、连接释放</strong>。运输连接的管理就是使运输连接的建立和释放都能正常地进行。<br>
+TCP 连接的建立采用客户服务器方式。主动发起连接建立的应用进程叫做<strong>客户</strong>，而被动等待连接建立的应用进程叫做<strong>服务器</strong>。</p>
+<p>TCP 的连接建立：<strong>三次握手</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-31995728.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+例如：<br>
+<img src="https://img.hacpai.com/file/2019/12/image-47630955.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+三次握手建立 TCP 连接的各状态<br>
+<img src="https://img.hacpai.com/file/2019/12/image-f8bbf4aa.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+<p>TCP 连接释放：<strong>四次挥手</strong><br>
+<img src="https://img.hacpai.com/file/2019/12/image-3cff08f6.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-c9f49c8f.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-be6a6b09.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+<img src="https://img.hacpai.com/file/2019/12/image-e0191a2d.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"><br>
+释放连接的各状态（TCP 连接必须经过时间 2MSL 后才真正释放掉）<br>
+<img src="https://img.hacpai.com/file/2019/12/image-6d94c201.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image.png"></p>
+          <div>
+            <hr>
+
+标题：（5）运输层——计算机网络复习笔记<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2019/12/23/1577072671762.html" target="_blank">https://algerfan.github.io/articles/2019/12/23/1577072671762.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（5）运输层——计算机网络复习笔记"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2019/12/23/1577072671762.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1577072671762"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1577072671762",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1577072671762",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1577072671762', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 38ms, 2022/12/10 22:11:59 -->

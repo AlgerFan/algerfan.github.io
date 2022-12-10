@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>（4）实战开发——Webflux响应式编程利器 - AlgerFan | Blog</title><meta name="description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/><meta property="og:description" content="AlgerFan的个人博客，一个编程爱好者，喜欢研究一些新技术。  平时喜欢整理个人博客，逛逛技术论坛。"/>    <meta name="keywords" content="AlgerFan | Blog,Java,博客,Blog"/><link rel="dns-prefetch" href="https://algerfan.github.io"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://algerfan.github.io"><link rel="icon" type="image/png" href="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="apple-touch-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><link rel="shortcut icon" type="image/x-icon" href="https://study.algerfan.cn/images/ironman-draw.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="（4）实战开发——Webflux响应式编程利器 - AlgerFan | Blog"/><meta property="og:site_name" content="AlgerFan | Blog"/><meta property="og:url"      content="https://algerfan.github.io/articles/2018/12/09/1544342714012.html?"/><meta property="og:image" content="https://study.algerfan.cn/images/ironman-draw.png"/><link rel="search" type="application/opensearchdescription+xml" title="（4）实战开发——Webflux响应式编程利器 - AlgerFan | Blog" href="/opensearch.xml"><link href="https://algerfan.github.io/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://algerfan.github.io/manifest.json">        <link rel="canonical" href="https://algerfan.github.io/articles/2018/12/09/1544342714012.html">      <link type="text/css" rel="stylesheet" href="https://algerfan.github.io/skins/solo-skin-emiya/css/base.css?1670680631646" charset="utf-8" />
+    <style>
+    li code{
+        color: #cc0414;
+    }
+<!--  
+   .item {
+        color: #000 !important;
+    }   
+    .rowRowLayout a {
+        display: inline-block !important;
+        width: 32%;
+        margin-bottom: 6px !important;
+    }
+    .items ul li a {
+        text-transform: none;
+    }
+ -->
+</style>
+
+<script src="https://study.algerfan.cn/images/click.js"></script>
+<!-- 谷歌分析及百度统计 -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-129735490-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4281497bfb65c11d434048a736f3ec34";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script><script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>  </head>
+  <body id="emiya_blog">
+  <nav class="navbar J_navbar">
+    <div class="navbar__container navbar__container--mobile">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="toggle-items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+
+    <div class="navbar__container navbar__container--web">
+      <a class="brand" href="/">AlgerFan | Blog</a>
+      <div class="items">
+        <ul>  <li><a href="/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B" target="_self">Webflux系列</a></li>
+  <li><a href="/tags/Springboot" target="_self">Springboot系列</a></li>
+  <li><a href="/tags/MySQL" target="_self">MySQL系列</a></li>
+  <li><a href="/archives" target="_self">存档</a></li>
+  <li><a href="/tags" target="_self">标签墙</a></li>
+  <li><a href="/links.html" target="_self">友情链接</a></li>
+  <li><a href="https://algerfan.github.io/start">立即使用</a></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+    <div class="container-fluid">
+      <main id="pjax" class="container--left">
+        
+  <header class="custom_header">
+    <div class="custom_header__container">
+      <div class="custom_header__articleMeta">
+        <h1 class="articleMeta__title">（4）实战开发——Webflux响应式编程利器</h1>
+        <div class="articleMeta__info">
+          <span class="author">@AlgerFan &nbsp;2018-12-09</span>
+          <span class="comments">
+            <span data-uvstatcmt="1544342714012">0</span> 
+            评论
+          </span>
+          <span class="views">
+            <span data-uvstaturl="https://algerfan.github.io/articles/2018/12/09/1544342714012.html">0</span> 浏览
+          </span>
+        </div>
+        <div class="articleMeta__tags">
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>&nbsp;
+          <a class="tagBtn" rel="tag" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>&nbsp;
+        </div>
+      </div>
+    </div>
+  </header>
+        <div class="article__content J_article__content vditor-reset">
+          <p><img src="https://img.hacpai.com/bing/20180311.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<ul>
+<li>学习webflux响应式前需要学习三个基础：</li>
+</ul>
+<ol>
+<li>函数式编程和lambda表达式</li>
+<li>Stream流编程</li>
+<li>Reactive stream 响应式流</li>
+<li>实战开发</li>
+</ol>
+<ul>
+<li>接下来进入学习系列四</li>
+</ul>
+<h3 id="toc_h3_0">Webflux响应式编程实战开发</h3>
+<p>先来一张图，这是spring文档的一张截图，介绍了spring如今的两种开发模式，MVC和webflux两种开发模式，可见webflux的重要性</p>
+<p><img src="https://img.algerfan.cn/blog/image/20190619/19a36ac4c2bf478d98b0363247a027cf.png" alt="20181117163117958.png"></p>
+<h4 id="toc_h4_1">1. 初识SpringWebFlux</h4>
+<p>webflux 是spring5推出的一种响应式Web框架，它是一种非阻塞的开发模式，可以在一个线程里处理多个请求（非阻塞），运行在netty环境，也可以可以运行在servlet3.1之后的容器，支持异步servlet， 可以支持更高的并发量</p>
+<h4 id="toc_h4_2">2. 异步servlet</h4>
+<ul>
+<li>我们知道同步servlet阻塞了Tomcat容器的线程，当一个网络请求到我们的Tomcat容器之后，容器会给每个请求启动一个线程去处理，线程里面会调用一个servlet去处理，当使用同步servlet时，业务代码花多长时间，你的线程就要等待多长时间，这就是堵塞（同步和异步是服务器后台才有异步这个概念，对于浏览器来说所有的请求都是异步，前台都要花费业务逻辑时间）</li>
+<li>异步servlet的主要作用是它不会堵塞Tomcat容器的servlet线程，它可以把一些耗时的操作放在一个独立的线程池，那么我们的servlet就可以立马返回，处理下一个请求，以此就可以达到高并发。<br>
+通过代码比较一下同步servlet与异步servlet</li>
+</ul>
+<p>同步servlet</p>
+<pre><code class="language-java">@WebServlet(urlPatterns = "/SyncServlet")
+public class SyncServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public SyncServlet() {
+        super();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long t1 = System.currentTimeMillis();
+        // 执行业务代码
+        doSomeThing(request, response);
+        System.out.println("sync use:" + (System.currentTimeMillis() - t1));
+    }
+    private void doSomeThing(HttpServletRequest request,
+                             HttpServletResponse response) throws IOException {
+        // 模拟耗时操作
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        response.getWriter().append("done");
+    }
+}
+
+</code></pre>
+<p>异步servlet</p>
+<pre><code class="language-java">@WebServlet(asyncSupported = true, urlPatterns = { "/AsyncServlet" })
+public class AsyncServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public AsyncServlet() {
+        super();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long t1 = System.currentTimeMillis();
+
+        // 开启异步
+        AsyncContext asyncContext = request.startAsync();
+
+        // 执行业务代码,放入一个线程池里
+        CompletableFuture.runAsync(() -&gt; doSomeThing(asyncContext,
+                asyncContext.getRequest(), asyncContext.getResponse()));
+
+        System.out.println("async use:" + (System.currentTimeMillis() - t1));
+    }
+    private void doSomeThing(AsyncContext asyncContext,
+                             ServletRequest servletRequest, ServletResponse servletResponse) {
+
+        // 模拟耗时操作
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            servletResponse.getWriter().append("done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 业务代码处理完毕, 通知结束
+        asyncContext.complete();
+    }
+}
+</code></pre>
+<p><img src="https://img.algerfan.cn/blog/image/20190406/f026fac298e34169a2e8fec581b628f3.png" alt="20181218173222926.png"></p>
+<ul>
+<li>通过以上两段代码控制台的打印结果可以看出，异步servlet把耗时操作放在一个独立的线程池，那么我们的servlet就可以立马返回，处理下一个请求。</li>
+</ul>
+<h4 id="toc_h4_3">3. CRUD完整示例</h4>
+<ul>
+<li>
+<p><strong>通过下图可以看出MVC和wenflux的区别</strong><br>
+<img src="https://img.algerfan.cn/blog/image/20190619/feb1151b28bc435695d5f0c407bb8019.png" alt="20181117165349636.png"></p>
+</li>
+<li>
+<p><strong>以下通过一个例子了解一下webflux开发</strong></p>
+</li>
+</ul>
+<ol>
+<li>实体类</li>
+</ol>
+<pre><code class="language-java">@Document(collection = "user")
+@Data
+public class User {
+
+	@Id
+	private String id;
+
+	@NotBlank
+	private String name;
+
+	@Range(min=10, max=100)
+	private int age;
+
+}
+</code></pre>
+<ol start="2">
+<li>Controller层</li>
+</ol>
+<pre><code class="language-java">@RestController
+@RequestMapping("/user")
+public class UserController {
+
+	private final UserRepository repository;
+
+	public UserController(UserRepository repository) {
+		this.repository = repository;
+	}
+
+	/**
+	 * 以数组形式一次性返回数据
+	 */
+	@GetMapping("/")
+	public Flux&lt;User&gt; getAll() {
+		return repository.findAll();
+	}
+
+	/**
+	 * 以SSE形式多次返回数据
+	 */
+	@GetMapping(value = "/stream/all", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux&lt;User&gt; streamGetAll() {
+		return repository.findAll();
+	}
+
+	/**
+	 * 新增数据
+	 */
+	@PostMapping("/")
+	public Mono&lt;User&gt; createUser(@Valid @RequestBody User user) {
+		// spring data jpa 里面, 新增和修改都是save. 有id是修改, id为空是新增
+		// 根据实际情况是否置空id
+		user.setId(null);
+		CheckUtil.checkName(user.getName());
+		return this.repository.save(user);
+	}
+
+	/**
+	 * 根据id删除用户 存在的时候返回200, 不存在返回404
+	 */
+	@DeleteMapping("/{id}")
+	public Mono&lt;ResponseEntity&lt;Void&gt;&gt; deleteUser(
+			@PathVariable("id") String id) {
+		// deletebyID 没有返回值, 不能判断数据是否存在
+		// this.repository.deleteById(id)
+		return this.repository.findById(id)
+				// 当你要操作数据, 并返回一个Mono 这个时候使用flatMap
+				// 如果不操作数据, 只是转换数据, 使用map
+				.flatMap(user -&gt; this.repository.delete(user).then(
+						Mono.just(new ResponseEntity&lt;Void&gt;(HttpStatus.OK))))
+				.defaultIfEmpty(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * 修改数据 存在的时候返回200 和修改后的数据, 不存在的时候返回404
+	 */
+	@PutMapping("/{id}")
+	public Mono&lt;ResponseEntity&lt;User&gt;&gt; updateUser(@PathVariable("id") String id,
+			@Valid @RequestBody User user) {
+		CheckUtil.checkName(user.getName());
+		return this.repository.findById(id)
+				// flatMap 操作数据
+				.flatMap(u -&gt; {
+					u.setAge(user.getAge());
+					u.setName(user.getName());
+					return this.repository.save(u);
+				})
+				// map: 转换数据
+				.map(u -&gt; new ResponseEntity&lt;User&gt;(u, HttpStatus.OK))
+				.defaultIfEmpty(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * 根据ID查找用户 存在返回用户信息, 不存在返回404
+	 */
+	@GetMapping("/{id}")
+	public Mono&lt;ResponseEntity&lt;User&gt;&gt; findUserById(
+			@PathVariable("id") String id) {
+		return this.repository.findById(id)
+				.map(u -&gt; new ResponseEntity&lt;User&gt;(u, HttpStatus.OK))
+				.defaultIfEmpty(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * 根据年龄查找用户
+	 */
+	@GetMapping("/age/{start}/{end}")
+	public Flux&lt;User&gt; findByAge(@PathVariable("start") int start,
+			@PathVariable("end") int end) {
+		return this.repository.findByAgeBetween(start, end);
+	}
+
+	/**
+	 * 根据年龄查找用户
+	 */
+	@GetMapping(value = "/stream/age/{start}/{end}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux&lt;User&gt; streamFindByAge(@PathVariable("start") int start,
+			@PathVariable("end") int end) {
+		return this.repository.findByAgeBetween(start, end);
+	}
+	
+	/**
+	 *  得到20-30用户
+	 */
+	@GetMapping("/old")
+
+	public Flux&lt;User&gt; oldUser() {
+		return this.repository.oldUser();
+	}
+
+	/**
+	 * 得到20-30用户
+	 */
+	@GetMapping(value = "/stream/old", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux&lt;User&gt; streamOldUser() {
+		return this.repository.oldUser();
+	}
+
+}
+</code></pre>
+<ol start="3">
+<li>Repository层</li>
+</ol>
+<pre><code class="language-java">@Repository
+public interface UserRepository extends ReactiveMongoRepository&lt;User, String&gt; {
+
+	/**
+	 * 根据年龄查找用户
+	 */
+	Flux&lt;User&gt; findByAgeBetween(int start, int end);
+	
+	@Query("{'age':{ '$gte': 20, '$lte' : 30}}")
+	Flux&lt;User&gt; oldUser();
+}
+</code></pre>
+<ul>
+<li>以上代码没有进行校验，当然没有校验的代码是不能用的，校验代码我就不放了，想了解的<a href="https://github.com/AlgerFan/webflux" target="_blank">GitHub</a>上有完整代码。</li>
+</ul>
+          <div>
+            <hr>
+
+标题：（4）实战开发——Webflux响应式编程利器<br>
+作者：<a href="https://algerfan.github.io" target="_blank">AlgerFan</a><br>
+地址：<a href="https://algerfan.github.io/articles/2018/12/09/1544342714012.html" target="_blank">https://algerfan.github.io/articles/2018/12/09/1544342714012.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+          </div>
+        </div>
+        <div class="share__container">
+          <a class="item J_share" data-type="weibo" href="javascript:;"></a>
+          <a class="item J_share" data-type="qzone" href="javascript:;"></a>
+          <a 
+            class="item J_share J_share_wechat"
+            href="javascript:;"
+            data-type="wechat"
+            data-title="（4）实战开发——Webflux响应式编程利器"
+            data-blogtitle="AlgerFan | Blog"
+            data-url="https://algerfan.github.io/articles/2018/12/09/1544342714012.html"
+            data-avatar="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+            <span class="qrcode J_qrcode"></span>  
+          </a>
+        </div>
+        <div class="comment__container" id="comments">
+          <div id="gitalk-container"></div>
+          <div id="b3logsolocomments"></div>
+          <div id="vcomment" data-name="AlgerFan" data-postId="1544342714012"></div>
+        </div>
+        <div class="recommendation__container">
+          <div class="item" id="externalRelevantArticles">
+          </div>
+          <div class="item" id="randomArticles">
+          </div>
+          <div class="item" id="relevantArticles">
+          </div>
+        </div>
+        
+      </main>
+      <div class="container--right">
+<div class="sidebar">
+    <section class="sidebar__container">
+    <div class="header">
+      <span>公告</span>
+    </div>
+    <div class="board" id="board">
+      一个编程爱好者，喜欢研究一些新技术。
+喜欢逛逛博客、技术论坛。
+<br>
+GitHub：<a href="https://github.com/AlgerFan" >https://github.com/AlgerFan</a>
+<br>
+Email：<a href="mailto:algerfan@163.com" target="_blank">algerfan@163.com</a>
+
+<!-- 
+<div class="board" id="board">
+    <style>
+        .music { width: 100%; position: relative; }
+        .music-player { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: none; height: 100%; width: 100%; }
+    </style>
+    <div class="music">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210 src="//music.163.com/outchain/player?type=0&id=6673647026&auto=0&height=430"></iframe>
+    </div>    
+</div>
+ -->    
+    </div>
+  </section>
+  <section class="sidebar__container">
+    <div class="header">
+      <span>搜索文章</span>
+    </div>
+    <div class="search">
+      <form class="search__form" action="https://algerfan.github.io/search">
+        <div class="input">
+          <input type="text" name="keyword" placeholder="输入关键字搜索">
+          <button type="submit"></button>
+        <div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>关于博主</span>
+    </div>
+    <main class="user">
+      <img class="user__avatar" src="https://b3logfile.com/avatar/1543646816183_1569037583022.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="AlgerFan"/>
+      <div class="user__info">
+        <div class="item"><a href="https://algerfan.github.io/archives.html">82<span class="text">文章</span></a></div>
+        <div class="item"><span data-uvstaturl="https://algerfan.github.io">42238</span><span class="text">浏览</span></div>
+        <div class="item">2<span class="text">当前浏览</span></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>标签</span>
+    </div>
+    <div class="tags rowSmallItemLayout">
+      <a class="item" href="https://algerfan.github.io/tags/JavaWeb">JavaWeb</a>
+      <a class="item" href="https://algerfan.github.io/tags/MySQL">MySQL</a>
+      <a class="item" href="https://algerfan.github.io/tags/Springboot">Springboot</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%BD%AC%E8%BD%BD%E5%A5%BD%E6%96%87">转载好文</a>
+      <a class="item" href="https://algerfan.github.io/tags/webflux%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">webflux响应式编程</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>
+      <a class="item" href="https://algerfan.github.io/tags/Linux">Linux</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F">微信小程序</a>
+      <a class="item" href="https://algerfan.github.io/tags/GitHub">GitHub</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90">权限</a>
+      <a class="item" href="https://algerfan.github.io/tags/docker">docker</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91">关于我</a>
+      <a class="item" href="https://algerfan.github.io/tags/JDBC">JDBC</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E7%BC%93%E5%AD%98">缓存</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E9%82%AE%E4%BB%B6">邮件</a>
+      <a class="item" href="https://algerfan.github.io/tags/Git">Git</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a>
+      <a class="item" href="https://algerfan.github.io/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">加密算法</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container">
+    <div class="header">
+      <span>存档</span>
+    </div>
+    <div class="lists">
+              <a href="https://algerfan.github.io/archives/2022/04"
+                  title="2022 年 04 月(1)">
+                  2022 年 04 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2021/03"
+                  title="2021 年 03 月(1)">
+                  2021 年 03 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2020/01"
+                  title="2020 年 01 月(5)">
+                  2020 年 01 月(5)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/12"
+                  title="2019 年 12 月(10)">
+                  2019 年 12 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/11"
+                  title="2019 年 11 月(1)">
+                  2019 年 11 月(1)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/10"
+                  title="2019 年 10 月(7)">
+                  2019 年 10 月(7)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/09"
+                  title="2019 年 09 月(3)">
+                  2019 年 09 月(3)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/08"
+                  title="2019 年 08 月(11)">
+                  2019 年 08 月(11)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/07"
+                  title="2019 年 07 月(10)">
+                  2019 年 07 月(10)
+              </a>
+              <a href="https://algerfan.github.io/archives/2019/06"
+                  title="2019 年 06 月(2)">
+                  2019 年 06 月(2)
+              </a>
+        <a href="https://algerfan.github.io/archives.html">...</a>
+    </div>
+  </section>
+
+  <section class="sidebar__container article__contents J_article__contents fn__none">
+    <div class="header">
+      <span>文章目录</span>
+    </div>
+    <div class="contents J_article__contents--container">
+    </div>
+  </section>
+
+  <div class="toTop J_backToTop">
+    <img src="https://algerfan.github.io/skins/solo-skin-emiya/images/top.png" />
+  </div>
+</div>
+      </div>
+    </div>
+<footer class="footer">
+  <div class="footer__container">
+    © 2022 <a href="https://algerfan.github.io">AlgerFan | Blog</a> <br/>
+    Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> 
+    Theme <a rel="friend" href="https://github.com/zjhch123/solo-skin-emiya" target="_blank">solo-skin-emiya</a>
+    <sup>[<a href="https://github.com/spiritree/typecho-theme-amaze" target="_blank">ref</a>]</sup> 
+    by <a href="https://github.com/zjhch123" target="_blank">Jiahao.Zhang</a>
+  </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://algerfan.github.io",
+    staticServePath: "https://algerfan.github.io",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1544342714012",
+  }
+</script>
+<script type="text/javascript" src="https://algerfan.github.io/js/common.min.js?1670680631646" charset="utf-8"></script>
+<script type="text/javascript" src="https://algerfan.github.io/skins/solo-skin-emiya/js/common.min.js?1670680631646" charset="utf-8"></script>
+
+    
+<script type="text/javascript">
+    Util.addScript('https://algerfan.github.io/js/page.min.js?1670680631646', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1544342714012",
+        "blogHost": "https://algerfan.github.io",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+
+      page.tips.externalRelevantArticlesDisplayCount = "0";
+          page.loadRandomArticles("<div class='header'><span>RECOMMEND POSTS</span></div>");
+          page.loadRelevantArticles('1544342714012', '<div class="header"><span>RELEVANT POSTS</span></div>');
+
+      Skin.initArticle()
+    });
+</script>
+    
+  </body>
+</html>
+<!-- Generated by Latke (https://github.com/88250/latke) in 20ms, 2022/12/10 22:11:59 -->
